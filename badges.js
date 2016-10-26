@@ -614,29 +614,34 @@ function init() {
 
 	role2id = function(role) {
 		roleloop = function() {
-			if (is.startWith(role, 'co') === true) {
-				badgeid = 1;
+			if (role_for_display === null) {
+				badgeid = 0;
 			}
 			else {
-				if (is.startWith(role, 'me') === true) {
-					badgeid = 2;
+				if (is.startWith(role, 'co') === true) {
+					badgeid = 1;
 				}
 				else {
-					if (is.startWith(role, 'ed') === true) {
-						badgeid = 3;
+					if (is.startWith(role, 'me') === true) {
+						badgeid = 2;
 					}
 					else {
-						if (is.startWith(role, 'mo') === true) {
-							badgeid = 4;
+						if (is.startWith(role, 'ed') === true) {
+							badgeid = 3;
 						}
 						else {
-							if (is.startWith(role, 're') === true) {
-								badgeid = 5;
+							if (is.startWith(role, 'mo') === true) {
+								badgeid = 4;
 							}
 							else {
-								if (is.startWith(role, 've') === true) {
-									role = roles_for_display[1];
-									roleloop();
+								if (is.startWith(role, 're') === true) {
+									badgeid = 5;
+								}
+								else {
+									if (is.startWith(role, 've') === true) {
+										role = roles_for_display[1];
+										roleloop();
+									}
 								}
 							}
 						}
@@ -955,11 +960,11 @@ function init() {
 			if (n !== 0) {
 				if (i > 0) {
 					// check if existent (yahoo)
-					url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='http://genius.com/" + logininput.toUpperCase().replace(/\s+/g, "-") + "'and%20compat='html5'%20and%20xpath=%27(//preload-content)[last()-" + i + "]%27&format=json";
+					url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='http://genius.com/" + logininput.toUpperCase().replace(/\s+/g, "-") + "'and%20xpath=%27(//preload-content)[last()-" + i + "]%27&format=json";
 
-					source = $.getJSON(url).done(function() {
+					source = $.get(url).done(function() {
 						sourcestring1 = JSON.stringify(source);
-						if (sourcestring1.indexOf("user") == userindexvalue) {
+						if (sourcestring1.indexOf("user") < 200 && sourcestring1.indexOf("user") != -1) {
 							findid();
 							id_given = "yes";
 							n = 0;

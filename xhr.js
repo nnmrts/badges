@@ -1,5 +1,5 @@
 "use strict";
-var window = require("global/window")
+//var window = require("global/window")
 var isFunction = require("is-function")
 var parseHeaders = require("parse-headers")
 var xtend = require("xtend")
