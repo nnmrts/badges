@@ -1,0 +1,22 @@
+https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url=%27http://genius.com/users%27%20and%20compat=%27html5%27%20and%20xpath=%27//body/div[2]%27&format=json
+
+
+
+(<div class="(.*?)data-badge-user-id="(.*?)"|href="\/(.*?)" )
+
+<div(.*?)" data-badge-user-id="(.*?)">(.*?)href="/(.*?)" (.*?)" />\r
+
+
+
+
+^(.*?) (.*?) (.*?): (.*?)\n
+
+\3: \4 \1 \2
+
+
+
+
+
+"<(.*?).com/(.*?)\\(.*?)deprecated(.*?)/users/(.*?)/(.*?)a>"
+
+{"username": "\2", "id": "\5"},

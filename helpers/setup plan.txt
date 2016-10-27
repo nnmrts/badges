@@ -1,0 +1,47 @@
+; -- Example1.iss --
+; Demonstrates copying 3 files and creating an icon.
+
+; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
+
+[Setup]
+AppName=Badges
+AppVersion=1
+DefaultDirName={pf}\Badges
+DefaultGroupName=Badges
+UninstallDisplayIcon={app}\badges.exe
+Compression=lzma2
+SolidCompression=yes
+OutputDir=C:\Users\Anton\Downloads
+
+[Files]
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\badges.exe"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\content_resources_200_percent.pak"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\content_shell.pak"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\d3dcompiler_47.dll"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\ffmpeg.dll"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\icudtl.dat"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\libEGL.dll"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\libGLESv2.dll"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\LICENSE"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\LICENSES.chromium.html"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\natives_blob.bin"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\node.dll"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\snapshot_blob.bin"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\ui_resources_200_percent.pak"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\version"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\xinput1_3.dll"; DestDir: "{app}"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\resources\electron.asar"; DestDir: "{app}\resources"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\resources\app\nativefier.json"; DestDir: "{app}\resources\app"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\resources\app\package.json"; DestDir: "{app}\resources\app"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\resources\app\inject\_placeholder"; DestDir: "{app}\resources\app\inject"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\resources\app\lib\main.js"; DestDir: "{app}\resources\app\lib"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\resources\app\lib\main.js.map"; DestDir: "{app}\resources\app\lib"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\resources\app\lib\static\preload.js"; DestDir: "{app}\resources\app\lib\static"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\resources\app\lib\static\preload.js.map"; DestDir: "{app}\resources\app\lib\static"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\resources\app\lib\static\login\login.css"; DestDir: "{app}\resources\app\lib\static"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\resources\app\lib\static\login\login.html"; DestDir: "{app}\resources\app\lib\static"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\resources\app\lib\static\login\login.js"; DestDir: "{app}\resources\app\lib\static\login"
+Source: "C:\Program Files (x86)\nodejs\badges-win32-x64\resources\app\lib\static\login\login.js.map"; DestDir: "{app}\resources\app\lib\static\login"
+
+[Icons]
+Name: "{group}\Badges"; Filename: "{app}\badges.exe"
