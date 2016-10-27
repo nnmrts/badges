@@ -273,9 +273,13 @@ function init() {
 	findname = function() {
 		name = geniussource.responseJSON.response.user.name;
 	};
-
+	
 	findlogin = function() {
 		login = geniussource.responseJSON.response.user.login;
+	};
+
+	findlink = function() {
+		link = "https://genius.com/" + login;
 	};
 
 	findiq_for_display = function() {
@@ -306,6 +310,7 @@ function init() {
 		findavatar();
 		findname();
 		findlogin();
+		findlink();
 		findiq_for_display();
 		findrole_for_display();
 		findroles_for_display();
@@ -319,7 +324,7 @@ function init() {
 	//-------------------------------------------------------------------------
 
 	insertavatar = function() {
-		html_avatar.style = "background-image: url('" + avatar + "')";
+		html_avatar.style = "background-image: url(" + avatar + ")";
 	};
 	insertstats = function() {
 		html_annotations_count.innerHTML = annotations_count;
@@ -327,10 +332,10 @@ function init() {
 	};
 
 	insertnamelink = function() {
-		html_namelink.setAttribute("href", "https://genius.com/" + login);
+		html_namelink.setAttribute("href", link);
 	};
 	insertname = function() {
-		html_name.innerHTML = name;
+		html_name.innerHTML = emojione.shortnameToImage(emojione.toShort(name));
 	};
 	insertlogin = function() {
 		html_login.innerHTML = login;
@@ -888,7 +893,7 @@ function init() {
 
 		data = [
 				["avatar", avatar],
-				["namelink", namelink],
+				["link", link],
 				["name", name],
 				["login", login],
 				["iq_for_display", iq_for_display],

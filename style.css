@@ -552,6 +552,20 @@ template {
 
 
 
+.emojione {
+    font-size: inherit;
+    height: 3ex;
+    width: 3.1ex;
+    min-height: 20px;
+    min-width: 20px;
+    display: inline-block;
+    margin: -1.5ex .05em .2ex;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+
+
 .close {
   float: right;
   font-size: 21px;
