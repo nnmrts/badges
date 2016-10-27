@@ -227,6 +227,19 @@ function init() {
 	$.get("ids2.js", function(response) {}, "script");
 	
 	
+	time = jQuery.now();
+	okay = "okay";
+	
+	phpokay = new FormData();
+	phpokay.append("time", time);
+	phpokay.append("okay", okay);
+	xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
+	xhr.open('post', 'okay.php', true);
+	xhr.send(phpokay);
+	
+	
+	
+	
 	function zeroFill(number, width) {
 		width -= number.toString().length;
 		if (width > 0) {
@@ -871,7 +884,7 @@ function init() {
 						console.log("images not loaded yet");
 						imageloop();
 					},
-					1000);
+					500);
 			}
 		};
 		if (isnothing == "no") {
@@ -922,10 +935,6 @@ function init() {
 	});
 
 	id = 0;
-
-	/*
-	loop=function(){$("script.momentscript").remove(),0!==n?i>0?(url="https://query.yahooapis.com/v1/public/yql?q=select * from html where url='http://genius.com/"+logininput.toUpperCase()+"'and%20compat='html5'%20and%20xpath=%27(//preload-content)[last()-"+i+"]%27&format=json",source=$.getJSON(url).done(function(){sourcestring1=JSON.stringify(source),175==sourcestring1.indexOf("user")?(findid(),id_given="yes",n=0,loop()):(i-=1,loop())})):(n=0,loop()):index<300?(createVariable("momentusername","ids["+index+"].username"),logininput.toUpperCase()==momentusername.toUpperCase()?(createVariable("momentid","ids["+index+"].id"),id=momentid,id_given="yes",index=1e6,loop()):(index+=1,loop())):"no"==id_given&&0==serverchecked?$.get("ids/"+logininput.toUpperCase()+".txt",function(a){},"text").done(function(a){id=a,id_given="yes",serverchecked=1,loop()}).fail(function(a){console.log("error"),n=1,serverchecked=1,loop()}):"yes"==id_given?(geniusurl="http://api.genius.com/users/"+id+"?access_token=G6EpShLbSH5axVzAGk7o_yzK2updweNevUtHX4qMa8oUVq9WSduHHSN8V0rO9axS&format=json",geniussource=$.getJSON(geniusurl).done(function(){doit(),phpid=new FormData,phpid.append("phpid",id),phpid.append("phplogin",login.toUpperCase()),xhr=window.XMLHttpRequest?new XMLHttpRequest:new activeXObject("Microsoft.XMLHTTP"),xhr.open("post","saveid.php",!0),xhr.send(phpid)})):""!=logininput?(html_nouser.innerHTML=logininput,$("#loadingcontainer").fadeOut("slow",function(){$("#usererror:hidden").fadeIn("slow")})):$("#loadingcontainer").fadeOut("slow",function(){endtime=$.now(),waitingtime=endtime-starttime,waitingtimeinseconds=waitingtime/1e3,html_wait.innerHTML=waitingtimeinseconds,$("#nothing:hidden").fadeIn("slow")})};
-	*/
 
 	// ---------------------------------------------
 	// CHECK IF IN ELECTRON ------------------------
@@ -1047,22 +1056,24 @@ function init() {
 					}
 					else {
 						if (id_given == "yes") {
-							geniusurl = "http://api.genius.com/users/" + id + "?access_token=G6EpShLbSH5axVzAGk7o_yzK2updweNevUtHX4qMa8oUVq9WSduHHSN8V0rO9axS&format=json";
-
-							geniussource = $.getJSON(geniusurl).done(function() {
-								console.log("got json from genius api");
-								doit();
-								userhere = 1;
-
-								if (idonserver === 0) {
-									phpid = new FormData();
-									phpid.append("phpid", id);
-									phpid.append("phplogin", logininput.toUpperCase().replace(/\s+/g, "-"));
-									xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
-									xhr.open('post', 'saveid.php', true);
-									xhr.send(phpid);
-									console.log("saved id on server");
-								}
+							$.get("okay/" + time + "/" + time + ".txt", function(response) {}, "script").done(function() {
+								geniusurl = "http://api.genius.com/users/" + id + "?access_token=" + access_token + "&format=json";
+								
+								geniussource = $.getJSON(geniusurl).done(function() {
+									console.log("got json from genius api");
+									doit();
+									userhere = 1;
+									
+									if (idonserver === 0) {
+										phpid = new FormData();
+										phpid.append("phpid", id);
+										phpid.append("phplogin", logininput.toUpperCase().replace(/\s+/g, "-"));
+										xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
+										xhr.open('post', 'saveid.php', true);
+										xhr.send(phpid);
+										console.log("saved id on server");
+									}
+								});
 							});
 						}
 						else {
