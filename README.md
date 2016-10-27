@@ -1,4 +1,4 @@
 # badges
 a web-app for the badges initiative on genius.com
-
-## VERSION 2
+<hr>
+### VERSION 2
