@@ -1,9 +1,9 @@
-git cd C:\Users\Anton\Documents\GitHub\badges2.1-weekly-[WEEK]
+cd C:\Users\Anton\Documents\GitHub\badges2.1-weekly-[WEEK]
 git diff // änderungen anschauen
 git add [FILE] // datei erkennen
 git commit -m"[COMMENT]"
 
-git cd C:\Users\Anton\Documents\GitHub\badges
+cd C:\Users\Anton\Documents\GitHub\badges
 git remote add [WEEK] C:\Users\Anton\Documents\GitHub\badges2.1-weekly-
 git checkout [WEEKLY BRANCH]
 git merge [WEEK]/master
