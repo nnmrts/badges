@@ -5,6 +5,7 @@ git commit -m"[COMMENT]"
 
 cd C:\Users\Anton\Documents\GitHub\badges
 git remote add [WEEK] C:\Users\Anton\Documents\GitHub\badges2.1-weekly-
+git remote update
 git checkout [WEEKLY BRANCH]
 git merge [WEEK]/master
 git push https://github.com/nnmrts/badges.git [WEEKLY BRANCH]
