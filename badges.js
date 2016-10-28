@@ -722,6 +722,13 @@ function init() {
 		if (rolebadge1 !== "undefined") {
 			html_badgescontainer.appendChild(rolebadge1);
 		}
+		
+		if (roles_for_display.indexOf("mediator") == 1) {
+			rolebadgechooser("mediator", 2);
+			if (rolebadge2 !== "undefined") {
+				html_badgescontainer.appendChild(rolebadge2);
+			}
+		}
 
 		verifiedartistbadgechooser();
 		if (verifiedartistbadge !== "undefined") {
