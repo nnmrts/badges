@@ -118,6 +118,9 @@ function init() {
 					if (rolebadge1 != "undefined") {
 						urlarray.push(rolebadge1.firstChild.src.slice(0, rolebadge1.firstChild.src.indexOf("500px")) + "170px.png");
 					}
+					if (rolebadge2 != "undefined") {
+						urlarray.push(rolebadge2.firstChild.src.slice(0, rolebadge2.firstChild.src.indexOf("500px")) + "170px.png");
+					}
 					if (verifiedartistbadge != "undefined") {
 						urlarray.push(verifiedartistbadge.firstChild.src.slice(0, verifiedartistbadge.firstChild.src.indexOf("500px")) + "170px.png");
 					}
@@ -178,6 +181,20 @@ function init() {
 						gentexthtml += littleend;
 						gentexthtml += littlestart;
 						gentexthtml += itemstart + urlarray[4] + itemend;
+						gentexthtml += littleend + realend;
+					}
+					if (urlarray.length == 6) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += itemstart + urlarray[1] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[2] + itemend;
+						gentexthtml += itemstart + urlarray[3] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[4] + itemend;
+						gentexthtml += itemstart + urlarray[5] + itemend;
 						gentexthtml += littleend + realend;
 					}
 
