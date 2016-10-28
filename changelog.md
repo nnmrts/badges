@@ -4,7 +4,8 @@
   - **added** a changelog
 <hr>
 - <h3>negligible updates:</h3>
-  - **added** helper for git commands
+  - **added** a helper for git commands
 <hr>
+
 ## 2 (2016/25/10):
 - <h3>initial release</h3>
