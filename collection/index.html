@@ -1,0 +1,82 @@
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Badges</title>
+		<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png?v=m2dBzPMjbw">
+		<link rel="icon" type="image/png" href="favicon/favicon-32x32.png?v=m2dBzPMjbw" sizes="32x32">
+		<link rel="icon" type="image/png" href="favicon/favicon-194x194.png?v=m2dBzPMjbw" sizes="194x194">
+		<link rel="icon" type="image/png" href="favicon/android-chrome-192x192.png?v=m2dBzPMjbw" sizes="192x192">
+		<link rel="icon" type="image/png" href="favicon/favicon-16x16.png?v=m2dBzPMjbw" sizes="16x16">
+		<link rel="manifest" href="favicon/manifest.json?v=m2dBzPMjbw">
+		<link rel="mask-icon" href="favicon/safari-pinned-tab.svg?v=m2dBzPMjbw" color="#ffff64">
+		<link rel="shortcut icon" href="favicon/favicon.ico?v=m2dBzPMjbw">
+		<meta name="apple-mobile-web-app-title" content="Badges">
+		<meta name="application-name" content="Badges">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="favicon/mstile-144x144.png?v=m2dBzPMjbw">
+		<meta name="msapplication-config" content="favicon/browserconfig.xml?v=m2dBzPMjbw">
+		<meta name="theme-color" content="#ffffff">
+		<meta name="description" content="badgesbadgesbadgesbadgesbadgesbadges">
+		
+		<script src="../libraries/emojione/emojione.js"></script>
+		<link rel="stylesheet" href="../libraries/emojione/assets/css/emojione.css"/>
+		
+		<link href="https://assets.genius.com/stylesheets/compiled/bagon_fonts-bbc6a4e57e275a56e302efb59741b16c.css" media="screen" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="../fonts/fonts.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script src="../libraries/browserify/bundle.js"></script>
+		<script src="../libraries/xhr/xhr.js"></script>
+		<script src="../libraries/is.js/is.js"></script>
+		<script src="../libraries/bootbox/bootbox.min.js"></script>
+		<script src="../badges.js"></script>
+		<script src="collection.js"></script>
+		<!--[if lt IE 9]>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+<body onload="collectioninit(); init();">
+	<header class="wrapped_header">
+		<a href="http://genius.com/" class="logo_container"></a>
+	</header>
+	<div id="sitecontainer">
+		<div class="infocontainer">
+		<span class="headline">Hey SinaTheQueen!</span>
+		<span class="info">
+		This is your current badges collection. You can remove and add badges, save your changes and then they will be shown in your badges profile.<br>Some badges, like the role badges, are assigned automatically to your collection and cannot be removed. However, you can hide them.
+		</span>
+		</div>
+		<div class="button" id="edit">EDIT YOUR COLLECTION</div>
+		<div id="badgescontainer">
+			<div class="badgebox" id="001-010topazgenius">
+				<img src="../badges/001%20Genius%20Badges/genius-001-010topazgenius500px.png?time=1477737861146" class="badge">
+			</div>
+			<div class="badgebox" id="002-006platinumtranscriber">
+				<img src="../badges/002%20Transcriber%20Badges/genius-002-006platinumtranscriber500px.png?time=1477737861147" class="badge">
+			</div>
+			<div class="badgebox" id="003-012amethystannotator">
+				<img src="../badges/003%20Annotator%20Badges/genius-003-012amethystannotator500px.png?time=1477737861147" class="badge">
+			</div>
+			<div class="badgebox" id="004-004moderator">
+				<img src="../badges/004%20Role%20Badges/genius-004-004moderator500px.png?time=1477737861149" class="badge">
+			</div>
+			<div class="badgebox" id="005-001verifiedartist">
+				<img src="../badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=1477737861150" class="badge">
+			</div>
+		</div>
+		<div class="nav" id="nav" style="display: none">
+			<div class="items" nav-index="0">
+				<div page-id="clazu">Clazu</div>
+				<div page-id="nafe">Nafe</div>
+				<div page-id="loclisk">Loclisk</div>
+				<div page-id="jimgobosh">Jimgobosh</div>
+				<div page-id="agrift">Agrift</div>
+				<div page-id="knolle">Knolle</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

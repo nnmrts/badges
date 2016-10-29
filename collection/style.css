@@ -1,0 +1,91 @@
+body {
+   font-family: 'Programme2';
+   margin:0;
+   background-color:#F5F7FA;
+   display:flex;
+   flex-direction:column;
+}
+.top {
+	font-size:32px;
+	padding:10px;
+}
+
+.nav {
+	position: relative;
+	background-color:#4A89DC;
+	height:39px;
+	overflow:hidden;
+}
+.nav:after {
+	position: absolute;
+	top:0px;
+	left:50%;
+	transform:translateX(-50%);
+	content: '';
+	width:0px;
+	height:0px;
+	border:10px solid transparent;
+	border-bottom:none;
+	border-top-color:#5D9CEC;
+}
+.items {
+	position: absolute;
+	left:50%;
+	transform:translateX(-50%);
+	transition:transform .5s ease;
+	white-space: nowrap;
+	user-select:none;
+}
+.items div {
+	cursor: pointer;
+	display:inline-block;
+	padding:10px 4px;
+	color:#dddddd;
+	transition:color .5s ease;
+}
+div .selected {
+color:#ffffff;
+}
+.pages {
+	flex-grow:1;
+}
+
+.infocontainer {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color: white;
+	padding-top: 6vh;
+	padding-bottom: 4vh;
+	margin-bottom: 41px;
+}
+
+.headline {
+	align-self: center;
+	font-size: 2em;
+	font-weight: 700;
+}
+
+.info {
+	align-self: center;
+	font-size: 1.1em;
+	width: 80%;
+	font-family: "Whitney";
+	margin: 4vh 4vh 4vh 4vh;
+}
+
+#badgescontainer {width: 100%;background-color: white;padding: 5% 5% 5% 5%;}
+
+#edit {margin-bottom: 41px;width: 100%;}
+
+.fixed {
+	position: fixed;
+	top: 41px;
+	width: 100%;
+	border: none;
+	left: -5vw;
+	background-color: #ff1464;
+	margin: 0 5vw 0 5vw;
+	color: white;
+}

@@ -7,6 +7,9 @@ function init() {
 	html_generatedtext = document.getElementById("generatedtext");
 	html_profiletext = document.getElementById("profiletext");
 	html_profile = document.getElementById("profile");
+	
+	html_customize = document.getElementById("customize");
+	html_authenticate = document.getElementById("authenticate");
 
 	html_userinfo = document.getElementById("userinfo");
 	html_usererror = document.getElementById("usererror");
@@ -93,6 +96,15 @@ function init() {
 						opacity: 0
 					}, 500, function() {});
 					$("#generatedtext").animate({
+						opacity: 0
+					}, 500, function() {});
+					$("#profilehr").animate({
+						opacity: 0
+					}, 500, function() {});
+					$("#customize").animate({
+						opacity: 0
+					}, 500, function() {});
+					$("#authenticate").animate({
 						opacity: 0
 					}, 500, function() {});
 					$("#profilebox").animate({
@@ -204,7 +216,7 @@ function init() {
 					$("#profilebox").animate({
 						marginTop: "-41px",
 						marginBottom: "41px",
-						height: "200px"
+						height: "350px"
 					}, 1000, function() {
 						$("#profiletext").animate({
 							opacity: 1
@@ -212,6 +224,15 @@ function init() {
 							// Animation complete.
 						});
 						$("#generatedtext").animate({
+							opacity: 1
+						}, 500, function() {});
+						$("#profilehr").animate({
+							opacity: 1
+						}, 500, function() {});
+						$("#customize").animate({
+							opacity: 1
+						}, 500, function() {});
+						$("#authenticate").animate({
 							opacity: 1
 						}, 500, function() {});
 						html_profile.innerHTML = "CLOSE THAT";
@@ -277,7 +298,10 @@ function init() {
 		var end1 = nthIndex(sourcestring1, "\\\"iq\\\"", 3);
 
 		id = sourcestring1.slice((start1 + 7), (end1 - 1));
-
+		
+		if (location.pathname != "/mag/badges2.1-weekly-201643/collection/") {
+			id = geniussource.responseJSON.response.user.id;
+		}
 		// id =
 
 
@@ -583,7 +607,15 @@ function init() {
 		}
 		stars = stars + badgeid;
 	};
-
+	
+	starbadge1 = "undefined";
+	starbadge2 = "undefined";
+	starbadge3 = "undefined";
+	rolebadge1 = "undefined";
+	rolebadge2 = "undefined";
+	verifiedartistbadge = "undefined";
+	
+	
 	starbadgenamechooser = function(badgeid) {
 		badgenames = [{0: ""}, {1: "coal"}, {2: "copper"}, {3: "bronze"}, {4: "silver"}, {5: "gold"}, {6: "platinum"}, {7: "sapphire"}, {8: "amber"}, {9: "emerald"}, {10: "topaz"}, {11: "opal"}, {12: "amethyst"}, {13: "ruby"}, {14: "yellowdiamond"}, {15: "greendiamond"}, {16: "reddiamond"}, {17: "diamond"}];
 		badgename = badgenames[badgeid][badgeid];
@@ -602,7 +634,7 @@ function init() {
 				badgebox.setAttribute("class", "badgebox");
 				badgebox.setAttribute("id", zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category);
 				badge = document.createElement("img");
-				badge.setAttribute("src", "badges/" + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
+				badge.setAttribute("src", "http://www.pumpn.net/mag/badges2.1-weekly-201643/badges/" + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
 				badge.setAttribute("class", "badge");
 				badgebox.appendChild(badge);
 
@@ -621,7 +653,7 @@ function init() {
 				badgebox.setAttribute("class", "badgebox");
 				badgebox.setAttribute("id", zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category);
 				badge = document.createElement("img");
-				badge.setAttribute("src", "badges/" + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
+				badge.setAttribute("src", "http://www.pumpn.net/mag/badges2.1-weekly-201643/badges/" + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
 				badge.setAttribute("class", "badge");
 				badgebox.appendChild(badge);
 
@@ -636,7 +668,11 @@ function init() {
 	//-------------------------------------------
 	//-------------------------------------------
 	//-------------------------------------------
-
+	
+	
+	
+	
+	
 	role2id = function(role) {
 		roleloop = function() {
 			if (role_for_display === null) {
@@ -690,7 +726,7 @@ function init() {
 			badgebox.setAttribute("class", "badgebox");
 			badgebox.setAttribute("id", "004-" + zeroFill(badgeid, 3) + badgename);
 			badge = document.createElement("img");
-			badge.setAttribute("src", "badges/004%20Role%20Badges/genius-004-" + zeroFill(badgeid, 3) + badgename + "500px.png?time=" + jQuery.now());
+			badge.setAttribute("src", "http://www.pumpn.net/mag/badges2.1-weekly-201643/badges/004%20Role%20Badges/genius-004-" + zeroFill(badgeid, 3) + badgename + "500px.png?time=" + jQuery.now());
 			badge.setAttribute("class", "badge");
 			badgebox.appendChild(badge);
 
@@ -707,7 +743,7 @@ function init() {
 			badgebox.setAttribute("class", "badgebox");
 			badgebox.setAttribute("id", "005-001verifiedartist");
 			badge = document.createElement("img");
-			badge.setAttribute("src", "badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=" + jQuery.now());
+			badge.setAttribute("src", "http://www.pumpn.net/mag/badges2.1-weekly-201643/badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=" + jQuery.now());
 			badge.setAttribute("class", "badge");
 			badgebox.appendChild(badge);
 
@@ -859,6 +895,18 @@ function init() {
 		$("#generatedtext").attr({
 			style: "opacity: 0"
 		});
+		
+		$("#profilehr").attr({
+			style: "opacity: 0"
+		});
+		
+		$("#customize").attr({
+			style: "opacity: 0"
+		});
+
+		$("#authenticate").attr({
+			style: "opacity: 0"
+		});
 
 		html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
 
@@ -931,9 +979,18 @@ function init() {
 		console.table(data);
 
 	};
-
-	bind();
-
+	
+	
+	
+	
+	if (location.pathname != "/mag/badges2.1-weekly-201643/collection/") {
+		bind();
+	}
+	
+	
+	
+	
+	
 	warmupyahooapi = function() {
 		url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='http://genius.com/SinaTheQueen'&format=json";
 
@@ -1128,6 +1185,18 @@ function init() {
 									$("#generatedtext").attr({
 										style: "opacity: 0"
 									});
+									
+									$("#profilehr").attr({
+										style: "opacity: 0"
+									});
+									
+									$("#customize").attr({
+										style: "opacity: 0"
+									});
+
+									$("#authenticate").attr({
+										style: "opacity: 0"
+									});
 
 									html_profile.innerHTML = "NOTHING HERE";
 
@@ -1169,6 +1238,18 @@ function init() {
 									});
 
 									$("#generatedtext").attr({
+										style: "opacity: 0"
+									});
+									
+									$("#profilehr").attr({
+										style: "opacity: 0"
+									});
+									
+									$("#customize").attr({
+										style: "opacity: 0"
+									});
+
+									$("#authenticate").attr({
 										style: "opacity: 0"
 									});
 

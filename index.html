@@ -66,38 +66,41 @@
 				<div class="button" id="about">ABOUT</div>
 			</div>
 			<div id="profilebox" style="height: 0">
-				<span id="profiletext" style="opacity: 0;">Just copy-paste this text to your profile bio:</span>
+				<!-- window.location.search: ?code=1qaa4_qEg45nvL5d-Mt07GhfYJVEyvVC1T9qwS8gh-cVez-a1Tr6FcTByzfnJyWg&state=loggedin -->
+				<span id="profiletext" style="opacity: 0;">You are SinaTheQueen? Just copy-paste this text to your profile bio:</span>
 				<span id="generatedtext" style="opacity: 0;"></span>
+				<hr id="profilehr" style="opacity: 0; display: none">
+				<span id="customize" style="opacity: 0; display: none">Do you want to customize your badges collection? Connect with your Genius account below!</span>
+				<a href="https://api.genius.com/oauth/authorize?client_id=AmeAeHEwCCzFN0n6IgHmyLTzi8PDtVa59s2lajN6zYsORSLBYsn9fTFHX16NREz3&redirect_uri=http://www.pumpn.net/mag/badges2.1-weekly-201643/collection/&scope=me&state=loggedin&response_type=code" style="text-decoration: none; color: black;"><div class="button" id="authenticate" style="opacity: 0; display: none">CONNECT</div></a>
 			</div>
-			<div id="userinfo" style="display:none">
+			<div id="userinfo" style="display: none;">
 				<div class="BOXavatar">
-					<div id="avatar" style="background-image: url('https://images.genius.com/avatars/medium/0c47ecfb9b5230f591147758e60e130f')">
+					<div id="avatar" style="background-image: url(&quot;https://images.genius.com/avatars/medium/a775893c8c742f8b8dcdae21ef8c6a91&quot;);">
 					</div>
 				</div>
 				<div class="identity">
 					<div class="line1">
 						<div class="BOXname">
-							<a id="namelink" href="https://genius.com/IBims2Genius"><span id="name">Nano Miratus</span></a>
+							<a id="namelink" href="https://genius.com/SinaTheQueen"><span id="name">SinaTheQueen</span></a>
 						</div>
 						<div class="BOXiq_for_display">
-							<span id="iq_for_display">1,000,000</span>
+							<span id="iq_for_display">169,880</span>
 						</div>
 					</div>
 					<div class="line2">
 						<div class="BOXlogin">
-							<span>@</span><span id="login">IBims2Genius</span>
+							<span>@</span><span id="login">SinaTheQueen</span>
 						</div>
-						<span id="divider"> | </span>
+						<span id="divider" style="display: inline-block"> | </span>
 						<div class="BOXrole_for_display">
-							<div class="BOXrole_icon" id="iconbox">
-								<svg id="role_icon">
-								</svg>
+							<div class="BOXrole_icon" id="iconbox" style="display: inline-block"><svg id="role_icon" src="diamond.svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" version="1.1" style="fill: #7689e8;width: 1.05rem;height: 1.05rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block"><path id="role_icon_path" d="M11 1.95l8.98 8.98L11 19.91l-8.98-8.98z" cx="74" cy="10" r="9"></path></svg>
+								
 								<svg id="role_icon2">
 								</svg>
 								<svg id="role_icon3">
 								</svg>
 							</div>
-							<span id="role_for_display">Editor</span>
+							<span id="role_for_display" style="display: inline-block">moderator</span>
 						</div>
 					</div>
 				</div>
@@ -116,7 +119,7 @@
 												</g>
 											</g>
 										</svg>
-										<span id="annotations_count" class="statistic_and_label-number">888</span>
+										<span id="annotations_count" class="statistic_and_label-number">4513</span>
 									</div>
 									<div class="statistic_and_label-subtext">Annotations</div>
 								</div>
@@ -132,7 +135,7 @@
 											<path d="M-3392 6367.9v20h17.4v-20h-17.4zm15.2 17.8h-13v-15.6h13v15.6z"></path>
 											<path d="M-3386.3 6374.3h6v1.1h-6zm0 3.3h6v1.1h-6zm0 4.3h6v-1.1h-6v1.1"></path>
 										</svg>
-										<span id="transcriptions_count" class="statistic_and_label-number">301</span>
+										<span id="transcriptions_count" class="statistic_and_label-number">339</span>
 									</div>
 									<div class="statistic_and_label-subtext">Transcriptions</div>
 								</div>
@@ -140,13 +143,12 @@
 						</statistics-panel-item>
 					</div>
 				</div>
-				<div id="starscontainer">
-					<img src="images/badgesstar.png" id="starleft"/>
-					<span id="stars">51 STARS</span>
-					<img src="images/badgesstar.png" id="starright"/>
+				<div id="starscontainer" style="height: 9.792156862745099vh">
+					<img src="images/badgesstar.png" id="starleft">
+					<span id="stars" style="font-size: 7.792156862745099vh">28 STARS</span>
+					<img src="images/badgesstar.png" id="starright">
 				</div>
-				<div id="badgescontainer">
-				</div>
+				<div id="badgescontainer"><div class="badgebox" id="001-010topazgenius"><img src="badges/001%20Genius%20Badges/genius-001-010topazgenius500px.png?time=1477737861146" class="badge"></div><div class="badgebox" id="002-006platinumtranscriber"><img src="badges/002%20Transcriber%20Badges/genius-002-006platinumtranscriber500px.png?time=1477737861147" class="badge"></div><div class="badgebox" id="003-012amethystannotator"><img src="badges/003%20Annotator%20Badges/genius-003-012amethystannotator500px.png?time=1477737861147" class="badge"></div><div class="badgebox" id="004-004moderator"><img src="badges/004%20Role%20Badges/genius-004-004moderator500px.png?time=1477737861149" class="badge"></div><div class="badgebox" id="005-001verifiedartist"><img src="badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=1477737861150" class="badge"></div></div>
 			</div>
 			<div id="usererror" style="display:none">
 				<div class="BOXerror">

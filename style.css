@@ -80,8 +80,12 @@ figure {
 
 hr {
   box-sizing: content-box; /* 1 */
-  height: 0; /* 1 */
+   /* 1 */
+  width: 80%;
+  border-style: solid;
+  border-color: #292929;
   overflow: visible; /* 2 */
+  margin: 20px;
 }
 
 /**
@@ -731,6 +735,13 @@ button.close {
 /* ========================================================================== */
 /* ========================================================================== */
 
+#customize {
+}
+
+#authenticate {
+}
+
+
 #profilebox {font-family: "Programme2";width: 100%;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: column;}
 
 #profiletext {font-size: 3vh;}
@@ -1248,7 +1259,7 @@ input[type=text] {
 /*--------------------------------------------*/
 
 .wrapped_header {
-	background: #fffc64;
+	background: #ffff64;
 	height: 41px;
 	position: fixed;
 	top: 0;
