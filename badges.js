@@ -634,7 +634,7 @@ function init() {
 				badgebox.setAttribute("class", "badgebox");
 				badgebox.setAttribute("id", zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category);
 				badge = document.createElement("img");
-				badge.setAttribute("src", "http://www.pumpn.net/mag/badges2.1-weekly-201643/badges/" + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
+				badge.setAttribute("src", "../badges2.1-weekly-201643/badges/" + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
 				badge.setAttribute("class", "badge");
 				badgebox.appendChild(badge);
 
@@ -653,7 +653,7 @@ function init() {
 				badgebox.setAttribute("class", "badgebox");
 				badgebox.setAttribute("id", zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category);
 				badge = document.createElement("img");
-				badge.setAttribute("src", "http://www.pumpn.net/mag/badges2.1-weekly-201643/badges/" + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
+				badge.setAttribute("src", "../badges/" + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
 				badge.setAttribute("class", "badge");
 				badgebox.appendChild(badge);
 
@@ -726,7 +726,7 @@ function init() {
 			badgebox.setAttribute("class", "badgebox");
 			badgebox.setAttribute("id", "004-" + zeroFill(badgeid, 3) + badgename);
 			badge = document.createElement("img");
-			badge.setAttribute("src", "http://www.pumpn.net/mag/badges2.1-weekly-201643/badges/004%20Role%20Badges/genius-004-" + zeroFill(badgeid, 3) + badgename + "500px.png?time=" + jQuery.now());
+			badge.setAttribute("src", "../badges/004%20Role%20Badges/genius-004-" + zeroFill(badgeid, 3) + badgename + "500px.png?time=" + jQuery.now());
 			badge.setAttribute("class", "badge");
 			badgebox.appendChild(badge);
 
@@ -743,7 +743,7 @@ function init() {
 			badgebox.setAttribute("class", "badgebox");
 			badgebox.setAttribute("id", "005-001verifiedartist");
 			badge = document.createElement("img");
-			badge.setAttribute("src", "http://www.pumpn.net/mag/badges2.1-weekly-201643/badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=" + jQuery.now());
+			badge.setAttribute("src", "../badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=" + jQuery.now());
 			badge.setAttribute("class", "badge");
 			badgebox.appendChild(badge);
 

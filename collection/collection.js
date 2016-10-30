@@ -61,14 +61,18 @@ function navSelect($this) {
 initNav();
 
 
-stickyOffset = $('div#edit.button').offset().top;
+stickyOffset = $('#nav').offset().top;
 
 $("#sitecontainer").scroll(function(){
-  sticky = $('#edit'),
-      scroll = $("#sitecontainer").scrollTop();
+	sticky = $('#nav');
+	scroll = $("#sitecontainer").scrollTop();
 
-  if (scroll >= (stickyOffset - 42)) sticky.addClass('fixed');
-  else sticky.removeClass('fixed');
+	if (scroll >= (stickyOffset - 42)) {
+		sticky.addClass('fixed');
+	}
+	else {
+		sticky.removeClass('fixed');
+	}
 });
 
 }
