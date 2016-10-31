@@ -299,7 +299,7 @@ function init() {
 
 		id = sourcestring1.slice((start1 + 7), (end1 - 1));
 		
-		if (location.pathname != "/mag/badges2.1-weekly-201643/collection/") {
+		if (location.pathname != "/mag/badges2.1-weekly-201644/collection/") {
 			id = geniussource.responseJSON.response.user.id;
 		}
 		// id =
@@ -986,7 +986,7 @@ function init() {
 	
 	
 	
-	if (location.pathname != "/mag/badges2.1-weekly-201643/collection/") {
+	if (location.pathname != "/mag/badges2.1-weekly-201644/collection/") {
 		bind();
 	}
 	

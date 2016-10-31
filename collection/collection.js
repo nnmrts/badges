@@ -9,9 +9,9 @@ collectioninit = function() {
 
 		$.post( "https://api.genius.com/oauth/token", {
 			"code": code,
-			"client_id": "AmeAeHEwCCzFN0n6IgHmyLTzi8PDtVa59s2lajN6zYsORSLBYsn9fTFHX16NREz3",
-			"client_secret": "1I2Hw8UkidvHmvRaFzBXSqosrPR8gD4TsVbdLOby97tDOYGN-WM_rNWDkqWcPQ5zfL1wrP8YFpaoIx4NTf6kJg",
-			"redirect_uri": "http://www.pumpn.net/mag/badges2.1-weekly-201643/collection/",
+			"client_id": "VBCq06AtaVIVjTdXHhSDHBn57vwQPOeQFNB4Q-hpt5eoBxGWdXgjHIlsMt3AXgf5",
+			"client_secret": "FZAGoMtQ-d79uPgO-pfnW0Uul-trrQOwMCass4Ly74jPeFl5_l2G0y0CMwaAKLg8LxM6CRNOGKtp-MNzh59rrQ",
+			"redirect_uri": "http://www.pumpn.net/mag/badges2.1-weekly-201644/collection/",
 			"response_type": "code",
 			"grant_type": "authorization_code"
 		})
