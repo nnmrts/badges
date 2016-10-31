@@ -4,6 +4,8 @@ git add [FILE] // datei erkennen
 git commit -m"[COMMENT]"
 
 cd C:\Users\Anton\Documents\GitHub\badges
+git branch [WEEK]
+git checkout [WEEK]
 git remote add [WEEK] C:\Users\Anton\Documents\GitHub\badges2.1-weekly-
 git remote update
 git checkout [WEEKLY BRANCH]
