@@ -5,9 +5,9 @@ git commit -m"[COMMENT]"
 
 cd C:\Users\Anton\Documents\GitHub\badges
 git checkout master
-git branch [WEEK]
-git checkout [WEEK]
-git remote add [WEEK] C:\Users\Anton\Documents\GitHub\badges2.1-weekly-
+git branch [WEEKLY BRANCH]
+git checkout [WEEKLY BRANCH]
+git remote add [WEEK] C:\Users\Anton\Documents\GitHub\badges2.1-weekly-[WEEK]
 git remote update
 git checkout [WEEKLY BRANCH]
 git merge [WEEK]/master
