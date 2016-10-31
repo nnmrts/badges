@@ -20,12 +20,16 @@
 		
 		<script src="../libraries/emojione/emojione.js"></script>
 		<link rel="stylesheet" href="../libraries/emojione/assets/css/emojione.css"/>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		
 		<link href="https://assets.genius.com/stylesheets/compiled/bagon_fonts-bbc6a4e57e275a56e302efb59741b16c.css" media="screen" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="../style.css">
 		<link rel="stylesheet" href="style.css">
 		<link rel="stylesheet" href="../fonts/fonts.css">
+		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+		
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script src="../libraries/browserify/bundle.js"></script>
 		<script src="../libraries/xhr/xhr.js"></script>
@@ -38,7 +42,7 @@
 		<![endif]-->
 	</head>
 
-<body onload="collectioninit(); init();">
+<body id="body" onload="collectioninit(); init();">
 	<header class="wrapped_header">
 		<a href="http://genius.com/" class="logo_container"></a>
 	</header>
@@ -52,26 +56,49 @@
 		<div class="button" id="edit">EDIT YOUR COLLECTION</div>
 		<div class="nav" id="nav">
 			<div class="items" nav-index="0">
-				<div page-id="collectionpage">COLLECTION</div>
-				<div page-id="editpage">EDIT</div>
-				<div page-id="savepage">SAVE</div>
+				<div id="collectionpage">COLLECTION</div>
+				<div id="editpage">EDIT</div>
+				<div id="savepage">SAVE</div>
 			</div>
 		</div>
-		<div id="badgescontainer">
-			<div class="badgebox" id="001-010topazgenius">
-				<img src="../badges/001%20Genius%20Badges/genius-001-010topazgenius500px.png?time=1477737861146" class="badge">
+		<div id="collectioncontainer">
+			<div id="badgescontainer">
+				<div class="badgebox" id="001-010topazgenius">
+					<img src="../badges/001%20Genius%20Badges/genius-001-010topazgenius500px.png?time=1477737861146" class="badge">
+				</div>
+				<div class="badgebox" id="002-006platinumtranscriber">
+					<img src="../badges/002%20Transcriber%20Badges/genius-002-006platinumtranscriber500px.png?time=1477737861147" class="badge">
+				</div>
+				<div class="badgebox" id="003-012amethystannotator">
+					<img src="../badges/003%20Annotator%20Badges/genius-003-012amethystannotator500px.png?time=1477737861147" class="badge">
+				</div>
+				<div class="badgebox" id="004-004moderator">
+					<img src="../badges/004%20Role%20Badges/genius-004-004moderator500px.png?time=1477737861149" class="badge">
+				</div>
+				<div class="badgebox" id="005-001verifiedartist">
+					<img src="../badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=1477737861150" class="badge">
+				</div>
 			</div>
-			<div class="badgebox" id="002-006platinumtranscriber">
-				<img src="../badges/002%20Transcriber%20Badges/genius-002-006platinumtranscriber500px.png?time=1477737861147" class="badge">
-			</div>
-			<div class="badgebox" id="003-012amethystannotator">
-				<img src="../badges/003%20Annotator%20Badges/genius-003-012amethystannotator500px.png?time=1477737861147" class="badge">
-			</div>
-			<div class="badgebox" id="004-004moderator">
-				<img src="../badges/004%20Role%20Badges/genius-004-004moderator500px.png?time=1477737861149" class="badge">
-			</div>
-			<div class="badgebox" id="005-001verifiedartist">
-				<img src="../badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=1477737861150" class="badge">
+			<ul id="editbadges" class="sortable">
+				<li class="badgebox ui-state-default" id="001-010topazgenius">
+					<img src="../badges/001%20Genius%20Badges/genius-001-010topazgenius500px.png?time=1477737861146" class="badge">
+				</li>
+				<li class="badgebox ui-state-default" id="002-006platinumtranscriber">
+					<img src="../badges/002%20Transcriber%20Badges/genius-002-006platinumtranscriber500px.png?time=1477737861147" class="badge">
+				</li>
+				<li class="badgebox ui-state-default" id="003-012amethystannotator">
+					<img src="../badges/003%20Annotator%20Badges/genius-003-012amethystannotator500px.png?time=1477737861147" class="badge">
+				</li>
+				<li class="badgebox ui-state-default" id="004-004moderator">
+					<img src="../badges/004%20Role%20Badges/genius-004-004moderator500px.png?time=1477737861149" class="badge">
+				</li>
+				<li class="badgebox ui-state-default" id="005-001verifiedartist">
+					<img src="../badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=1477737861150" class="badge">
+				</li>
+			</ul>
+			<div id="savebadges">
+				<span id="savetext">Click on the button below to save your collection.</span>
+				<div class="button" id="save">SAVE</div>
 			</div>
 		</div>
 	</div>

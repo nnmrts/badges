@@ -13,8 +13,11 @@ body {
 .nav {
 	position: relative;
 	background-color: #ffff64;
-	height:39px;
+	height: 44px;
 	overflow:hidden;
+	border-bottom-color: white;
+	border-bottom-style: solid;
+	border-bottom-width: 3px;
 }
 .nav:after {
 	position: absolute;
@@ -22,8 +25,8 @@ body {
 	left:50%;
 	transform:translateX(-50%);
 	content: '';
-	width:0px;
-	height:0px;
+	width: 0px;
+	height: 0px;
 	border:10px solid transparent;
 	border-bottom:none;
 	border-top-color: #ff1464;
@@ -31,24 +34,33 @@ body {
 }
 .items {
 	position: absolute;
-	left: -50%;
+	left: 50%;
 	transform: translateX(-50%);
-	transition:transform .5s ease;
+	-webkit-transition:transform 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	transition:transform 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 	white-space: nowrap;
 	user-select:none;
 	height: 100%;
 	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 }
 .items div {
 	cursor: pointer;
-	display:inline-block;
-	padding:10px 4px;
+	display: inline-flex;
+	padding: 10px 0px;
 	color: #000000;
-	transition:color .5s ease;
-	width: 20%;
+	-webkit-transition: color 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	transition: color 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	width: 200px;
+	background-color: #ffff64;
 	text-align: center;
+	justify-content: center;
+	flex-direction: column;
+	height: 100%;
 }
-div .selected {color: #000000;background-color: #ffffff;height: 100%;}
+div .selected {color: #000000;background-color: #ffffff;height: 100%;/* flex-grow: 1; */}
 .pages {
 	flex-grow:1;
 }
@@ -78,18 +90,69 @@ div .selected {color: #000000;background-color: #ffffff;height: 100%;}
 	margin: 4vh 4vh 4vh 4vh;
 }
 
-#badgescontainer {width: 100%;background-color: white;padding: 5% 5% 5% 5%;}
+#badgescontainer {
+	width: 100%;
+	background-color: white;
+	padding: 5% 5% 5% 5%;
+	flex-shrink: 0;
+	margin-left: 0;
+	position: relative;
+}
 
-#edit {margin-bottom: 41px;width: 100%;z-index: 10;}
+#edit {
+	margin-bottom: 41px;
+	width: 100%;
+	z-index: 10;
+}
 
 .fixed {
 	position: fixed;
 	top: 41px;
+	width: 89.91066736731477%;
+	left: 5vw;
+	z-index: 100;
+}
+
+#collectioncontainer {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.navisfixed {
+	margin-top: 85px;
+}
+
+#editbadges {
+	flex-shrink: 0;
+	position: relative;
 	width: 100%;
-	border: none;
-	left: -5vw;
-	margin: 0 5vw 0 5vw;
-	border-bottom-color: white;
-	border-bottom-style: solid;
-	border-bottom-width: 5px;
+}
+
+.sortable {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 450px;
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	-webkit-padding-start: 0;
+}
+.sortable li {
+	margin: 0;
+	padding: 1px;
+	float: left;
+	width: 100px;
+	height: 90px;
+	font-size: 4em;
+	text-align: center;
+}
+
+#savebadges {
+	width: 100%;
+	flex-shrink: 0;
+	position: relative;
 }

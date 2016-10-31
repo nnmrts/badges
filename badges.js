@@ -517,7 +517,10 @@ function init() {
 	//-------------------------------------------
 	//-------------------------------------------
 	//-------------------------------------------
-
+	
+	badgespath = "badges/";
+	
+	
 	amount2id = function(type) {
 		if (type < 100) {
 			badgeid = 0;
@@ -634,7 +637,7 @@ function init() {
 				badgebox.setAttribute("class", "badgebox");
 				badgebox.setAttribute("id", zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category);
 				badge = document.createElement("img");
-				badge.setAttribute("src", "../badges2.1-weekly-201643/badges/" + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
+				badge.setAttribute("src", badgespath + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
 				badge.setAttribute("class", "badge");
 				badgebox.appendChild(badge);
 
@@ -653,7 +656,7 @@ function init() {
 				badgebox.setAttribute("class", "badgebox");
 				badgebox.setAttribute("id", zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category);
 				badge = document.createElement("img");
-				badge.setAttribute("src", "../badges/" + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
+				badge.setAttribute("src", badgespath + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
 				badge.setAttribute("class", "badge");
 				badgebox.appendChild(badge);
 
@@ -726,7 +729,7 @@ function init() {
 			badgebox.setAttribute("class", "badgebox");
 			badgebox.setAttribute("id", "004-" + zeroFill(badgeid, 3) + badgename);
 			badge = document.createElement("img");
-			badge.setAttribute("src", "../badges/004%20Role%20Badges/genius-004-" + zeroFill(badgeid, 3) + badgename + "500px.png?time=" + jQuery.now());
+			badge.setAttribute("src", badgespath + "004%20Role%20Badges/genius-004-" + zeroFill(badgeid, 3) + badgename + "500px.png?time=" + jQuery.now());
 			badge.setAttribute("class", "badge");
 			badgebox.appendChild(badge);
 
@@ -743,7 +746,7 @@ function init() {
 			badgebox.setAttribute("class", "badgebox");
 			badgebox.setAttribute("id", "005-001verifiedartist");
 			badge = document.createElement("img");
-			badge.setAttribute("src", "../badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=" + jQuery.now());
+			badge.setAttribute("src", badgespath + "005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=" + jQuery.now());
 			badge.setAttribute("class", "badge");
 			badgebox.appendChild(badge);
 
@@ -937,9 +940,9 @@ function init() {
 				$("#loadingcontainer").fadeOut(1000, function() {
 					$("#loadingcontaineroverlay").fadeOut(1000, function() {
 						$("#sitecontainer").attr({
-							style: "position: absolute;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
+							style: "position: relative;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
 						});
-						$("#sitecontainer").animate({
+						$("body").animate({
 							scrollTop: $('#userinfo').offset().top
 						}, 1000);
 					});

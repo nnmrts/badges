@@ -842,7 +842,7 @@ input[type=text] {
 body {
 	background: #f7f7f7;
 	margin: 0;
-	overflow: hidden;
+	overflow: auto;
 }
 
 input,
@@ -1293,7 +1293,7 @@ input[type=text] {
   transform: translatez(0);
 }
 
-#sitecontainer {width: 100%;height: 100%;position: fixed;padding: 82px 5vw 41px 5vw;overflow: auto;z-index: 1;}
+#sitecontainer {width: 100%;height: 100%;position: fixed;padding: 82px 5vw 41px 5vw;/* overflow: auto; */z-index: 1;}
 
 
 
