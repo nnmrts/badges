@@ -37,12 +37,20 @@ collectioninit = function() {
 	
 	getsource();
 	
-	
-	
-
+			   
+								   
 sorterinit = function() {
 	$( ".sortable" ).sortable({
-		tolerance: "intersect"
+		tolerance: "pointer",
+		containment: $("#editbadges"),
+		revert: 200,
+		revertDuration: 200,
+		zIndex: 1,
+		deactivate: function( event, ui ) {
+			sorting = $( ".sortable" ).sortable( "toArray" );
+			console.log($( ".sortable" ).sortable( "toArray" ));
+		},
+		cursor: "move"
 	});
 	$( ".sortable" ).disableSelection();
 };

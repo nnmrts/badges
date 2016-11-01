@@ -4,6 +4,7 @@ body {
    background-color:#F5F7FA;
    display:flex;
    flex-direction:column;
+   overflow: inherit;
 }
 .top {
 	font-size:32px;
@@ -128,6 +129,7 @@ div .selected {color: #000000;background-color: #ffffff;height: 100%;/* flex-gro
 	flex-shrink: 0;
 	position: relative;
 	width: 100%;
+	padding: 5% 5% 5% 5%;
 }
 
 .sortable {
@@ -143,12 +145,12 @@ div .selected {color: #000000;background-color: #ffffff;height: 100%;/* flex-gro
 }
 .sortable li {
 	margin: 0;
-	padding: 1px;
 	float: left;
-	width: 100px;
-	height: 90px;
 	font-size: 4em;
 	text-align: center;
+	border: none;
+	background: none;
+	cursor: move;
 }
 
 #savebadges {
