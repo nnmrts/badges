@@ -29,6 +29,7 @@
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="../jquery-ui-1.12.1/jquery-ui.js"></script>
+		<script src="../libraries/sortable-animation/Sortable.js"></script>
 		
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script src="../libraries/browserify/bundle.js"></script>
@@ -82,24 +83,58 @@
 			<ul id="editbadges" class="sortable">
 				<li class="badgebox ui-state-default" id="001-010topazgenius">
 					<img src="../badges/001%20Genius%20Badges/genius-001-010topazgenius500px.png?time=1477737861146" class="badge">
+					<div id="smallfooter" class="smallfooter">
+						<div class="smallfooterreally">
+							<a id="footertext" class="remove">REMOVE</a>
+						</div>
+					</div>
 				</li>
 				<li class="badgebox ui-state-default" id="002-006platinumtranscriber">
 					<img src="../badges/002%20Transcriber%20Badges/genius-002-006platinumtranscriber500px.png?time=1477737861147" class="badge">
+					<div id="smallfooter" class="smallfooter">
+						<div class="smallfooterreally">
+							<a id="footertext" class="remove">REMOVE</a>
+						</div>
+					</div>
 				</li>
 				<li class="badgebox ui-state-default" id="003-012amethystannotator">
 					<img src="../badges/003%20Annotator%20Badges/genius-003-012amethystannotator500px.png?time=1477737861147" class="badge">
+					<div id="smallfooter" class="smallfooter">
+						<div class="smallfooterreally">
+							<a id="footertext" class="remove">REMOVE</a>
+						</div>
+					</div>
 				</li>
 				<li class="badgebox ui-state-default" id="004-004moderator">
 					<img src="../badges/004%20Role%20Badges/genius-004-004moderator500px.png?time=1477737861149" class="badge">
+					<div id="smallfooter" class="smallfooter">
+						<div class="smallfooterreally">
+							<a id="footertext" class="remove">REMOVE</a>
+						</div>
+					</div>
 				</li>
 				<li class="badgebox ui-state-default" id="005-001verifiedartist">
 					<img src="../badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=1477737861150" class="badge">
+					<div id="smallfooter" class="smallfooter">
+						<div class="smallfooterreally">
+							<a id="footertext" class="remove">REMOVE</a>
+						</div>
+					</div>
 				</li>
 			</ul>
 			<div id="savebadges">
 				<span id="savetext">Click on the button below to save your collection.</span>
 				<div class="button" id="save">SAVE</div>
 			</div>
+		</div>
+	</div>
+	<div id="loadingcontainer">
+		<div id="loading">
+			<img id="load" src="http://i.imgur.com/7qHrFCE.gif"/>
+		</div>
+	</div>
+	<div id="loadingcontaineroverlay">
+		<div id="loadingoverlay">
 		</div>
 	</div>
 </body>

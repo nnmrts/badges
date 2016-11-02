@@ -30,6 +30,8 @@ function init() {
 	html_role_for_display = document.getElementById("role_for_display");
 
 	html_badgescontainer = document.getElementById("badgescontainer");
+	
+	html_editbadges = document.getElementById("editbadges");
 
 	html_stars = document.getElementById("stars");
 
@@ -299,7 +301,7 @@ function init() {
 
 		id = sourcestring1.slice((start1 + 7), (end1 - 1));
 		
-		if (location.pathname != "/mag/badges2.1-weekly-201644/collection/") {
+		if (location.pathname.indexOf("collection") !== -1) {
 			id = geniussource.responseJSON.response.user.id;
 		}
 		// id =
@@ -611,6 +613,10 @@ function init() {
 		stars = stars + badgeid;
 	};
 	
+	
+	badgeelement = "div";
+	badgeclass = "badgebox";
+	
 	starbadge1 = "undefined";
 	starbadge2 = "undefined";
 	starbadge3 = "undefined";
@@ -633,8 +639,8 @@ function init() {
 			starbadgenamechooser(badgeid);
 
 			if (badgeid > 0) {
-				badgebox = document.createElement("div");
-				badgebox.setAttribute("class", "badgebox");
+				badgebox = document.createElement(badgeelement);
+				badgebox.setAttribute("class", badgeclass);
 				badgebox.setAttribute("id", zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category);
 				badge = document.createElement("img");
 				badge.setAttribute("src", badgespath + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
@@ -652,8 +658,8 @@ function init() {
 			starbadgenamechooser(badgeid);
 
 			if (badgeid > 0) {
-				badgebox = document.createElement("div");
-				badgebox.setAttribute("class", "badgebox");
+				badgebox = document.createElement(badgeelement);
+				badgebox.setAttribute("class", badgeclass);
 				badgebox.setAttribute("id", zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category);
 				badge = document.createElement("img");
 				badge.setAttribute("src", badgespath + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
@@ -725,8 +731,8 @@ function init() {
 		role2id(role);
 		rolebadgenamechooser(badgeid);
 		if (badgeid > 0) {
-			badgebox = document.createElement("div");
-			badgebox.setAttribute("class", "badgebox");
+			badgebox = document.createElement(badgeelement);
+			badgebox.setAttribute("class", badgeclass);
 			badgebox.setAttribute("id", "004-" + zeroFill(badgeid, 3) + badgename);
 			badge = document.createElement("img");
 			badge.setAttribute("src", badgespath + "004%20Role%20Badges/genius-004-" + zeroFill(badgeid, 3) + badgename + "500px.png?time=" + jQuery.now());
@@ -742,8 +748,8 @@ function init() {
 
 	verifiedartistbadgechooser = function() {
 		if (geniussource.responseJSON.response.user.artist !== null) {
-			badgebox = document.createElement("div");
-			badgebox.setAttribute("class", "badgebox");
+			badgebox = document.createElement(badgeelement);
+			badgebox.setAttribute("class", badgeclass);
 			badgebox.setAttribute("id", "005-001verifiedartist");
 			badge = document.createElement("img");
 			badge.setAttribute("src", badgespath + "005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=" + jQuery.now());
@@ -816,6 +822,69 @@ function init() {
 					html_badgescontainer.innerHTML = "<p id='nobadges'>This user has no badges yet. Sad.</p>";
 				}
 			}
+		}
+		if (location.pathname.indexOf("collection") !== -1) {
+			badgeelement = "li";
+			badgeclass = "badgebox ui-state-default";
+			
+			while (html_editbadges.hasChildNodes() == true) {
+				html_editbadges.removeChild(html_editbadges.firstChild);
+			}
+			starbadgechooser("genius", iq, 1);
+			if (starbadge1 !== "undefined") {
+				html_editbadges.appendChild(starbadge1);
+				starbadge1.appendChild(html_smallfooter.cloneNode(true));
+			}
+			starbadgechooser("transcriber", transcriptions_count, 2);
+			if (starbadge2 !== "undefined") {
+				html_editbadges.appendChild(starbadge2);
+				starbadge2.appendChild(html_smallfooter.cloneNode(true));
+			}
+			starbadgechooser("annotator", annotations_count, 3);
+			if (starbadge3 !== "undefined") {
+				html_editbadges.appendChild(starbadge3);
+				starbadge3.appendChild(html_smallfooter.cloneNode(true));
+			}
+
+			rolebadgechooser(role_for_display, 1);
+			if (rolebadge1 !== "undefined") {
+				html_editbadges.appendChild(rolebadge1);
+				rolebadge1.appendChild(html_smallfooter.cloneNode(true));
+			}
+			
+			if (roles_for_display.indexOf("mediator") == 1) {
+				rolebadgechooser("mediator", 2);
+				if (rolebadge2 !== "undefined") {
+					html_editbadges.appendChild(rolebadge2);
+					rolebadge2.appendChild(html_smallfooter.cloneNode(true));
+				}
+			}
+
+			verifiedartistbadgechooser();
+			if (verifiedartistbadge !== "undefined") {
+				html_editbadges.appendChild(verifiedartistbadge);
+				verifiedartistbadge.appendChild(html_smallfooter.cloneNode(true));
+			}
+			hoverEnabled = 1;
+			$(".smallfooter").fadeOut(100);
+			
+			
+				$( ".badgebox" ).hover(function() {
+					childindex = getChildrenIndex(this);
+					currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
+					if (currentfooter.id == "smallfooter") {
+						if (hoverEnabled == 1) {
+						$(currentfooter).fadeIn( 200 );
+						}
+					}
+				},
+				function() {
+					childindex = getChildrenIndex(this);
+					currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
+					if (currentfooter.id == "smallfooter") {
+						$(currentfooter).fadeOut( 200 );
+					}
+				});
 		}
 
 	};

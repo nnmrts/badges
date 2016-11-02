@@ -1195,6 +1195,8 @@ input[type=text] {
 .badgebox {
 	padding: 20px;
 	width: 25%;
+	border: none;
+	background: none;
 }
 /*
 .first {
