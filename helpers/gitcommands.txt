@@ -1,13 +1,22 @@
-cd C:\Users\Anton\Documents\GitHub\badges2.1-weekly-[WEEK]
-git diff // änderungen anschauen
-git add [FILE] // datei erkennen
+NEW WEEK:
+cd C:\Users\Anton\Documents\GitHub
+git clone C:\Users\Anton\Documents\GitHub\badges2.1-weekly-[LASTWEEK] C:\Users\Anton\Documents\GitHub\badges2.1-weekly-[CURRENTWEEK]
+
+WHEN SOMETHING WAS CHANGED:
+cd C:\Users\Anton\Documents\GitHub\badges2.1-weekly-[CURRENTWEEK]
+git diff
+git add .
+git add [FILE]
 git commit -m"[COMMENT]"
 
+IF CURRENT WEEKLY BRANCH DOESN'T EXIST ALREADY:
 cd C:\Users\Anton\Documents\GitHub\badges
 git checkout master
-git branch [WEEKLY BRANCH]
-git remote add [WEEK] C:\Users\Anton\Documents\GitHub\badges2.1-weekly-[WEEK]
+git branch badges2.1-weekly-[CURRENTWEEK]
+git remote add [CURRENTWEEK] C:\Users\Anton\Documents\GitHub\badges2.1-weekly-[CURRENTWEEK]
+
+PUSH TO REPOSITORY:
 git remote update
-git checkout [WEEKLY BRANCH]
-git merge [WEEK]/master
-git push https://github.com/nnmrts/badges.git [WEEKLY BRANCH]
+git checkout badges2.1-weekly-[CURRENTWEEK]
+git merge [CURRENTWEEK]/master
+git push https://github.com/nnmrts/badges.git badges2.1-weekly-[CURRENTWEEK]
