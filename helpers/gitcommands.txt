@@ -12,12 +12,12 @@ git commit -m"[COMMENT]"
 IF CURRENT WEEKLY BRANCH DOESN'T EXIST ALREADY:
 cd C:\Users\Anton\Documents\GitHub\badges
 git checkout master
-git branch badges2.1-weekly-[CURRENTWEEK]
+git branch 2.1-weekly-[CURRENTWEEK]
 git remote add [CURRENTWEEK] C:\Users\Anton\Documents\GitHub\badges2.1-weekly-[CURRENTWEEK]
 
 PUSH TO REPOSITORY:
 cd C:\Users\Anton\Documents\GitHub\badges
 git remote update
-git checkout badges2.1-weekly-[CURRENTWEEK]
+git checkout 2.1-weekly-[CURRENTWEEK]
 git merge [CURRENTWEEK]/master
-git push https://github.com/nnmrts/badges.git badges2.1-weekly-[CURRENTWEEK]
+git push https://github.com/nnmrts/badges.git 2.1-weekly-[CURRENTWEEK]
