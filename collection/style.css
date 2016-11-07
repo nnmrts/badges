@@ -100,7 +100,7 @@ div .selected {color: #000000;background-color: #ffffff;height: 100%;/* flex-gro
 	position: relative;
 }
 
-#edit {
+#add {
 	margin-bottom: 41px;
 	width: 100%;
 	z-index: 10;
@@ -197,4 +197,7 @@ div .selected {color: #000000;background-color: #ffffff;height: 100%;/* flex-gro
 .sortable-chosen {
 	opacity: 0.5;
 	display: none;
+}
+
+#badgescatalog {
 }
