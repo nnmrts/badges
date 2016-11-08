@@ -1055,7 +1055,7 @@ function init() {
 	
 	
 	
-	if (location.pathname != "/mag/badges2.1-weekly-201644/collection/") {
+	if (location.pathname != "/mag/badges2.1-weekly-201645/collection/") {
 		bind();
 	}
 	
