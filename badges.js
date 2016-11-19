@@ -1,7 +1,24 @@
 /*global name:true */
 function init() {
-	$.get("ids2.js");
+	// $.get("ids2.js");
 	
+	nthIndex = function(str, pat, n) {
+		var L = str.length;
+		var i = -1;
+		while (n-- && i++ < L) {
+			i = str.indexOf(pat, i);
+		}
+		return i;
+	};
+	
+	usergiven = 0;
+	
+	currentpath = window.location.pathname;
+	
+	if (currentpath.length != nthIndex(currentpath, "/", 3) + 1) {
+		usergiven = 1;
+		usergivenfunc();
+	}
 	
 	html_search = document.getElementById("search");
 	html_generatedtext = document.getElementById("generatedtext");
@@ -42,15 +59,15 @@ function init() {
 	pathactivated = 1;
 	circleactivated = 0;
 	polygonactivated = 0;
-
-	nthIndex = function(str, pat, n) {
-		var L = str.length;
-		var i = -1;
-		while (n-- && i++ < L) {
-			i = str.indexOf(pat, i);
-		}
-		return i;
-	};
+	
+	if (usergiven == 0) {
+		$("#loadingcontaineroverlay").attr({
+			style: "display: none"
+		});
+		$("#loadingcontainer").attr({
+			style: "display: none"
+		});
+	}
 
 	function htmlEntities(str) {
 		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -520,7 +537,7 @@ function init() {
 	//-------------------------------------------
 	//-------------------------------------------
 	
-	badgespath = "badges/";
+	badgespath = "http://www.pumpn.net" + window.location.pathname.slice(0, nthIndex(currentpath, "/", 3) + 1) + "badges/";
 	
 	
 	amount2id = function(type) {
@@ -938,8 +955,12 @@ function init() {
 		stars = 0;
 
 		find();
+		
+		NProgress.inc();
 
 		insert();
+		
+		NProgress.inc();
 
 		html_usererror.style.display = "none";
 
@@ -949,7 +970,7 @@ function init() {
 		});
 
 		$("#optionscontainer").attr({
-			style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin-bottom: 41px;"
+			style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;"
 		});
 
 		$("#buttoncontainer").attr({
@@ -984,12 +1005,8 @@ function init() {
 
 		html_generatedtext.innerHTML = "";
 
-		$("#infocontainer").attr({
-			style: "background: #fff;width: initial;"
-		});
-
 		$("#info").attr({
-			style: "text-align: center;display: flex;flex-direction: column;justify-content: space-around;"
+			style: "width: initial;"
 		});
 
 		$("#badgeslogo").attr({
@@ -1003,6 +1020,8 @@ function init() {
 		$("#menucontainer").attr({
 			style: "display: flex"
 		});
+		
+		NProgress.inc();
 
 		imageloop = function() {
 			if (html_badgescontainer.firstChild.firstChild.complete === true) {
@@ -1016,14 +1035,15 @@ function init() {
 						}, 1000);
 					});
 				});
+				NProgress.done();
 				console.log("images loaded");
 			}
 			else {
 				setTimeout(function() {
-						console.log("images not loaded yet");
-						imageloop();
-					},
-					1000);
+					NProgress.inc();
+					console.log("images not loaded yet");
+					imageloop();
+				}, 500);
 			}
 		};
 		if (isnothing == "no") {
@@ -1033,6 +1053,11 @@ function init() {
 			$("#loadingcontainer").fadeOut(1000, function() {
 				$("#loadingcontaineroverlay").fadeOut(1000);
 			});
+			NProgress.done();
+		}
+		
+		if (usergiven === 0) {
+			window.history.pushState("object or string", "Title", currentpath + login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
 		}
 
 		data = [
@@ -1100,19 +1125,23 @@ function init() {
 	// ---------------------------------------------
 	// ---------------------------------------------
 	// ---------------------------------------------
-
-
-
+	
+	
+	
+	
 	loop = function() {
 		if (logininputchecked === 0) {
+			NProgress.start();
 			if (logininput.match("^[#%^&\{\}\]\[\(\)\`\'<>\|\ ]*$") !== null || logininput.match(/\\/) !== null || logininput.match("\"") !== null) {
 				serverchecked = 1;
 				index = 300;
 				logininputchecked = 1;
+				NProgress.inc();
 				loop();
 			}
 			else {
 				logininputchecked = 1;
+				NProgress.inc();
 				loop();
 			}
 		}
@@ -1130,10 +1159,12 @@ function init() {
 							id_given = "yes";
 							n = 0;
 							console.log("did find user on genius");
+							NProgress.inc();
 							loop();
 						}
 						else {
 							i = i - 1;
+							NProgress.inc();
 							loop();
 						}
 					});
@@ -1141,6 +1172,7 @@ function init() {
 				else {
 					n = 0;
 					console.log("didn't find user on genius");
+					NProgress.inc();
 					loop();
 				}
 			}
@@ -1148,65 +1180,37 @@ function init() {
 				if (serverchecked === 0) {
 
 					// check if on server
-
-					$.get("ids/" + logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", function(response) {}, "text")
-						.done(function(response) {
-							id = response;
-							id_given = "yes";
-							serverchecked = 1;
-							idonserver = 1;
-							console.log("did find id on server");
-							loop();
-						})
-						.fail(function(response) {
-							serverchecked = 1;
-							console.log("didn't find id on server");
-							loop();
-						});
+					
+					$.get("http://www.pumpn.net" + window.location.pathname.slice(0, nthIndex(currentpath, "/", 3) + 1) + "ids/" + logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", function(response) {}, "text")
+							.done(function(response) {
+								if (response.length < 10) {
+									id = response;
+									id_given = "yes";
+									serverchecked = 1;
+									idonserver = 1;
+									console.log("did find id on server");
+									NProgress.inc();
+									loop();
+								}
+								else {
+									shithtml = response;
+									serverchecked = 1;
+									n = 1;
+									console.log("didn't find id on server");
+									NProgress.inc();
+									loop();
+								}
+							})
+							.fail(function(response) {
+								serverchecked = 1;
+								n = 1;
+								console.log("didn't find id on server");
+								NProgress.inc();
+								loop();
+							});
 				}
 
 				else {
-					if (id_given == "no" && arraychecked === 0) {
-
-						// check if in json
-
-
-						findusername = function(e) {
-							return e.username.toUpperCase() === logininput.toUpperCase();
-						};
-
-						if (ids2.find(findusername) !== undefined) {
-							id = ids2.find(findusername).id;
-							id_given = "yes";
-							arraychecked = 1;
-							console.log("did find id in array");
-							loop();
-						}
-						else {
-							n = 1;
-							arraychecked = 1;
-							console.log("didn't find id in array");
-							loop();
-						}
-
-						/*
-						createVariable("momentusername", "ids2[" + index + "].username");
-						if (logininput.toUpperCase() == momentusername.toUpperCase().replace(/\s+/g, "-")) {
-							createVariable("momentid", "ids2[" + index + "].id");
-							id = momentid;
-							id_given = "yes";
-							index = 1000000;
-							loop();
-						}
-						else {
-							index = index + 1;
-							$("script.momentscript").remove();
-							n = 1;
-							loop();
-						}
-						*/
-					}
-					else {
 						if (id_given == "yes") {
 							geniusurl = "http://api.genius.com/users/" + id + "?access_token=lUQ8rzBeb78dJdtUcBbE4Jh-jfO88nfoDxHV3Ji3iOz268lNbYAYh8G0PjlcV-ma";
 
@@ -1228,18 +1232,19 @@ function init() {
 						}
 						else {
 							if (logininput !== "") {
+								NProgress.done();
 								console.log("entered username was not found");
 								userhere = 0;
 								html_search.innerHTML = "search again";
 								$("#optionscontainer").attr({
-									style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin-bottom: 41px;"
+									style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;"
 								});
 
 								$("#buttoncontainer").attr({
 									style: "padding-top: 5vh;padding-bottom: 5vh;"
 								});
 
-								$("#infocontainer").attr({
+								$("#info").attr({
 									style: "display: none;"
 								});
 								$("#loadingcontainer").fadeOut(1000, function() {
@@ -1279,18 +1284,19 @@ function init() {
 								});
 							}
 							else {
+								NProgress.done();
 								console.log("user entered nothing");
 								userhere = 0;
 								html_search.innerHTML = "search again";
 								$("#optionscontainer").attr({
-									style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin-bottom: 41px;"
+									style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;"
 								});
 
 								$("#buttoncontainer").attr({
 									style: "padding-top: 5vh;padding-bottom: 5vh;"
 								});
 
-								$("#infocontainer").attr({
+								$("#info").attr({
 									style: "display: none;"
 								});
 
@@ -1334,7 +1340,6 @@ function init() {
 								});
 							}
 						}
-					}
 				}
 			}
 		}
@@ -1367,14 +1372,14 @@ bind = function() {
 		idonserver = 0;
 
 		userhere = 0;
+		
+		userpagegiven = 0;
 
-		if ($("#optionscontainer").css("margin-bottom") == "41px") {
+		if ($("#optionscontainer").css("height") == "initial") {
 			$("#userinfo").fadeOut("slow", function() {
 				$("#loadingcontainer:hidden").fadeIn(1000, function() {
 					$("#loadingcontaineroverlay:hidden").fadeIn(1000, function() {
-						//$.get("ids2.js").done(function() {
 							loop();
-						//});
 					});
 				});
 			});
@@ -1384,13 +1389,50 @@ bind = function() {
 				$("#userinfo").fadeOut("slow", function() {
 					$("#loadingcontainer:hidden").fadeIn(1000, function() {
 						$("#loadingcontaineroverlay:hidden").fadeIn(1000, function() {
-							//$.get("ids2.js").done(function() {
 								loop();
-							//});
 						});
 					});
 				});
 			});
 		}
 	};
+};
+
+usergivenfunc = function() {
+	
+	logininput = window.location.pathname.slice(nthIndex(currentpath, "/", 3) + 1);
+
+	starttime = $.now();
+
+	id_given = "no";
+
+	isnothing = "no";
+
+	n = 0;
+
+	index = 0;
+
+	arraychecked = 0;
+
+	i = 9;
+
+	serverchecked = 0;
+
+	logininputchecked = 0;
+
+	idonserver = 0;
+
+	userhere = 0;
+	
+	userpagegiven = 0;
+	
+		$("#optionscontainer").fadeOut("slow", function() {
+			$("#userinfo").fadeOut("slow", function() {
+				$("#loadingcontainer").fadeIn(1000, function() {
+					$("#loadingcontaineroverlay").fadeIn(1000, function() {
+						loop();
+					});
+				});
+			});
+		});
 };

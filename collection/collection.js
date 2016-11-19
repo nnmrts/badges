@@ -12,9 +12,9 @@ collectioninit = function() {
 		code = location.search.slice((location.search.indexOf("=") + 1), location.search.indexOf("&"));		
 		$.post("https://api.genius.com/oauth/token", {
 				"code": code,
-				"client_id": "sfXLwOUpptjAkr8LT6V3-TeDnPKsVM86t4Jnw-V2Kl7YjSC4JEZgBG3IOvdhQbSD",
-				"client_secret": "FHhzjmj7bjtWGz1ypZQKW4nB1J6cVkftr8NRt9af1LsEAkzsqhdBPx_N-BNIDIYySKO7jhIRnCs9-GM_zfhfwg",
-				"redirect_uri": "http://www.pumpn.net/mag/badges2.1-weekly-201645/collection/",
+				"client_id": "LuWjcKRaYYtvXzePOpw5reD0PZ-sFqhNIlxOuLcHEHimuUrDThK09sM94NvBTuMT",
+				"client_secret": "dbC3zPzTzs9wdCwJ1vxhTm8WhrP5GYBM2JoeeCYohebFIlJlAcw8u-h2-WjXaMVOfGxnm-n76wLKWHa1Dhphuw",
+				"redirect_uri": "http://www.pumpn.net/mag/badges2.1-weekly-201646/collection/",
 				"response_type": "code",
 				"grant_type": "authorization_code"
 			})

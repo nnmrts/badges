@@ -18,49 +18,69 @@
 		<meta name="msapplication-config" content="favicon/browserconfig.xml?v=m2dBzPMjbw">
 		<meta name="theme-color" content="#ffffff">
 		<meta name="description" content="badgesbadgesbadgesbadgesbadgesbadges">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
-		<script src="libraries/emojione/emojione.js"></script>
+		<link rel="stylesheet" href="libraries/normalize/normalize.css">
 		<link rel="stylesheet" href="libraries/emojione/assets/css/emojione.css"/>
+		<link rel="stylesheet" href="libraries/mdl/material.css"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel='stylesheet' href="libraries/nprogress/nprogress.css"/>
 		
 		<link href="https://assets.genius.com/stylesheets/compiled/bagon_fonts-bbc6a4e57e275a56e302efb59741b16c.css" media="screen" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="style.css">
 		<link rel="stylesheet" href="fonts/fonts.css">
+		<script src="libraries/emojione/emojione.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script src="libraries/browserify/bundle.js"></script>
 		<script src="libraries/xhr/xhr.js"></script>
 		<script src="libraries/is.js/is.js"></script>
 		<script src="libraries/bootbox/bootbox.min.js"></script>
+		<script src="libraries/mdl/material.js"></script>
+		<script src="libraries/nprogress/nprogress.js"></script>
 		<script src="badges.js"></script>
 		<!--[if lt IE 9]>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
 		<![endif]-->
 	</head>
 	<body onload="init();">
+		<!--
 		<header class="wrapped_header">
 			<a href="http://genius.com/" class="logo_container"></a>
 		</header>
-		<div id="sitecontainer">
-			<div id="optionscontainer">
-				<div id="infocontainer">
-					<div id="info">
-						<img id="badgeslogo" src="images/badgeslogooncircle.png"/>
-						<p id="version">BADGES</p>
-					</div>
+		-->
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header pumpn-layout">
+		<header class="mdl-layout__header pumpn-header">
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title pumpn-title">BADGES</span>
+			</div>
+		</header>
+		<div class="mdl-layout__drawer">
+			<span class="mdl-layout-title">Title</span>
+			<nav class="mdl-navigation">
+				<a class="mdl-navigation__link" href="">Link</a>
+				<a class="mdl-navigation__link" href="">Link</a>
+				<a class="mdl-navigation__link" href="">Link</a>
+				<a class="mdl-navigation__link" href="">Link</a>
+			</nav>
+		</div>
+		<main class="mdl-layout__content">
+			<div id="optionscontainer" class="mdl-card mdl-shadow--2dp">
+				<div id="info">
+					<img id="badgeslogo" src="images/badgeslogooncircle.png"/>
+					<h1 id="title">BADGES</h1>
 				</div>
-				<form id="form">
-					<div class="group">
-						<input id="userinput" type="text" required>
-						<span class="highlight"></span>
-						<span class="bar"></span>
-						<label>USER</label>
+				<form action="#">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label pumpn-textfield">
+						<input id="userinput" class="mdl-textfield__input" type="text">
+						<label class="mdl-textfield__label" for="userinput">USER</label>
 					</div>
 				</form>
-				<div id="buttoncontainer">
-					<div class="button" id="search">search</div>
-				</div>
+				
+				<button id="search" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">search</button>
 			</div>
-			<div id="menucontainer" style="display: none">
+			<div id="menucontainer" class="mdl-card mdl-shadow--2dp" style="display: none">
 				<div class="button" id="donate">DONATE</div>
 				<div class="button" id="profile">ADD THEM TO YOUR PROFILE</div>
 				<div class="button" id="about">ABOUT</div>
@@ -71,7 +91,7 @@
 				<span id="generatedtext" style="opacity: 0;"></span>
 				<hr id="profilehr" style="opacity: 0; display: none">
 				<span id="customize" style="opacity: 0; display: none">Do you want to customize your badges collection? Connect with your Genius account below!</span>
-				<a href="https://api.genius.com/oauth/authorize?client_id=sfXLwOUpptjAkr8LT6V3-TeDnPKsVM86t4Jnw-V2Kl7YjSC4JEZgBG3IOvdhQbSD&redirect_uri=http://www.pumpn.net/mag/badges2.1-weekly-201645/collection/&scope=me&state=loggedin&response_type=code" style="text-decoration: none; color: black;"><div class="button" id="authenticate" style="opacity: 0; display: none">CONNECT</div></a>
+				<a href="https://api.genius.com/oauth/authorize?client_id=LuWjcKRaYYtvXzePOpw5reD0PZ-sFqhNIlxOuLcHEHimuUrDThK09sM94NvBTuMT&redirect_uri=http://www.pumpn.net/mag/badges2.1-weekly-201646/collection/&scope=me&state=loggedin&response_type=code" style="text-decoration: none; color: black;"><div class="button" id="authenticate" style="opacity: 0; display: none">CONNECT</div></a>
 			</div>
 			<div id="userinfo" style="display: none;">
 				<div class="BOXavatar">
@@ -165,7 +185,7 @@
 					<small id="muhahaha">Of course I could have checked if you entered nothing, <i>before</i> the whole script started and loaded through. Of course I could have <i>notified</i> you that the input box is empty.<br>By the way, have you heard my "Muhahaha" already?</small></span>
 				</div>
 			</div>
-		</div>
+		</main>
 		<div id="loadingcontainer" style="display:none">
 			<div id="loading">
 				<img id="load" src="http://i.imgur.com/7qHrFCE.gif"/>
@@ -174,6 +194,7 @@
 		<div id="loadingcontaineroverlay" style="display:none">
 			<div id="loadingoverlay">
 			</div>
+		</div>
 		</div>
 	</body>
 </html>
