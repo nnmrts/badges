@@ -137,7 +137,12 @@ input:-webkit-autofill {
     margin-bottom: 41px;
     font-family: "Programme2";
 }
-
+.pumpn-layout .mdl-layout__drawer-button {
+	display: flex;
+    justify-content: center;
+    flex-direction: column;
+	outline: none;
+}
 
 /* ---------------------- GENIUS ---------------------- */
 

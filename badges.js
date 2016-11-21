@@ -1056,9 +1056,9 @@ function init() {
 			NProgress.done();
 		}
 		
-		if (usergiven === 0) {
-			window.history.pushState("object or string", "Title", currentpath + login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
-		}
+		//if (usergiven === 0) {
+			window.history.pushState("object or string", "Title", window.location.pathname.slice(0, (nthIndex(currentpath, "/", 3) + 1)) + login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
+		//}
 
 		data = [
 				["avatar", avatar],
