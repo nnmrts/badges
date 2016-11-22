@@ -10,10 +10,14 @@ body {
     font-weight: 700;
 }
 
-.pumpn-layout .mdl-layout-title {
-	font-family: "Programme2";
-	letter-spacing: normal;
+.badges-layout .mdl-layout-title {
+    font-family: "Programme2";
     font-weight: 700;
+    color: black;
+}
+
+.badges-layout a {
+	text-decoration: none;
 }
 
 main {
@@ -35,59 +39,89 @@ main {
     flex-direction: column;
 }
 
-.pumpn-layout .mdl-textfield {
-	width: 500px;
-	max-width: none;
+.badges-layout .mdl-textfield {
+    min-width: 30vw;
+    max-width: 50vw;
 }
 
-.pumpn-layout input[type=text] {
+.badges-layout input[type=text] {
 	font-family: "Programme2";
 }
 
-.pumpn-layout input {
+.badges-layout input {
 	font-size: 26px;
 	border-bottom: 1px solid #cecece;
 }
 
-.pumpn-layout label {
+.badges-layout label {
 	font-size: 26px;
 	top: 27px;
 }
 
-.pumpn-layout .mdl-textfield.is-dirty > .mdl-textfield__label {
+.badges-layout .mdl-textfield.is-dirty > .mdl-textfield__label {
 	font-size: 16px;
 }
 
-.pumpn-layout .mdl-textfield.is-focused > .mdl-textfield__label {
+.badges-layout .mdl-textfield.is-focused > .mdl-textfield__label {
 	font-size: 16px;
 }
 
-.pumpn-layout .mdl-layout__header {
-	background-color: #ffff64;
+.badges-layout .mdl-layout__header {
+    color: black;
+    background-color: #ffff64;
+    min-height: 41px;
+    box-shadow: none;
+}
+
+.badges-layout .mdl-layout__drawer-button {
 	color: black;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    outline: none;
+    line-height: normal;
+    margin: 0;
+    width: 41px;
+    height: 41px;
 }
 
-.pumpn-layout .mdl-layout__drawer-button {
-	color: black;
+.badges-layout .mdl-layout__drawer {
+	background-color: #f7f7f7;
 }
 
-.pumpn-layout .mdl-layout__tab-bar {
+.badges-layout .mdl-layout__header-row {
+    height: 41px;
+    display: flex;
+    padding: 0;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.logo_container {
+    background: url(https://docs.genius.com/images/snarly_wordmark_hires.png) no-repeat center;
+    background-size: contain;
+    height: 41px;
+    width: 122px;
+    display: block;
+}
+
+.badges-layout .mdl-layout__tab-bar {
 	background-color: #ffff64;
 }
 
-.pumpn-layout .mdl-layout__tab {
+.badges-layout .mdl-layout__tab {
 	color: rgba(0,0,0, 0.6);
 }
 
-.pumpn-layout .mdl-layout__tab.is-active {
+.badges-layout .mdl-layout__tab.is-active {
 	color: black;
 }
 
-.pumpn-layout .mdl-layout__tab.is-active:after {
+.badges-layout .mdl-layout__tab.is-active:after {
 	background-color: black;
 }
 
-.pumpn-layout .mdl-button {
+.badges-layout .mdl-button {
 	font-family: "Programme2";
 	letter-spacing: normal;
 	font-size: 26px;
@@ -136,13 +170,52 @@ input:-webkit-autofill {
     position: static;
     margin-bottom: 41px;
     font-family: "Programme2";
+	margin: 30px 0 30px;
 }
-.pumpn-layout .mdl-layout__drawer-button {
-	display: flex;
-    justify-content: center;
-    flex-direction: column;
-	outline: none;
+
+
+.mdl-navigation #about {
+    flex-grow: initial;
+    flex-shrink: initial;
+    margin: 0;
+    font-size: inherit;
+    width: initial;
+    align-self: initial;
+	cursor: pointer;
 }
+
+.mdl-navigation #donate {
+	flex-grow: initial;
+    flex-shrink: initial;
+    margin: 0;
+    font-size: inherit;
+    width: initial;
+    align-self: initial;
+	cursor: pointer;
+}
+
+#top {
+	width: 100%;
+	height: 100%;
+	margin-bottom: 41px;
+}
+
+form {
+	margin: 0;
+}
+
+#profile {
+	margin: 0;
+}
+
+#authenticate {
+    margin: 0 0 15px 0;
+}
+
+#profiletext {
+    font-size: 24px;
+}
+
 
 /* ---------------------- GENIUS ---------------------- */
 
@@ -409,19 +482,11 @@ button.close {
 #customize {
 }
 
-#authenticate {
-}
-
-
 #profilebox {font-family: "Programme2";width: 100%;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: column;}
-
-#profiletext {font-size: 3vh;}
 
 #generatedtext {color: #ff1464;text-align: center;}
 
 #donate {:w: hiddenbackground: #f7f7f7min-width: 180pxtext-align: center;flex-grow: 0;flex-shrink: 0;flex-basis: initial;margin: 1vw;font-size: 3vmin;width: 30vmin;align-self: center;}
-
-#profile {flex-grow: 0;flex-shrink: 0;width: 60vmin;margin: 1vw;}
 
 #about {flex-grow: 0;flex-shrink: 0;margin: 1vw;font-size: 3vmin;width: 30vmin;align-self: center;}
 
@@ -448,25 +513,12 @@ button.close {
     font-weight: 700;
 }
 
-#optionsbox {
-}
-
 
 #muhahaha {
 	font-size: 0.4em;
 }
 
 #background {z-index: -1;height: 100%;width: 100%;background: #fff;position: fixed;border-top: #f7f7f7 solid 82px;border-right: #f7f7f7 solid 5vw;/* border-bottom: #f7f7f7 solid 41px; */border-left: #f7f7f7 solid 5vw;}
-
-
-#optionscontainer {
-	color: #000;
-	font-family: "Programme2";
-}
-
-#optionscontainer {
-	font-family: "Programme2";
-}
 
 * {
 	box-sizing: border-box;
@@ -810,18 +862,7 @@ input:-webkit-autofill {
 
 form {background: #fff;/* padding-bottom: 40px; */}
 
-#optionscontainer {
-	color: #000;
-	font-family: "Programme2";
-}
-
 .button {
-}
-
-
-#optionscontainer,
-input[type=text] {
-	font-family: "Programme2";
 }
 
 * {
@@ -831,16 +872,6 @@ input[type=text] {
 body {
 	background: #f7f7f7;
 	margin: 0;
-}
-
-#optionscontainer {
-	width: 100%;
-	height: 100%;
-	background: #fff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
 }
 
 .button {
@@ -1263,11 +1294,6 @@ input:-webkit-autofill {
 
 form {background: #fff;/* padding-bottom: 40px; */}
 
-#optionscontainer {
-	color: #000;
-	font-family: "Programme2";
-}
-
 .button {
 }
 
@@ -1277,11 +1303,6 @@ label {
 	pointer-events: none;
 }
 
-#optionscontainer,
-input[type=text] {
-	font-family: "Programme2";
-}
-
 * {
 	box-sizing: border-box;
 }
@@ -1289,16 +1310,6 @@ input[type=text] {
 body {
 	background: #f7f7f7;
 	margin: 0;
-}
-
-#optionscontainer {
-	width: 100%;
-	height: 100%;
-	background: #fff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
 }
 
 .button {
@@ -1617,15 +1628,6 @@ input:-webkit-autofill {
 
 form {background: #fff;/* padding-bottom: 40px; */}
 
-#optionscontainer {
-	color: #000;
-	font-family: "Programme2";
-}
-
-#optionscontainer {
-	font-family: "Programme2";
-}
-
 * {
 	box-sizing: border-box;
 }
@@ -1633,16 +1635,6 @@ form {background: #fff;/* padding-bottom: 40px; */}
 body {
 	background: #f7f7f7;
 	margin: 0;
-}
-
-#optionscontainer {
-	width: 100%;
-	height: 100%;
-	background: #fff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
 }
 
 input[type=text] {
@@ -1920,16 +1912,6 @@ input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #f7f7f7 inset;
 }
 
-#optionscontainer {
-	color: #000;
-	font-family: "Programme2";
-}
-
-#optionscontainer,
-input[type=text] {
-	font-family: "Programme2";
-}
-
 * {
 	box-sizing: border-box;
 }
@@ -1946,17 +1928,6 @@ label {
 
 .button,
 .group {
-}
-
-#optionscontainer {
-	width: 100%;
-	height: 100%;
-	background: #fff;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	flex-direction: row;
-	padding-top: 25vh;
 }
 
 input[type=text] {

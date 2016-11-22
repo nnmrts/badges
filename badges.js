@@ -15,9 +15,18 @@ function init() {
 	
 	currentpath = window.location.pathname;
 	
-	if (currentpath.length != nthIndex(currentpath, "/", 3) + 1) {
-		usergiven = 1;
-		usergivenfunc();
+	if (currentpath.indexOf("/collection") == -1) {
+		if (currentpath.length != nthIndex(currentpath, "/", 3) + 1) {
+			usergiven = 1;
+			usergivenfunc();
+		}
+		if (localStorage.getItem("access_token") !== null) {
+			if (localStorage.getItem("tokentime") !== null) {
+				if (jQuery.now() - (localStorage.getItem("tokentime")) < 1209600) {
+					document.getElementById("authenticate").parentNode.attributes.href.nodeValue = "collection";
+				}
+			}
+		}
 	}
 	
 	html_search = document.getElementById("search");
@@ -111,28 +120,19 @@ function init() {
 			if (userhere === 0) {}
 			else {
 				if (html_profile.innerHTML == "CLOSE THAT") {
-					$("#profiletext").animate({
-						opacity: 0
-					}, 500, function() {});
-					$("#generatedtext").animate({
-						opacity: 0
-					}, 500, function() {});
-					$("#profilehr").animate({
-						opacity: 0
-					}, 500, function() {});
-					$("#customize").animate({
-						opacity: 0
-					}, 500, function() {});
-					$("#authenticate").animate({
-						opacity: 0
-					}, 500, function() {});
 					$("#profilebox").animate({
-						marginTop: 0,
-						marginBottom: 0,
-						height: 0
-					}, 1000, function() {
-						html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
+						opacity: 0
+					}, 200, function() {
+						$("#profilebox").animate({
+							height: 0
+						}, 400, "easeInOutQuint", function() {
+							$("#profilebox").attr({
+								style: "height: 0;display:none;opacity: 0;"
+							});
+						});
 					});
+					html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
+					
 				}
 				else {
 					urlarray = [];
@@ -232,29 +232,31 @@ function init() {
 					gentext = htmlEntities(gentexthtml);
 					html_generatedtext.innerHTML = gentext;
 					html_profiletext.innerHTML = "You are " + name + "? Just copy-paste this text to your profile bio:";
+					$("#profilebox").attr({
+						style: "height: 0;display:flex;opacity: 0;"
+					});
+					$("#generatedtext").attr({
+						style: "opacity: 1;"
+					});
+					$("#profilehr").attr({
+						style: "opacity: 1;"
+					});
+					$("#customize").attr({
+						style: "opacity: 1;"
+					});
+					$("#authenticate").attr({
+						style: "opacity: 1;"
+					});
+					$("#profiletext").attr({
+						style: "opacity: 1;"
+					});
 					$("#profilebox").animate({
-						marginTop: "-41px",
-						marginBottom: "41px",
 						height: "350px"
-					}, 1000, function() {
-						$("#profiletext").animate({
-							opacity: 1
-						}, 500, function() {
-							// Animation complete.
-						});
-						$("#generatedtext").animate({
-							opacity: 1
-						}, 500, function() {});
-						$("#profilehr").animate({
-							opacity: 1
-						}, 500, function() {});
-						$("#customize").animate({
-							opacity: 1
-						}, 500, function() {});
-						$("#authenticate").animate({
-							opacity: 1
-						}, 500, function() {});
+					}, 400, "easeInOutQuint", function() {
 						html_profile.innerHTML = "CLOSE THAT";
+						$("#profilebox").animate({
+							opacity: 1
+						}, 400);
 					});
 
 				}
@@ -970,7 +972,7 @@ function init() {
 		});
 
 		$("#optionscontainer").attr({
-			style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;"
+			style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
 		});
 
 		$("#buttoncontainer").attr({
@@ -978,7 +980,7 @@ function init() {
 		});
 
 		$("#profilebox").attr({
-			style: "height: 0;margin-top: initial;margin-bottom: initial"
+			style: "height: 0;display:none;opacity: 0;"
 		});
 
 		$("#profiletext").attr({
@@ -1010,7 +1012,7 @@ function init() {
 		});
 
 		$("#badgeslogo").attr({
-			style: "width: 3vw;align-self: center;margin-bottom: 10px;height: initial;top: 0;"
+			style: "width: 3vw;align-self: center;height: initial;"
 		});
 
 		$("#version").attr({
@@ -1019,6 +1021,14 @@ function init() {
 
 		$("#menucontainer").attr({
 			style: "display: flex"
+		});
+		
+		$("#top").attr({
+			style: "height: initial;"
+		});
+		
+		$("#search").attr({
+			style: "margin-top: 0;"
 		});
 		
 		NProgress.inc();
@@ -1030,9 +1040,9 @@ function init() {
 						$("#sitecontainer").attr({
 							style: "position: relative;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
 						});
-						$("body").animate({
+						$(".mdl-layout__content").animate({
 							scrollTop: $('#userinfo').offset().top
-						}, 1000);
+						}, 1000, "easeInOutQuint");
 					});
 				});
 				NProgress.done();
@@ -1237,7 +1247,7 @@ function init() {
 								userhere = 0;
 								html_search.innerHTML = "search again";
 								$("#optionscontainer").attr({
-									style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;"
+									style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
 								});
 
 								$("#buttoncontainer").attr({
@@ -1252,7 +1262,7 @@ function init() {
 
 
 									$("#profilebox").attr({
-										style: "height: 0;margin-top: initial;margin-bottom: initial"
+										style: "height: 0;display:none;opacity: 0;"
 									});
 
 									$("#profiletext").attr({
@@ -1289,7 +1299,7 @@ function init() {
 								userhere = 0;
 								html_search.innerHTML = "search again";
 								$("#optionscontainer").attr({
-									style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;"
+									style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
 								});
 
 								$("#buttoncontainer").attr({
@@ -1308,7 +1318,7 @@ function init() {
 
 
 									$("#profilebox").attr({
-										style: "height: 0;margin-top: initial;margin-bottom: initial"
+										style: "height: 0;display:none;opacity: 0;"
 									});
 
 									$("#profiletext").attr({
@@ -1401,6 +1411,10 @@ bind = function() {
 usergivenfunc = function() {
 	
 	logininput = window.location.pathname.slice(nthIndex(currentpath, "/", 3) + 1);
+	
+	$(".mdl-textfield").addClass("is-dirty");
+	
+	document.getElementById("userinput").value = window.location.pathname.slice(nthIndex(currentpath, "/", 3) + 1);
 
 	starttime = $.now();
 

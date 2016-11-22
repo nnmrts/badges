@@ -38,9 +38,35 @@ collectioninit = function() {
 							badgesarray.push($(this).attr("id"));
 						});
 					});
+				localStorage.setItem("access_token", source.access_token);
+				localStorage.setItem("tokentime", jQuery.now());
 			});
 	};	
-	getsource();	
+	if (localStorage.getItem("access_token") === null) {
+		getsource();
+	}
+	else {
+		geniusurl = "http://api.genius.com/account?access_token=" + localStorage.getItem("access_token");
+		geniussource = $.getJSON(geniusurl)
+			.done(function() {
+				stars = 0;
+				find();
+				$(".headline")[0].innerHTML = "Hey " + name + "!";
+				badgespath = "../badges/";
+				insertbadges();
+				$("#loadingcontainer").fadeOut(1000, function() {
+					$("#loadingcontaineroverlay").fadeOut(1000, function() {});
+				});
+
+				badgesarray = [];
+
+				$("#badgescontainer > .badgebox").each(function() {
+					badgesarray.push($(this).attr("id"));
+				});
+			});
+	}
+	
+	
 	placeholderNumber = 0;	
 	sorterinit = function() {
 		sortable = Sortable.create($(".sortable")[0], {

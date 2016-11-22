@@ -1,7 +1,21 @@
-<html lang="en">
+<html lang="en" class="mdl-js">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<!-- TITLE -->
 		<title>Badges</title>
+		
+		<!-- META -->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="description" content="badgesbadgesbadgesbadgesbadgesbadges">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<meta name="apple-mobile-web-app-title" content="Badges">
+		<meta name="application-name" content="Badges">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="favicon/mstile-144x144.png?v=m2dBzPMjbw">
+		<meta name="msapplication-config" content="favicon/browserconfig.xml?v=m2dBzPMjbw">
+		<meta name="theme-color" content="#ffffff">
+		
+		<!-- FAVICON -->
 		<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png?v=m2dBzPMjbw">
 		<link rel="icon" type="image/png" href="favicon/favicon-32x32.png?v=m2dBzPMjbw" sizes="32x32">
 		<link rel="icon" type="image/png" href="favicon/favicon-194x194.png?v=m2dBzPMjbw" sizes="194x194">
@@ -10,34 +24,41 @@
 		<link rel="manifest" href="favicon/manifest.json?v=m2dBzPMjbw">
 		<link rel="mask-icon" href="favicon/safari-pinned-tab.svg?v=m2dBzPMjbw" color="#ffff64">
 		<link rel="shortcut icon" href="favicon/favicon.ico?v=m2dBzPMjbw">
-		<meta name="apple-mobile-web-app-title" content="Badges">
-		<meta name="application-name" content="Badges">
-		<meta name="msapplication-TileColor" content="#ffffff">
-		<meta name="msapplication-TileImage" content="favicon/mstile-144x144.png?v=m2dBzPMjbw">
-		<meta name="msapplication-config" content="favicon/browserconfig.xml?v=m2dBzPMjbw">
-		<meta name="theme-color" content="#ffffff">
-		<meta name="description" content="badgesbadgesbadgesbadgesbadgesbadges">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
+		<!-- CSS -->
+		<!--- LIBRARIES --->
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<link rel="stylesheet" href="libraries/normalize/normalize.css">
+		
 		<link rel="stylesheet" href="libraries/emojione/assets/css/emojione.css"/>
+		
 		<link rel="stylesheet" href="libraries/mdl/material.css"/>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		
 		<link rel='stylesheet' href="libraries/nprogress/nprogress.css"/>
 		
-		<link href="https://assets.genius.com/stylesheets/compiled/bagon_fonts-bbc6a4e57e275a56e302efb59741b16c.css" media="screen" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="style.css">
+		<!--- MAIN --->
 		<link rel="stylesheet" href="fonts/fonts.css">
-		<script src="libraries/emojione/emojione.js"></script>
+		<link rel="stylesheet" href="style.css">
+		
+		<!-- JS -->
+		<!--- LIBRARIES --->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="libraries/jquery-ui-1.12.1/jquery-ui.js"></script>
+		
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-		<script src="libraries/browserify/bundle.js"></script>
-		<script src="libraries/xhr/xhr.js"></script>
-		<script src="libraries/is.js/is.js"></script>
 		<script src="libraries/bootbox/bootbox.min.js"></script>
+		
+		<script src="libraries/browserify/bundle.js"></script>
+		<script src="libraries/emojione/emojione.js"></script>
+		<script src="libraries/is.js/is.js"></script>
 		<script src="libraries/mdl/material.js"></script>
 		<script src="libraries/nprogress/nprogress.js"></script>
+		<script src="libraries/xhr/xhr.js"></script>
+		
+		<!--- MAIN --->
 		<script src="badges.js"></script>
+		
 		<!--[if lt IE 9]>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
 		<![endif]-->
@@ -48,49 +69,48 @@
 			<a href="http://genius.com/" class="logo_container"></a>
 		</header>
 		-->
-		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header pumpn-layout">
-		<header class="mdl-layout__header pumpn-header">
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header badges-layout">
+		<header class="mdl-layout__header badges-header">
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
-				<span class="mdl-layout-title pumpn-title">BADGES</span>
+				<a href="http://genius.com/" class="logo_container"></a>
 			</div>
 		</header>
 		<div class="mdl-layout__drawer">
-			<span class="mdl-layout-title">Title</span>
+			<span class="mdl-layout-title"><a href="">BADGES</a></span>
 			<nav class="mdl-navigation">
-				<a class="mdl-navigation__link" href="">Link</a>
-				<a class="mdl-navigation__link" href="">Link</a>
-				<a class="mdl-navigation__link" href="">Link</a>
-				<a class="mdl-navigation__link" href="">Link</a>
+				<div class="mdl-navigation__link" id="about">ABOUT</div>
+				<div class="mdl-navigation__link" id="donate">DONATE</div>
+				<a class="mdl-navigation__link" id="github" href="https://github.com/nnmrts/badges" target="_blank">GITHUB REPOSITORY</a>
 			</nav>
 		</div>
 		<main class="mdl-layout__content">
-			<div id="optionscontainer" class="mdl-card mdl-shadow--2dp">
-				<div id="info">
-					<img id="badgeslogo" src="images/badgeslogooncircle.png"/>
-					<h1 id="title">BADGES</h1>
-				</div>
-				<form action="#">
-					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label pumpn-textfield">
-						<input id="userinput" class="mdl-textfield__input" type="text">
-						<label class="mdl-textfield__label" for="userinput">USER</label>
+			<div id="top" class="mdl-card mdl-shadow--2dp">
+				<div id="optionscontainer">
+					<div id="info">
+						<img id="badgeslogo" src="images/badgeslogooncircle.png"/>
+						<h1 id="title">BADGES</h1>
 					</div>
-				</form>
-				
-				<button id="search" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">search</button>
-			</div>
-			<div id="menucontainer" class="mdl-card mdl-shadow--2dp" style="display: none">
-				<div class="button" id="donate">DONATE</div>
-				<div class="button" id="profile">ADD THEM TO YOUR PROFILE</div>
-				<div class="button" id="about">ABOUT</div>
-			</div>
-			<div id="profilebox" style="height: 0">
-				<!-- window.location.search: ?code=1qaa4_qEg45nvL5d-Mt07GhfYJVEyvVC1T9qwS8gh-cVez-a1Tr6FcTByzfnJyWg&state=loggedin -->
-				<span id="profiletext" style="opacity: 0;">You are SinaTheQueen? Just copy-paste this text to your profile bio:</span>
-				<span id="generatedtext" style="opacity: 0;"></span>
-				<hr id="profilehr" style="opacity: 0; display: none">
-				<span id="customize" style="opacity: 0; display: none">Do you want to customize your badges collection? Connect with your Genius account below!</span>
-				<a href="https://api.genius.com/oauth/authorize?client_id=LuWjcKRaYYtvXzePOpw5reD0PZ-sFqhNIlxOuLcHEHimuUrDThK09sM94NvBTuMT&redirect_uri=http://www.pumpn.net/mag/badges2.1-weekly-201646/collection/&scope=me&state=loggedin&response_type=code" style="text-decoration: none; color: black;"><div class="button" id="authenticate" style="opacity: 0; display: none">CONNECT</div></a>
+					<form action="#">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label badges-textfield">
+							<input id="userinput" class="mdl-textfield__input" type="text">
+							<label class="mdl-textfield__label" for="userinput">USER</label>
+						</div>
+					</form>
+					
+					<button id="search" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">search</button>
+				</div>
+				<div id="menucontainer" style="display: none">
+					<button id="profile" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">ADD THEM TO YOUR PROFILE</button>
+				</div>
+				<div id="profilebox" style="height: 0;display:none;opacity: 1;">
+					<!-- window.location.search: ?code=1qaa4_qEg45nvL5d-Mt07GhfYJVEyvVC1T9qwS8gh-cVez-a1Tr6FcTByzfnJyWg&state=loggedin -->
+					<span id="profiletext" style="opacity: 0;">You are SinaTheQueen? Just copy-paste this text to your profile bio:</span>
+					<span id="generatedtext" style="opacity: 0;"></span>
+					<hr id="profilehr" style="opacity: 0; display: none">
+					<span id="customize" style="opacity: 0; display: none">Do you want to customize your badges collection? Connect with your Genius account below!</span>
+					<a href="https://api.genius.com/oauth/authorize?client_id=LuWjcKRaYYtvXzePOpw5reD0PZ-sFqhNIlxOuLcHEHimuUrDThK09sM94NvBTuMT&redirect_uri=http://www.pumpn.net/mag/badges2.1-weekly-201646/collection/&scope=me&state=loggedin&response_type=code" style="text-decoration: none; color: black;"><div class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="authenticate" style="opacity: 0; display: none">CONNECT</div></a>
+				</div>
 			</div>
 			<div id="userinfo" style="display: none;">
 				<div class="BOXavatar">
