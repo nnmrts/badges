@@ -216,6 +216,14 @@ form {
 }
 
 
+.badges-layout .mdl-shadow--2dp {
+    box-shadow: none;
+}
+
+.badges-layout .mdl-button--raised {
+    box-shadow: none;
+}
+
 /* ---------------------- GENIUS ---------------------- */
 
 .statistics_panel {
