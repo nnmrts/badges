@@ -11,6 +11,9 @@ body {
 	padding:10px;
 }
 
+#nav {
+}
+
 .nav {
 	position: relative;
 	background-color: #ffff64;
@@ -19,6 +22,11 @@ body {
 	border-bottom-color: white;
 	border-bottom-style: solid;
 	border-bottom-width: 3px;
+	min-height: initial;
+    width: initial;
+    display: inherit;
+    font-weight: initial;
+    font-size: initial
 }
 .nav:after {
 	position: absolute;
@@ -33,12 +41,13 @@ body {
 	border-top-color: #ff1464;
 	display: none;
 }
+
 .items {
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
-	-webkit-transition:transform 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-	transition:transform 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	-webkit-transition:transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
+	transition:transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
 	white-space: nowrap;
 	user-select:none;
 	height: 100%;
@@ -52,8 +61,8 @@ body {
 	display: inline-flex;
 	padding: 10px 0px;
 	color: #000000;
-	-webkit-transition: color 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-	transition: color 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	-webkit-transition: color 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
+	transition: color 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
 	width: 200px;
 	background-color: #ffff64;
 	text-align: center;
@@ -67,14 +76,15 @@ div .selected {color: #000000;background-color: #ffffff;height: 100%;/* flex-gro
 }
 
 .infocontainer {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	background-color: white;
-	padding-top: 6vh;
-	padding-bottom: 4vh;
-	margin-bottom: 41px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    padding-top: 6vh;
+    padding-bottom: 4vh;
+    margin-bottom: 41px;
+    width: 100%;
 }
 
 .headline {
@@ -84,11 +94,11 @@ div .selected {color: #000000;background-color: #ffffff;height: 100%;/* flex-gro
 }
 
 .info {
-	align-self: center;
-	font-size: 1.1em;
-	width: 80%;
-	font-family: "Whitney";
-	margin: 4vh 4vh 4vh 4vh;
+    align-self: center;
+    font-size: 1.1em;
+    width: 80%;
+    font-family: "Programme2";
+    margin: 4vh 4vh 4vh 4vh;
 }
 
 #badgescontainer {
@@ -105,13 +115,20 @@ div .selected {color: #000000;background-color: #ffffff;height: 100%;/* flex-gro
 	width: 100%;
 	z-index: 10;
 }
-
+/*
 .fixed {
-	position: fixed;
-	top: 41px;
-	width: 89.91066736731477%;
-	left: 5vw;
-	z-index: 100;
+    position: fixed;
+    top: 41px;
+    width: 79.1%;
+    z-index: 100;
+}
+*/
+.fixed {
+    position: fixed;
+    top: 41px;
+    width: 100%;
+    left: 0;
+    z-index: 100;
 }
 
 #collectioncontainer {
@@ -122,7 +139,7 @@ div .selected {color: #000000;background-color: #ffffff;height: 100%;/* flex-gro
 }
 
 .navisfixed {
-	margin-top: 85px;
+    margin-top: 41px;
 }
 
 #editbadges {
@@ -200,4 +217,9 @@ div .selected {color: #000000;background-color: #ffffff;height: 100%;/* flex-gro
 }
 
 #badgescatalog {
+}
+
+
+.mdl-layout__container #collectioncontainer {
+	width: initial;
 }

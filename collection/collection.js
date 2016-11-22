@@ -5,9 +5,6 @@ collectioninit = function() {
 	html_smallfooter = document.getElementById("smallfooter");
 	
 	html_add = document.getElementById("add");	
-	$("#sitecontainer").attr({
-		style: "position: relative;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
-	});	
 	getsource = function() {
 		code = location.search.slice((location.search.indexOf("=") + 1), location.search.indexOf("&"));		
 		$.post("https://api.genius.com/oauth/token", {
@@ -278,9 +275,9 @@ collectioninit = function() {
 	initNav();	
 
 	stickyOffset = $('#nav').offset().top;	
-	$(window).scroll(function() {
+	$(".mdl-layout__content").scroll(function() {
 		sticky = $('#nav');
-		scrolla = $("#body").scrollTop();		
+		scrolla = $(".mdl-layout__content").scrollTop();		
 		if (scrolla >= (stickyOffset - 41)) {
 			sticky.addClass('fixed');
 			$('#collectioncontainer').addClass('navisfixed');
@@ -298,57 +295,57 @@ collectioninit = function() {
 		$("#collectionpage").click(function() {
 			$("#badgescontainer").animate({
 				left: 0
-			}, 1000, "easeInOutQuad", function() {
+			}, 1000, "easeInOutQuint", function() {
 				// Animation complete.
 			});
 
 			$("#editbadges").animate({
 				left: 0
-			}, 1000, "easeInOutQuad", function() {
+			}, 1000, "easeInOutQuint", function() {
 				// Animation complete.
 			});
 
 			$("#savebadges").animate({
 				left: 0
-			}, 1000, "easeInOutQuad", function() {
+			}, 1000, "easeInOutQuint", function() {
 				// Animation complete.
 			});
 		});
 		$("#editpage").click(function() {
 			$("#badgescontainer").animate({
 				left: "-100%"
-			}, 1000, "easeInOutQuad", function() {
+			}, 1000, "easeInOutQuint", function() {
 				// Animation complete.
 			});
 
 			$("#editbadges").animate({
 				left: "-100%"
-			}, 1000, "easeInOutQuad", function() {
+			}, 1000, "easeInOutQuint", function() {
 				// Animation complete.
 			});
 
 			$("#savebadges").animate({
 				left: "-100%"
-			}, 1000, "easeInOutQuad", function() {
+			}, 1000, "easeInOutQuint", function() {
 				// Animation complete.
 			});
 		});
 		$("#savepage").click(function() {
 			$("#badgescontainer").animate({
 				left: "-200%"
-			}, 1000, "easeInOutQuad", function() {
+			}, 1000, "easeInOutQuint", function() {
 				// Animation complete.
 			});
 
 			$("#editbadges").animate({
 				left: "-200%"
-			}, 1000, "easeInOutQuad", function() {
+			}, 1000, "easeInOutQuint", function() {
 				// Animation complete.
 			});
 
 			$("#savebadges").animate({
 				left: "-200%"
-			}, 1000, "easeInOutQuad", function() {
+			}, 1000, "easeInOutQuint", function() {
 				// Animation complete.
 			});
 		});
