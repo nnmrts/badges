@@ -16,16 +16,16 @@ function init() {
 	currentpath = window.location.pathname;
 	
 	if (currentpath.indexOf("/collection") == -1) {
-		if (currentpath.length != nthIndex(currentpath, "/", 3) + 1) {
-			usergiven = 1;
-			usergivenfunc();
-		}
 		if (localStorage.getItem("access_token") !== null) {
 			if (localStorage.getItem("tokentime") !== null) {
-				if (jQuery.now() - (localStorage.getItem("tokentime")) < 1209600) {
+				if (jQuery.now() - (localStorage.getItem("tokentime")) < 1209600000) {
 					document.getElementById("authenticate").parentNode.attributes.href.nodeValue = "collection";
 				}
 			}
+		}
+		if (currentpath.length != nthIndex(currentpath, "/", 3) + 1) {
+			usergiven = 1;
+			usergivenfunc();
 		}
 	}
 	
@@ -78,7 +78,7 @@ function init() {
 		});
 	}
 
-	function htmlEntities(str) {
+	htmlEntities = function (str) {
 		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 	}
 
@@ -94,6 +94,53 @@ function init() {
 		var nodehead = document.getElementsByTagName("head")[0];
 		nodehead.appendChild(nodescript);
 	}
+	
+	
+	// -----------------------------
+	// CONVERTING
+	// -----------------------------
+	
+	Object.size = function(obj) {
+		var size = 0, key;
+		for (key in obj) {
+			if (obj.hasOwnProperty(key)) size++;
+		}
+		return size;
+	};
+	
+	dom2object = function () {
+		collectionobject = {};
+		collectionobject.user = login;
+		collectionobject.collection = {};
+		
+		pushobjectbadge = function (collectionbadge, auto) {
+			if (collectionbadge != "undefined") {
+				x = getChildrenIndex(collectionbadge)
+				
+				collectionobject.collection[x] = "swag";
+				collectionobject.collection[x] = {id1: (collectionbadge.attributes.id.nodeValue).slice(0, (collectionbadge.attributes.id.nodeValue).indexOf("-")), id2: (collectionbadge.attributes.id.nodeValue).slice(((collectionbadge.attributes.id.nodeValue).indexOf("-")+1), ((collectionbadge.attributes.id.nodeValue).indexOf("-")+4)), badgename: (collectionbadge.attributes.id.nodeValue).slice((collectionbadge.attributes.id.nodeValue).indexOf("-")+4), src: collectionbadge.firstElementChild.attributes.src.nodeValue.slice(0, collectionbadge.firstElementChild.attributes.src.nodeValue.indexOf("?")), auto: auto}
+			}
+		};
+		f = 0;
+		while (f < html_badgescontainer.childElementCount) {
+			pushobjectbadge(html_badgescontainer.children[f], true);
+		f = f + 1;
+		}
+	};
+	
+	object2dom = function () {
+		collectiondom = document.createElement("div");
+		x = 0;
+		while (x < Object.size(collectionobject.collection)) {
+			collectiondom.innerHTML += "<div class='badgebox' id='" + collectionobject.collection[x].id1 + "-" + collectionobject.collection[x].id2 + collectionobject.collection[x].badgename + "'><img src='" + collectionobject.collection[x].src + "?time=" + jQuery.now() + "' class='badge'/></div>";
+			x = x + 1;
+		}
+	};
+	
+	//-----------------
+	//-----------------
+	//-----------------
+	
 
 	function donate() {
 		bootbox.dialog({
@@ -135,27 +182,39 @@ function init() {
 					
 				}
 				else {
-					urlarray = [];
+					if (collectionhere === 0) {
+						urlarray = [];
 
-					if (starbadge1 != "undefined") {
-						urlarray.push(starbadge1.firstChild.src.slice(0, starbadge1.firstChild.src.indexOf("500px")) + "170px.png");
+						if (starbadge1 != "undefined") {
+							urlarray.push(starbadge1.firstChild.src.slice(0, starbadge1.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (starbadge2 != "undefined") {
+							urlarray.push(starbadge2.firstChild.src.slice(0, starbadge2.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (starbadge3 != "undefined") {
+							urlarray.push(starbadge3.firstChild.src.slice(0, starbadge3.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (rolebadge1 != "undefined") {
+							urlarray.push(rolebadge1.firstChild.src.slice(0, rolebadge1.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (rolebadge2 != "undefined") {
+							urlarray.push(rolebadge2.firstChild.src.slice(0, rolebadge2.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (verifiedartistbadge != "undefined") {
+							urlarray.push(verifiedartistbadge.firstChild.src.slice(0, verifiedartistbadge.firstChild.src.indexOf("500px")) + "170px.png");
+						}
 					}
-					if (starbadge2 != "undefined") {
-						urlarray.push(starbadge2.firstChild.src.slice(0, starbadge2.firstChild.src.indexOf("500px")) + "170px.png");
+					else {
+						urlarray = [];
+			
+						z = 0;
+						
+						while (z < collectiondom.children.length) {
+							urlarray.push(collectiondom.children[z].firstChild.src.slice(0, collectiondom.children[z].firstChild.src.indexOf("500px")) + "170px.png");
+							z = z + 1;
+						}
 					}
-					if (starbadge3 != "undefined") {
-						urlarray.push(starbadge3.firstChild.src.slice(0, starbadge3.firstChild.src.indexOf("500px")) + "170px.png");
-					}
-					if (rolebadge1 != "undefined") {
-						urlarray.push(rolebadge1.firstChild.src.slice(0, rolebadge1.firstChild.src.indexOf("500px")) + "170px.png");
-					}
-					if (rolebadge2 != "undefined") {
-						urlarray.push(rolebadge2.firstChild.src.slice(0, rolebadge2.firstChild.src.indexOf("500px")) + "170px.png");
-					}
-					if (verifiedartistbadge != "undefined") {
-						urlarray.push(verifiedartistbadge.firstChild.src.slice(0, verifiedartistbadge.firstChild.src.indexOf("500px")) + "170px.png");
-					}
-
+					
 					realstart = "<table><tbody>";
 
 					littlestart = "<tr>";
@@ -258,7 +317,6 @@ function init() {
 							opacity: 1
 						}, 400);
 					});
-
 				}
 			}
 		});
@@ -540,6 +598,8 @@ function init() {
 	//-------------------------------------------
 	
 	badgespath = "http://www.pumpn.net" + window.location.pathname.slice(0, nthIndex(currentpath, "/", 3) + 1) + "badges/";
+	
+	collectionspath = "http://www.pumpn.net" + window.location.pathname.slice(0, nthIndex(currentpath, "/", 3) + 1) + "collections/";
 	
 	
 	amount2id = function(type) {
@@ -958,133 +1018,217 @@ function init() {
 
 		find();
 		
-		NProgress.inc();
-
-		insert();
-		
-		NProgress.inc();
-
-		html_usererror.style.display = "none";
-
-		html_search.innerHTML = "search again";
-		$("#userinfo:hidden").attr({
-			style: "display: flex;"
-		});
-
-		$("#optionscontainer").attr({
-			style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
-		});
-
-		$("#buttoncontainer").attr({
-			style: "padding-top: 5vh;padding-bottom: 5vh;"
-		});
-
-		$("#profilebox").attr({
-			style: "height: 0;display:none;opacity: 0;"
-		});
-
-		$("#profiletext").attr({
-			style: "opacity: 0"
-		});
-
-		$("#generatedtext").attr({
-			style: "opacity: 0"
-		});
-		
-		$("#profilehr").attr({
-			style: "opacity: 0"
-		});
-		
-		$("#customize").attr({
-			style: "opacity: 0"
-		});
-
-		$("#authenticate").attr({
-			style: "opacity: 0"
-		});
-
-		html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
-
-		html_generatedtext.innerHTML = "";
-
-		$("#info").attr({
-			style: "width: initial;"
-		});
-
-		$("#badgeslogo").attr({
-			style: "width: 3vw;align-self: center;height: initial;"
-		});
-
-		$("#version").attr({
-			style: "font-size: 5vmin;color: #000000;font-weight: 700;margin-top: 0;margin-bottom: 0;line-height: 80%;padding-bottom:0;"
-		});
-
-		$("#menucontainer").attr({
-			style: "display: flex"
-		});
-		
-		$("#top").attr({
-			style: "height: initial;margin-bottom: 41px;"
-		});
-		
-		$("#search").attr({
-			style: "margin-top: 0;"
-		});
-		
-		NProgress.inc();
-
-		imageloop = function() {
-			if (html_badgescontainer.firstChild.firstChild.complete === true) {
-				$("#loadingcontainer").fadeOut(1000, function() {
-					$("#loadingcontaineroverlay").fadeOut(1000, function() {
-						$("#sitecontainer").attr({
-							style: "position: relative;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
-						});
-						$(".mdl-layout__content").animate({
-							scrollTop: $('#userinfo').offset().top - 75
-						}, 1000, "easeInOutQuint");
-					});
-				});
-				NProgress.done();
-				console.log("images loaded");
-			}
-			else {
-				setTimeout(function() {
+		$.get(collectionspath + login.toUpperCase().replace(/\s+/g, "-") + ".js")
+			.done(function(data) {
+				collectionsource = data;
+				if (collectionsource.indexOf("<html") !== 0) {
+					console.log("found collection on server");
+					collectionhere = 1;
 					NProgress.inc();
-					console.log("images not loaded yet");
+					object2dom();
+					
+					while (html_badgescontainer.firstChild) {
+						html_badgescontainer.removeChild(html_badgescontainer.firstChild);
+					}
+					html_badgescontainer.innerHTML = collectiondom.innerHTML;
+					
+					badgesnumber = html_badgescontainer.childElementCount;
+					
+					if (location.pathname.indexOf("collection") == -1) {
+					insertavatar();
+					insertstats();
+					insertnamelink();
+					insertname();
+					insertlogin();
+					insertiq_for_display();
+					insertrole_for_display();
+					insertrole_icon();
+					insertstars();
+					
+					NProgress.inc();
+					}
+					else {
+						html_editbadges.innerHTML = collectiondom.innerHTML;
+						
+						mapObj2 = {
+							'class="badgebox"': 'class="badgebox ui-state-default"',
+							'div': 'li'
+						};
+
+						html_editbadges.innerHTML = html_editbadges.innerHTML.replace(/class="badgebox"|div/g, function(matched) {
+							return mapObj2[matched];
+						});
+						
+						m = 0;
+						while (m < Object.size(collectionobject.collection)) {
+							html_editbadges.children[m].appendChild(html_smallfooter.cloneNode(true));
+							m = m + 1;
+						}
+						
+						hoverEnabled = 1;
+						$(".smallfooter").fadeOut(100);
+						
+						
+						$( ".badgebox" ).hover(function() {
+							childindex = getChildrenIndex(this);
+							currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
+							if (currentfooter.id == "smallfooter") {
+								if (hoverEnabled == 1) {
+								$(currentfooter).fadeIn( 200 );
+								}
+							}
+						},
+						function() {
+							childindex = getChildrenIndex(this);
+							currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
+							if (currentfooter.id == "smallfooter") {
+								$(currentfooter).fadeOut( 200 );
+							}
+						});
+					}
+				}
+				else {
+					collectionhere = 0;
+					
+					NProgress.inc();
+					
+					if (location.pathname.indexOf("collection") == -1) {
+
+					insert();
+					}
+					else {
+						insertbadges();
+					}
+					
+					NProgress.inc();
+				}
+				
+				if (location.pathname.indexOf("collection") == -1) {
+				html_usererror.style.display = "none";
+
+				html_search.innerHTML = "search again";
+				$("#userinfo:hidden").attr({
+					style: "display: flex;"
+				});
+
+				$("#optionscontainer").attr({
+					style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
+				});
+
+				$("#buttoncontainer").attr({
+					style: "padding-top: 5vh;padding-bottom: 5vh;"
+				});
+
+				$("#profilebox").attr({
+					style: "height: 0;display:none;opacity: 0;"
+				});
+
+				$("#profiletext").attr({
+					style: "opacity: 0"
+				});
+
+				$("#generatedtext").attr({
+					style: "opacity: 0"
+				});
+					
+				$("#profilehr").attr({
+					style: "opacity: 0"
+				});
+					
+				$("#customize").attr({
+					style: "opacity: 0"
+				});
+
+				$("#authenticate").attr({
+					style: "opacity: 0"
+				});
+
+				html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
+
+				html_generatedtext.innerHTML = "";
+
+				$("#info").attr({
+					style: "width: initial;"
+				});
+
+				$("#badgeslogo").attr({
+					style: "width: 3vw;align-self: center;height: initial;"
+				});
+
+				$("#version").attr({
+					style: "font-size: 5vmin;color: #000000;font-weight: 700;margin-top: 0;margin-bottom: 0;line-height: 80%;padding-bottom:0;"
+				});
+
+				$("#menucontainer").attr({
+					style: "display: flex"
+				});
+					
+				$("#top").attr({
+					style: "height: initial;margin-bottom: 41px;"
+				});
+				
+				$("#search").attr({
+					style: "margin-top: 0;"
+				});
+				
+				NProgress.inc();
+
+				imageloop = function() {
+					if (html_badgescontainer.firstChild.firstChild.complete === true) {
+						$("#loadingcontainer").fadeOut(1000, function() {
+							$("#loadingcontaineroverlay").fadeOut(1000, function() {
+								$("#sitecontainer").attr({
+									style: "position: relative;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
+								});
+								$(".mdl-layout__content").animate({
+									scrollTop: $('#userinfo').offset().top - 75
+								}, 1000, "easeInOutQuint");
+							});
+						});
+						NProgress.done();
+						console.log("images loaded");
+					}
+					else {
+						setTimeout(function() {
+							NProgress.inc();
+							console.log("images not loaded yet");
+							imageloop();
+						}, 500);
+					}
+				};
+				if (isnothing == "no") {
 					imageloop();
-				}, 500);
-			}
-		};
-		if (isnothing == "no") {
-			imageloop();
-		}
-		else {
-			$("#loadingcontainer").fadeOut(1000, function() {
-				$("#loadingcontaineroverlay").fadeOut(1000);
+				}
+				else {
+					$("#loadingcontainer").fadeOut(1000, function() {
+						$("#loadingcontaineroverlay").fadeOut(1000);
+					});
+					NProgress.done();
+				}
+					
+				//if (usergiven === 0) {
+					window.history.pushState("object or string", "Title", window.location.pathname.slice(0, (nthIndex(currentpath, "/", 3) + 1)) + login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
+				//}
+
+				data = [
+					["avatar", avatar],
+					["link", link],
+					["name", name],
+					["login", login],
+					["iq_for_display", iq_for_display],
+					["iq", iq],
+					["id", id],
+					["transcriptions_count", transcriptions_count],
+					["annotations_count", annotations_count],
+					["role_for_display", role_for_display],
+					["swag?", "swag."]
+				];
+				console.table(data);
+				}
+				else {
+					NProgress.done();
+				}
 			});
-			NProgress.done();
-		}
-		
-		//if (usergiven === 0) {
-			window.history.pushState("object or string", "Title", window.location.pathname.slice(0, (nthIndex(currentpath, "/", 3) + 1)) + login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
-		//}
-
-		data = [
-				["avatar", avatar],
-				["link", link],
-				["name", name],
-				["login", login],
-				["iq_for_display", iq_for_display],
-				["iq", iq],
-				["id", id],
-				["transcriptions_count", transcriptions_count],
-				["annotations_count", annotations_count],
-				["role_for_display", role_for_display],
-				["swag?", "swag."]
-			];
-		console.table(data);
-
 	};
 	
 	
