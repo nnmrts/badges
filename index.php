@@ -112,7 +112,7 @@
 					<a href="https://api.genius.com/oauth/authorize?client_id=LuWjcKRaYYtvXzePOpw5reD0PZ-sFqhNIlxOuLcHEHimuUrDThK09sM94NvBTuMT&redirect_uri=http://www.pumpn.net/mag/badges2.1-weekly-201646/collection/&scope=me&state=loggedin&response_type=code" style="text-decoration: none; color: black;"><div class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="authenticate" style="opacity: 0; display: none">CONNECT</div></a>
 				</div>
 			</div>
-			<div id="userinfo" style="display: none;">
+			<div id="userinfo" class="mdl-card mdl-shadow--2dp" style="display: none;">
 				<div class="BOXavatar">
 					<div id="avatar" style="background-image: url(&quot;https://images.genius.com/avatars/medium/a775893c8c742f8b8dcdae21ef8c6a91&quot;);">
 					</div>

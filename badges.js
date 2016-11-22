@@ -1024,7 +1024,7 @@ function init() {
 		});
 		
 		$("#top").attr({
-			style: "height: initial;"
+			style: "height: initial;margin-bottom: 41px;"
 		});
 		
 		$("#search").attr({
@@ -1041,7 +1041,7 @@ function init() {
 							style: "position: relative;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
 						});
 						$(".mdl-layout__content").animate({
-							scrollTop: $('#userinfo').offset().top
+							scrollTop: $('#userinfo').offset().top - 75
 						}, 1000, "easeInOutQuint");
 					});
 				});
