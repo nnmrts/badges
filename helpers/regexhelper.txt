@@ -20,3 +20,9 @@ https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20u
 "<(.*?).com/(.*?)\\(.*?)deprecated(.*?)/users/(.*?)/(.*?)a>"
 
 {"username": "\2", "id": "\5"},
+
+
+"*" + ((Get-ChildItem -recurse "C:\Users\Anton\Documents\GitHub\badges2.1-weekly-$CURRENTWEEK" | Where {$_.Extension -ne ""}| Select-Object Extension -unique | Sort-Object Extension | Get-Unique -asString  | Select -ExpandProperty Extension | % { $_.ToLower() } | Get-Unique) -join ";*")
+
+
+FILTER: *.1;*.css;*.eot;*.gif;*.gitignore;*.htaccess;*.html;*.ico;*.js;*.json;*.md;*.npmignore;*.php;*.svg;*.ttf;*.txt;*.woff;*.woff2;*.xml;*.yml

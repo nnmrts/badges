@@ -1234,9 +1234,7 @@ function init() {
 	
 	
 	
-	if (location.pathname != "/mag/badges2.1-weekly-201645/collection/") {
-		bind();
-	}
+
 	
 	
 	
@@ -1551,6 +1549,8 @@ bind = function() {
 		}
 	};
 };
+
+bind();
 
 usergivenfunc = function() {
 	

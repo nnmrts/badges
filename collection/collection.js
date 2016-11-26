@@ -14,9 +14,9 @@ collectioninit = function() {
 
 		$.post("https://api.genius.com/oauth/token", {
 				"code": code,
-				"client_id": "LuWjcKRaYYtvXzePOpw5reD0PZ-sFqhNIlxOuLcHEHimuUrDThK09sM94NvBTuMT",
-				"client_secret": "dbC3zPzTzs9wdCwJ1vxhTm8WhrP5GYBM2JoeeCYohebFIlJlAcw8u-h2-WjXaMVOfGxnm-n76wLKWHa1Dhphuw",
-				"redirect_uri": "http://www.pumpn.net/mag/badges2.1-weekly-201646/collection/",
+				"client_id": "xgD87AhrO_jK1lJfLhO3jcbT01K0S-s4E526l20VKB7qPSQfyGiAWV1Tp12HRXBA",
+				"client_secret": "9FZ7ryhuLoT0fMBYgHXvofQRHTA5Uax36qrv-tqrWdmF4wLroGycEeFZBchtdkAaUHKnPyQicKN1d4gKOC66BQ",
+				"redirect_uri": "http://www.pumpn.net/mag/badges2.1-weekly-201647/collection/",
 				"response_type": "code",
 				"grant_type": "authorization_code"
 			})
@@ -456,7 +456,7 @@ collectioninit = function() {
 			phpcollection.append("phplogin", login.toUpperCase().replace(/\s+/g, "-"));
 			phpcollection.append("phpcollection", "collectionobject = " + JSON.stringify(collectionobject) + ";");
 			xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
-			xhr.open('post', 'http://www.pumpn.net/mag/badges2.1-weekly-201646/savecollection.php', true);
+			xhr.open('post', 'http://www.pumpn.net/mag/badges2.1-weekly-201647/savecollection.php', true);
 			xhr.send(phpcollection);
 			console.log("saved collection on server");
 
