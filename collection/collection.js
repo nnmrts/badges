@@ -453,8 +453,7 @@ collectioninit = function() {
 	bind2 = function() {
 		html_save.onclick = function() {
 			phpcollection = new FormData();
-			phpcollection.append("phplogin", login.toUpperCase()
-				.replace(/\s+/g, "-"));
+			phpcollection.append("phplogin", login.toUpperCase().replace(/\s+/g, "-"));
 			phpcollection.append("phpcollection", "collectionobject = " + JSON.stringify(collectionobject) + ";");
 			xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
 			xhr.open('post', 'http://www.pumpn.net/mag/badges2.1-weekly-201646/savecollection.php', true);
