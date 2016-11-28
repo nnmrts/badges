@@ -1,7 +1,7 @@
 NEW WEEK:
 cd C:\Users\Anton\Documents\GitHub
-Set-Variable -Name "LASTWEEK" -Value "[LASTWEEK]"
-Set-Variable -Name "CURRENTWEEK" -Value "[CURRENTWEEK]"
+$LASTWEEK = $LASTWEEK + 1
+$CURRENTWEEK = $CURRENTWEEK + 1
 git clone C:\Users\Anton\Documents\GitHub\badges2.1-weekly-$LASTWEEK C:\Users\Anton\Documents\GitHub\badges2.1-weekly-$CURRENTWEEK
 
 WHEN SOMETHING WAS CHANGED:

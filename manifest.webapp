@@ -1,0 +1,25 @@
+{
+  "version": "2.1-weekly-201647",
+  "name": "Badges",
+  "launch_path": "/",
+  "description": "A web-app for the badges initiative on genius.com.",
+  "icons": {
+    "194": "favicon/favicon-194x194.png"
+  },
+  "developer": {
+    "name": "Nano Miratus",
+    "url": ""
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "default_locale": "en",
+  "permissions": {
+  },
+  "locales": {
+    "en": {
+      "name": "Badges",
+      "description": "A web-app for the badges initiative on genius.com."
+    }
+  }
+}

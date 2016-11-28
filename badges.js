@@ -1233,12 +1233,7 @@ function init() {
 	
 	
 	
-	
-
-	
-	
-	
-	
+	bind();
 	
 	warmupyahooapi = function() {
 		url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='http://genius.com/SinaTheQueen'&format=json";
@@ -1549,8 +1544,6 @@ bind = function() {
 		}
 	};
 };
-
-bind();
 
 usergivenfunc = function() {
 	

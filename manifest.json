@@ -1,0 +1,17 @@
+{
+  "name": "Badges",
+  "short_name": "Badges",
+  "icons": [{
+        "src": "favicon/favicon-194x194.png",
+        "sizes": "194x194",
+        "type": "image/png"
+      }, {
+        "src": "favicon/favicon-32x32.png",
+        "sizes": "32x32",
+        "type": "image/png"
+      }],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFF64"
+}

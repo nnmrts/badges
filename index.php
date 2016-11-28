@@ -3,6 +3,22 @@
 		<!-- TITLE -->
 		<title>Badges</title>
 		
+		<link rel="author" href="humans.txt" />
+		
+		<!-- Google Tag Manager -->
+		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-PCSB9HM');</script>
+		<!-- End Google Tag Manager -->
+		
+		<!-- Web Application Manifest -->
+		<link rel="manifest" href="manifest.json">
+		
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="application-name" content="Badges">
+		
 		<!-- META -->
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="description" content="badgesbadgesbadgesbadgesbadgesbadges">
@@ -13,6 +29,7 @@
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="msapplication-TileImage" content="favicon/mstile-144x144.png?v=m2dBzPMjbw">
 		<meta name="msapplication-config" content="favicon/browserconfig.xml?v=m2dBzPMjbw">
+		<meta name="msapplication-tap-highlight" content="no">
 		<meta name="theme-color" content="#ffffff">
 		
 		<!-- FAVICON -->
@@ -63,16 +80,16 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
 		<![endif]-->
 	</head>
-	<body onload="init();">
-		<!--
-		<header class="wrapped_header">
-			<a href="http://genius.com/" class="logo_container"></a>
-		</header>
-		-->
+	<body onload="init();" class="badges-layout">
+	
+		<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PCSB9HM"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		
 		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header badges-layout">
 		<header class="mdl-layout__header badges-header">
 			<div class="mdl-layout__header-row">
-				<!-- Title -->
 				<a href="http://genius.com/" class="logo_container"></a>
 			</div>
 		</header>
@@ -82,6 +99,7 @@
 				<div class="mdl-navigation__link" id="about">ABOUT</div>
 				<div class="mdl-navigation__link" id="donate">DONATE</div>
 				<a class="mdl-navigation__link" id="github" href="https://github.com/nnmrts/badges" target="_blank">GITHUB REPOSITORY</a>
+				<a class="mdl-navigation__link" href="http://www.pumpn.net/impressum.html" target="_blank">PRIVACY & TERMS</a>
 			</nav>
 		</div>
 		<main class="mdl-layout__content">
@@ -215,5 +233,14 @@
 			</div>
 		</div>
 		</div>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-47871844-3', 'auto');
+	  ga('send', 'pageview');
+	</script>
 	</body>
 </html>
