@@ -1,3 +1,7 @@
+ON STARTUP:
+$LASTWEEK = [LASTWEEK]
+$CURRENTWEEK = $LASTWEEK + 1
+
 NEW WEEK:
 cd C:\Users\Anton\Documents\GitHub
 $LASTWEEK = $LASTWEEK + 1
