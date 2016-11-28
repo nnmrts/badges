@@ -1,7 +1,5 @@
 /*global name:true */
-function init() {
-	// $.get("ids2.js");
-	
+
 	nthIndex = function(str, pat, n) {
 		var L = str.length;
 		var i = -1;
@@ -15,74 +13,21 @@ function init() {
 	
 	currentpath = window.location.pathname;
 	
-	if (currentpath.indexOf("/collection") == -1) {
-		if (localStorage.getItem("access_token") !== null) {
-			if (localStorage.getItem("tokentime") !== null) {
-				if (jQuery.now() - (localStorage.getItem("tokentime")) < 1209600000) {
-					document.getElementById("authenticate").parentNode.attributes.href.nodeValue = "collection";
-				}
-			}
-		}
-		if (currentpath.length != nthIndex(currentpath, "/", 3) + 1) {
-			usergiven = 1;
-			usergivenfunc();
-		}
-	}
+	badgespath = window.location.origin + window.location.pathname.slice(0, nthIndex(window.location.pathname, "/", 3) + 1) + "badges/";
 	
-	html_search = document.getElementById("search");
-	html_generatedtext = document.getElementById("generatedtext");
-	html_profiletext = document.getElementById("profiletext");
-	html_profile = document.getElementById("profile");
+	collectionpath = window.location.origin + window.location.pathname.slice(0, nthIndex(window.location.pathname, "/", 3) + 1) + "collection/";
 	
-	html_customize = document.getElementById("customize");
-	html_authenticate = document.getElementById("authenticate");
-
-	html_userinfo = document.getElementById("userinfo");
-	html_usererror = document.getElementById("usererror");
-	html_loading = document.getElementById("loading");
-
-	html_avatar = document.getElementById("avatar");
-	html_annotations_count = document.getElementById("annotations_count");
-	html_transcriptions_count = document.getElementById("transcriptions_count");
-	html_namelink = document.getElementById("namelink");
-	html_name = document.getElementById("name");
-	html_login = document.getElementById("login");
-	html_iq_for_display = document.getElementById("iq_for_display");
-	html_divider = document.getElementById("divider");
-	html_iconbox = document.getElementById("iconbox");
-	html_role_icon = document.getElementById("role_icon");
-	html_role_icon_path = document.getElementById("role_icon_path");
-	html_role_icon2 = document.getElementById("role_icon2");
-	html_role_for_display = document.getElementById("role_for_display");
-
-	html_badgescontainer = document.getElementById("badgescontainer");
-	
-	html_editbadges = document.getElementById("editbadges");
-
-	html_stars = document.getElementById("stars");
-
-	html_nouser = document.getElementById("nouser");
-
-	html_wait = document.getElementById("wait");
+	collectionspath = window.location.origin + window.location.pathname.slice(0, nthIndex(window.location.pathname, "/", 3) + 1) + "collections/";
 
 	pathactivated = 1;
 	circleactivated = 0;
 	polygonactivated = 0;
 	
-	if (usergiven == 0) {
-		$("#loadingcontaineroverlay").attr({
-			style: "display: none"
-		});
-		$("#loadingcontainer").attr({
-			style: "display: none"
-		});
-	}
-
 	htmlEntities = function (str) {
 		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-	}
+	};
 
-	function createVariable(varName, varContent) {
+	createVariable = function (varName, varContent) {
 		var scriptStr = "var " + varName + "= " + varContent + "";
 
 		var nodescriptCode = document.createTextNode(scriptStr);
@@ -93,8 +38,7 @@ function init() {
 
 		var nodehead = document.getElementsByTagName("head")[0];
 		nodehead.appendChild(nodescript);
-	}
-	
+	};
 	
 	// -----------------------------
 	// CONVERTING
@@ -115,10 +59,16 @@ function init() {
 		
 		pushobjectbadge = function (collectionbadge, auto) {
 			if (collectionbadge != "undefined") {
-				x = getChildrenIndex(collectionbadge)
+				x = getChildrenIndex(collectionbadge);
 				
 				collectionobject.collection[x] = "swag";
-				collectionobject.collection[x] = {id1: (collectionbadge.attributes.id.nodeValue).slice(0, (collectionbadge.attributes.id.nodeValue).indexOf("-")), id2: (collectionbadge.attributes.id.nodeValue).slice(((collectionbadge.attributes.id.nodeValue).indexOf("-")+1), ((collectionbadge.attributes.id.nodeValue).indexOf("-")+4)), badgename: (collectionbadge.attributes.id.nodeValue).slice((collectionbadge.attributes.id.nodeValue).indexOf("-")+4), src: collectionbadge.firstElementChild.attributes.src.nodeValue.slice(0, collectionbadge.firstElementChild.attributes.src.nodeValue.indexOf("?")), auto: auto}
+				collectionobject.collection[x] = {
+					id1: (collectionbadge.attributes.id.nodeValue).slice(0, (collectionbadge.attributes.id.nodeValue).indexOf("-")),
+					id2: (collectionbadge.attributes.id.nodeValue).slice(((collectionbadge.attributes.id.nodeValue).indexOf("-")+1), ((collectionbadge.attributes.id.nodeValue).indexOf("-")+4)), 
+					badgename: (collectionbadge.attributes.id.nodeValue).slice((collectionbadge.attributes.id.nodeValue).indexOf("-")+4),
+					src: collectionbadge.firstElementChild.attributes.src.nodeValue.slice(0, collectionbadge.firstElementChild.attributes.src.nodeValue.indexOf("?")),
+					auto: auto
+				};
 			}
 		};
 		f = 0;
@@ -142,7 +92,7 @@ function init() {
 	//-----------------
 	
 
-	function donate() {
+	donate = function () {
 		bootbox.dialog({
 			message: '<div id="message1"><h2>GIMME MONEY<\/h2><br>sooo, i\'m 17 and did all this just for fun...you don\'t need to give me money to earn a badge or something like that, but if you want to support this project, feel free to go on <a href="https://nnmrts.bandcamp.com/album/mittlerweile?action=download&from=embed">my bandcamp page</a> and just enter a price you want for an album you want<br><small>- nano miratus, was too lazy to setup a paypal donate button</small><br><br><br><\/div><iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album=1755031164/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless><a href="http://nnmrts.bandcamp.com/album/mittlerweile">Mittlerweile by Nano Miratus</a></iframe><br><h3>cheerio<\/h3>',
 			title: "DONATE",
@@ -154,175 +104,9 @@ function init() {
 				}
 			}
 		});
-	}
-
-	$(document).ready(function() {
-		$("#donate").click(function() {
-			donate();
-		});
-	});
-
-	$(document).ready(function() {
-		$("#profile").click(function() {
-			if (userhere === 0) {}
-			else {
-				if (html_profile.innerHTML == "CLOSE THAT") {
-					$("#profilebox").animate({
-						opacity: 0
-					}, 200, function() {
-						$("#profilebox").animate({
-							height: 0
-						}, 400, "easeInOutQuint", function() {
-							$("#profilebox").attr({
-								style: "height: 0;display:none;opacity: 0;"
-							});
-						});
-					});
-					html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
-					
-				}
-				else {
-					if (collectionhere === 0) {
-						urlarray = [];
-
-						if (starbadge1 != "undefined") {
-							urlarray.push(starbadge1.firstChild.src.slice(0, starbadge1.firstChild.src.indexOf("500px")) + "170px.png");
-						}
-						if (starbadge2 != "undefined") {
-							urlarray.push(starbadge2.firstChild.src.slice(0, starbadge2.firstChild.src.indexOf("500px")) + "170px.png");
-						}
-						if (starbadge3 != "undefined") {
-							urlarray.push(starbadge3.firstChild.src.slice(0, starbadge3.firstChild.src.indexOf("500px")) + "170px.png");
-						}
-						if (rolebadge1 != "undefined") {
-							urlarray.push(rolebadge1.firstChild.src.slice(0, rolebadge1.firstChild.src.indexOf("500px")) + "170px.png");
-						}
-						if (rolebadge2 != "undefined") {
-							urlarray.push(rolebadge2.firstChild.src.slice(0, rolebadge2.firstChild.src.indexOf("500px")) + "170px.png");
-						}
-						if (verifiedartistbadge != "undefined") {
-							urlarray.push(verifiedartistbadge.firstChild.src.slice(0, verifiedartistbadge.firstChild.src.indexOf("500px")) + "170px.png");
-						}
-					}
-					else {
-						urlarray = [];
-			
-						z = 0;
-						
-						while (z < collectiondom.children.length) {
-							urlarray.push(collectiondom.children[z].firstChild.src.slice(0, collectiondom.children[z].firstChild.src.indexOf("500px")) + "170px.png");
-							z = z + 1;
-						}
-					}
-					
-					realstart = "<table><tbody>";
-
-					littlestart = "<tr>";
-
-					itemstart = "<td><img src='";
-
-					itemend = "'></td>";
-
-					littleend = "</tr>";
-
-					realend = "</tbody></table>";
-
-					if (urlarray.length === 0) {
-						gentexthtml = "This user has no badges. :(";
-					}
-					if (urlarray.length == 1) {
-						gentexthtml = realstart + littlestart;
-						gentexthtml += itemstart + urlarray[0] + itemend;
-						gentexthtml += littleend + realend;
-					}
-					if (urlarray.length == 2) {
-						gentexthtml = realstart + littlestart;
-						gentexthtml += itemstart + urlarray[0] + itemend;
-						gentexthtml += itemstart + urlarray[1] + itemend;
-						gentexthtml += littleend + realend;
-					}
-					if (urlarray.length == 3) {
-						gentexthtml = realstart + littlestart;
-						gentexthtml += itemstart + urlarray[0] + itemend;
-						gentexthtml += itemstart + urlarray[1] + itemend;
-						gentexthtml += littleend;
-						gentexthtml += littlestart;
-						gentexthtml += itemstart + urlarray[2] + itemend;
-						gentexthtml += littleend + realend;
-					}
-					if (urlarray.length == 4) {
-						gentexthtml = realstart + littlestart;
-						gentexthtml += itemstart + urlarray[0] + itemend;
-						gentexthtml += itemstart + urlarray[1] + itemend;
-						gentexthtml += littleend;
-						gentexthtml += littlestart;
-						gentexthtml += itemstart + urlarray[2] + itemend;
-						gentexthtml += itemstart + urlarray[3] + itemend;
-						gentexthtml += littleend + realend;
-					}
-					if (urlarray.length == 5) {
-						gentexthtml = realstart + littlestart;
-						gentexthtml += itemstart + urlarray[0] + itemend;
-						gentexthtml += itemstart + urlarray[1] + itemend;
-						gentexthtml += littleend;
-						gentexthtml += littlestart;
-						gentexthtml += itemstart + urlarray[2] + itemend;
-						gentexthtml += itemstart + urlarray[3] + itemend;
-						gentexthtml += littleend;
-						gentexthtml += littlestart;
-						gentexthtml += itemstart + urlarray[4] + itemend;
-						gentexthtml += littleend + realend;
-					}
-					if (urlarray.length == 6) {
-						gentexthtml = realstart + littlestart;
-						gentexthtml += itemstart + urlarray[0] + itemend;
-						gentexthtml += itemstart + urlarray[1] + itemend;
-						gentexthtml += littleend;
-						gentexthtml += littlestart;
-						gentexthtml += itemstart + urlarray[2] + itemend;
-						gentexthtml += itemstart + urlarray[3] + itemend;
-						gentexthtml += littleend;
-						gentexthtml += littlestart;
-						gentexthtml += itemstart + urlarray[4] + itemend;
-						gentexthtml += itemstart + urlarray[5] + itemend;
-						gentexthtml += littleend + realend;
-					}
-
-					gentext = htmlEntities(gentexthtml);
-					html_generatedtext.innerHTML = gentext;
-					html_profiletext.innerHTML = "You are " + name + "? Just copy-paste this text to your profile bio:";
-					$("#profilebox").attr({
-						style: "height: 0;display:flex;opacity: 0;"
-					});
-					$("#generatedtext").attr({
-						style: "opacity: 1;"
-					});
-					$("#profilehr").attr({
-						style: "opacity: 1;"
-					});
-					$("#customize").attr({
-						style: "opacity: 1;"
-					});
-					$("#authenticate").attr({
-						style: "opacity: 1;"
-					});
-					$("#profiletext").attr({
-						style: "opacity: 1;"
-					});
-					$("#profilebox").animate({
-						height: "350px"
-					}, 400, "easeInOutQuint", function() {
-						html_profile.innerHTML = "CLOSE THAT";
-						$("#profilebox").animate({
-							opacity: 1
-						}, 400);
-					});
-				}
-			}
-		});
-	});
-
-	function about() {
+	};
+	
+	about = function () {
 		bootbox.dialog({
 			message: '<div id="message1"><h2>HEY HEY HEY<\/h2><br>okay, dis hard to explain...you know, there are some users on a website called genius.com and they can collect points called "iq" for annotating lyrics like darude sandstorm or so...long story short, i made badges for them and reading that text was totally a waste of time for you<br><small>- nano miratus, exaggerating small ass things since 2013</small><br><br><img src="http://i.imgur.com/9PmIlRx.gif"/><\/div><br><h3>swigswag bye<\/h3>',
 			title: "ABOUT",
@@ -334,34 +118,21 @@ function init() {
 				}
 			}
 		});
-	}
-
-	$(document).ready(function() {
-		$("#about").click(function() {
-			about();
-		});
-	});
-
-	/* $.get("ids.js", function(response) {}, "script"); */
-
+	};
 	
-	
-	
-	function zeroFill(number, width) {
+	zeroFill = function (number, width) {
 		width -= number.toString().length;
 		if (width > 0) {
 			return new Array(width + (/\./.test(number) ? 2 : 1)).join("0") + number;
 		}
 		return number + ""; // always return a string
-	}
-
-
-
+	};
+	
 	capitalizeFirstLetter = function(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	};
 
-	function create(htmlStr) {
+	create = function(htmlStr) {
 		var frag = document.createDocumentFragment();
 		var temp = document.createElement("div");
 		temp.innerHTML = htmlStr;
@@ -369,7 +140,7 @@ function init() {
 			frag.appendChild(temp.firstChild);
 		}
 		return frag;
-	}
+	};
 
 	findid = function() {
 		var start1 = nthIndex(sourcestring1, "\\\"id\\\"", 2);
@@ -381,9 +152,6 @@ function init() {
 		if (location.pathname.indexOf("collection") !== -1) {
 			id = geniussource.responseJSON.response.user.id;
 		}
-		// id =
-
-
 	};
 
 	findavatar = function() {
@@ -484,7 +252,7 @@ function init() {
 			fragment = create("<svg id='role_icon' src='equilateral_triangle.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 7' version='1.1' style='fill: #ffffff;width: 1rem;height: 1rem;stroke: #9a9a9a;stroke-width: 1px;top: 2px;position: relative;display: block'><path id='role_icon_path' d='M8.25 6.418L4.25 0l-4 6.418z' cx='74' cy='10' r='9'></path></svg>");
 			// You can use native DOM methods to insert the fragment:
 			html_iconbox.insertBefore(fragment, html_iconbox.childNodes[0]);
-			html_role_icon = document.getElementById("role_icon");
+			html_role_icon = $("#role_icon")[0];
 		}
 		else {
 			// MEDIATOR
@@ -502,7 +270,7 @@ function init() {
 				fragment = create("<svg id='role_icon' src='square.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' version='1.1' style='fill: #ff518c;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></path></svg>");
 				// You can use native DOM methods to insert the fragment:
 				html_iconbox.insertBefore(fragment, html_iconbox.childNodes[0]);
-				html_role_icon = document.getElementById("role_icon");
+				html_role_icon = $("#role_icon")[0];
 			}
 			else {
 				// EDITOR
@@ -520,7 +288,7 @@ function init() {
 					fragment = create("<svg id='role_icon' src='square.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' version='1.1' style='fill: #ffff64;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></path></svg>");
 					// You can use native DOM methods to insert the fragment:
 					html_iconbox.insertBefore(fragment, html_iconbox.childNodes[0]);
-					html_role_icon = document.getElementById("role_icon");
+					html_role_icon = $("#role_icon")[0];
 				}
 				else {
 					// MODERATOR
@@ -538,7 +306,7 @@ function init() {
 						fragment = create("<svg id='role_icon' src='diamond.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22' version='1.1' style='fill: #7689e8;width: 1.05rem;height: 1.05rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M11 1.95l8.98 8.98L11 19.91l-8.98-8.98z' cx='74' cy='10' r='9'></path></svg>");
 						// You can use native DOM methods to insert the fragment:
 						html_iconbox.insertBefore(fragment, html_iconbox.childNodes[0]);
-						html_role_icon = document.getElementById("role_icon");
+						html_role_icon = $("#role_icon")[0];
 					}
 					else {
 						// REGULATOR
@@ -558,7 +326,7 @@ function init() {
 							fragment = create("<svg id='role_icon' src='circle.svg' xmlns='http://www.w3.org/2000/svg' viewBox='64 0 20 20' version='1.1' style='fill: #b0c4de;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><circle id='role_icon_circle' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></circle></svg>");
 							// You can use native DOM methods to insert the fragment:
 							html_iconbox.insertBefore(fragment, html_iconbox.childNodes[0]);
-							html_role_icon = document.getElementById("role_icon");
+							html_role_icon = $("#role_icon")[0];
 						}
 						else {
 							// VERIFIED ARTIST
@@ -576,7 +344,7 @@ function init() {
 								fragment = create("<svg id='role_icon' src='checky.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 11' version='1.1' width='14px' height='14px' style='fill: #38ef51;    height: 17px;margin: 0 2px;top: 2px;width: 17px;stroke: #fff;position: relative;display: block'><polygon points='5.5 0 10.2631397 2.75 10.2631397 8.25 5.5 11 0.736860279 8.25 0.736860279 2.75 '></polygon><path d='M2.5,5.5 L4.5,7.5' stroke-width='1.2' stroke-linecap='square'></path><path d='M4.5,7.5 L8.5,3.5' stroke-width='1.2' stroke-linecap='square'></path></svg>");
 								// You can use native DOM methods to insert the fragment:
 								html_iconbox.insertBefore(fragment, html_iconbox.childNodes[0]);
-								html_role_icon = document.getElementById("role_icon");
+								html_role_icon = $("#role_icon")[0];
 							}
 							else {
 								// NO ROLE
@@ -584,7 +352,7 @@ function init() {
 								html_role_icon.setAttribute("style", "display: none");
 								html_iconbox.setAttribute("style", "display: none");
 								html_role_for_display.setAttribute("style", "display: none");
-								html_role_icon = document.getElementById("role_icon");
+								html_role_icon = $("#role_icon")[0];
 							}
 						}
 					}
@@ -596,10 +364,6 @@ function init() {
 	//-------------------------------------------
 	//-------------------------------------------
 	//-------------------------------------------
-	
-	badgespath = "http://www.pumpn.net" + window.location.pathname.slice(0, nthIndex(currentpath, "/", 3) + 1) + "badges/";
-	
-	collectionspath = "http://www.pumpn.net" + window.location.pathname.slice(0, nthIndex(currentpath, "/", 3) + 1) + "collections/";
 	
 	
 	amount2id = function(type) {
@@ -906,7 +670,7 @@ function init() {
 			badgeelement = "li";
 			badgeclass = "badgebox ui-state-default";
 			
-			while (html_editbadges.hasChildNodes() == true) {
+			while (html_editbadges.hasChildNodes() === true) {
 				html_editbadges.removeChild(html_editbadges.firstChild);
 			}
 			starbadgechooser("genius", iq, 1);
@@ -945,7 +709,7 @@ function init() {
 				verifiedartistbadge.appendChild(html_smallfooter.cloneNode(true));
 			}
 			hoverEnabled = 1;
-			$(".smallfooter").fadeOut(100);
+			$(".smallfooter").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
 			
 			
 				$( ".badgebox" ).hover(function() {
@@ -953,7 +717,7 @@ function init() {
 					currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
 					if (currentfooter.id == "smallfooter") {
 						if (hoverEnabled == 1) {
-						$(currentfooter).fadeIn( 200 );
+						$(currentfooter).fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
 						}
 					}
 				},
@@ -961,7 +725,7 @@ function init() {
 					childindex = getChildrenIndex(this);
 					currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
 					if (currentfooter.id == "smallfooter") {
-						$(currentfooter).fadeOut( 200 );
+						$(currentfooter).fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
 					}
 				});
 		}
@@ -1066,7 +830,7 @@ function init() {
 						}
 						
 						hoverEnabled = 1;
-						$(".smallfooter").fadeOut(100);
+						$(".smallfooter").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
 						
 						
 						$( ".badgebox" ).hover(function() {
@@ -1074,7 +838,7 @@ function init() {
 							currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
 							if (currentfooter.id == "smallfooter") {
 								if (hoverEnabled == 1) {
-								$(currentfooter).fadeIn( 200 );
+								$(currentfooter).fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
 								}
 							}
 						},
@@ -1082,7 +846,7 @@ function init() {
 							childindex = getChildrenIndex(this);
 							currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
 							if (currentfooter.id == "smallfooter") {
-								$(currentfooter).fadeOut( 200 );
+								$(currentfooter).fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
 							}
 						});
 					}
@@ -1175,15 +939,13 @@ function init() {
 
 				imageloop = function() {
 					if (html_badgescontainer.firstChild.firstChild.complete === true) {
-						$("#loadingcontainer").fadeOut(1000, function() {
-							$("#loadingcontaineroverlay").fadeOut(1000, function() {
-								$("#sitecontainer").attr({
-									style: "position: relative;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
-								});
-								$(".mdl-layout__content").animate({
-									scrollTop: $('#userinfo').offset().top - 75
-								}, 1000, "easeInOutQuint");
+						$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function() {
+							$("#sitecontainer").attr({
+								style: "position: relative;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
 							});
+							$(".mdl-layout__content").animate({
+								scrollTop: $('#userinfo').offset().top - 75
+							}, 1000, $.bez([0.4, 0.0, 0.2, 1]));
 						});
 						NProgress.done();
 						console.log("images loaded");
@@ -1200,15 +962,11 @@ function init() {
 					imageloop();
 				}
 				else {
-					$("#loadingcontainer").fadeOut(1000, function() {
-						$("#loadingcontaineroverlay").fadeOut(1000);
-					});
+					$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
 					NProgress.done();
 				}
 					
-				//if (usergiven === 0) {
-					window.history.pushState("object or string", "Title", window.location.pathname.slice(0, (nthIndex(currentpath, "/", 3) + 1)) + login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
-				//}
+				window.history.pushState("object or string", "Title", window.location.pathname.slice(0, (nthIndex(currentpath, "/", 3) + 1)) + login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
 
 				data = [
 					["avatar", avatar],
@@ -1228,12 +986,146 @@ function init() {
 				else {
 					NProgress.done();
 				}
+			})
+			.fail(function() {
+				console.log("didn't find collection on server");
+				collectionhere = 0;
+					
+				NProgress.inc();
+					
+				if (location.pathname.indexOf("collection") == -1) {
+
+				insert();
+				}
+				else {
+					insertbadges();
+				}
+					
+				NProgress.inc();
+				
+				if (location.pathname.indexOf("collection") == -1) {
+					html_usererror.style.display = "none";
+
+					html_search.innerHTML = "search again";
+					$("#userinfo:hidden").attr({
+						style: "display: flex;"
+					});
+
+					$("#optionscontainer").attr({
+						style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
+					});
+
+					$("#buttoncontainer").attr({
+						style: "padding-top: 5vh;padding-bottom: 5vh;"
+					});
+
+					$("#profilebox").attr({
+						style: "height: 0;display:none;opacity: 0;"
+					});
+
+					$("#profiletext").attr({
+						style: "opacity: 0"
+					});
+
+					$("#generatedtext").attr({
+						style: "opacity: 0"
+					});
+						
+					$("#profilehr").attr({
+						style: "opacity: 0"
+					});
+						
+					$("#customize").attr({
+						style: "opacity: 0"
+					});
+
+					$("#authenticate").attr({
+						style: "opacity: 0"
+					});
+
+					html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
+
+					html_generatedtext.innerHTML = "";
+
+					$("#info").attr({
+						style: "width: initial;"
+					});
+
+					$("#badgeslogo").attr({
+						style: "width: 3vw;align-self: center;height: initial;"
+					});
+
+					$("#version").attr({
+						style: "font-size: 5vmin;color: #000000;font-weight: 700;margin-top: 0;margin-bottom: 0;line-height: 80%;padding-bottom:0;"
+					});
+
+					$("#menucontainer").attr({
+						style: "display: flex"
+					});
+						
+					$("#top").attr({
+						style: "height: initial;margin-bottom: 41px;"
+					});
+					
+					$("#search").attr({
+						style: "margin-top: 0;"
+					});
+					
+					NProgress.inc();
+
+					imageloop = function() {
+						if (html_badgescontainer.firstChild.firstChild.complete === true) {
+							$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function() {
+								$("#sitecontainer").attr({
+									style: "position: relative;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
+								});
+								$(".mdl-layout__content").animate({
+									scrollTop: $('#userinfo').offset().top - 75
+								}, 1000, $.bez([0.4, 0.0, 0.2, 1]));
+							});
+							NProgress.done();
+							console.log("images loaded");
+						}
+						else {
+							setTimeout(function() {
+								NProgress.inc();
+								console.log("images not loaded yet");
+								imageloop();
+							}, 500);
+						}
+					};
+					if (isnothing == "no") {
+						imageloop();
+					}
+					else {
+						$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
+						NProgress.done();
+					}
+						
+				window.history.pushState("object or string", "Title", window.location.pathname.slice(0, (nthIndex(currentpath, "/", 3) + 1)) + login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
+
+					data = [
+						["avatar", avatar],
+						["link", link],
+						["name", name],
+						["login", login],
+						["iq_for_display", iq_for_display],
+						["iq", iq],
+						["id", id],
+						["transcriptions_count", transcriptions_count],
+						["annotations_count", annotations_count],
+						["role_for_display", role_for_display],
+						["swag?", "swag."]
+					];
+					console.table(data);
+				}
+				else {
+					NProgress.done();
+				}
 			});
+			
 	};
 	
-	
-	
-	bind();
 	
 	warmupyahooapi = function() {
 		url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='http://genius.com/SinaTheQueen'&format=json";
@@ -1244,37 +1136,9 @@ function init() {
 	};
 
 	// it's really a warmup...if this function wouldn't exist, the first request a user makes would take super long and eventually error then...i don't know why...it's like starting a steam machine or so :D
-
-	// warmupyahooapi();
-
-	$("input").keypress(function(event) {
-		if (event.which == 13) {
-			event.preventDefault();
-			html_search.onclick();
-		}
-	});
-
+	
+	
 	id = 0;
-
-	/*
-	loop=function(){$("script.momentscript").remove(),0!==n?i>0?(url="https://query.yahooapis.com/v1/public/yql?q=select * from html where url='http://genius.com/"+logininput.toUpperCase()+"'and%20compat='html5'%20and%20xpath=%27(//preload-content)[last()-"+i+"]%27&format=json",source=$.getJSON(url).done(function(){sourcestring1=JSON.stringify(source),175==sourcestring1.indexOf("user")?(findid(),id_given="yes",n=0,loop()):(i-=1,loop())})):(n=0,loop()):index<300?(createVariable("momentusername","ids["+index+"].username"),logininput.toUpperCase()==momentusername.toUpperCase()?(createVariable("momentid","ids["+index+"].id"),id=momentid,id_given="yes",index=1e6,loop()):(index+=1,loop())):"no"==id_given&&0==serverchecked?$.get("ids/"+logininput.toUpperCase()+".txt",function(a){},"text").done(function(a){id=a,id_given="yes",serverchecked=1,loop()}).fail(function(a){console.log("error"),n=1,serverchecked=1,loop()}):"yes"==id_given?(geniusurl="http://api.genius.com/users/"+id+"?access_token=G6EpShLbSH5axVzAGk7o_yzK2updweNevUtHX4qMa8oUVq9WSduHHSN8V0rO9axS&format=json",geniussource=$.getJSON(geniusurl).done(function(){doit(),phpid=new FormData,phpid.append("phpid",id),phpid.append("phplogin",login.toUpperCase()),xhr=window.XMLHttpRequest?new XMLHttpRequest:new activeXObject("Microsoft.XMLHTTP"),xhr.open("post","saveid.php",!0),xhr.send(phpid)})):""!=logininput?(html_nouser.innerHTML=logininput,$("#loadingcontainer").fadeOut("slow",function(){$("#usererror:hidden").fadeIn("slow")})):$("#loadingcontainer").fadeOut("slow",function(){endtime=$.now(),waitingtime=endtime-starttime,waitingtimeinseconds=waitingtime/1e3,html_wait.innerHTML=waitingtimeinseconds,$("#nothing:hidden").fadeIn("slow")})};
-	*/
-
-	// ---------------------------------------------
-	// CHECK IF IN ELECTRON ------------------------
-	// ---------------------------------------------
-	if (navigator.userAgent === "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36") {
-		userindexvalue = 172;
-	}
-	else {
-		userindexvalue = 175;
-	}
-	// ---------------------------------------------
-	// ---------------------------------------------
-	// ---------------------------------------------
-	
-	
-	
 	
 	loop = function() {
 		if (logininputchecked === 0) {
@@ -1328,7 +1192,7 @@ function init() {
 
 					// check if on server
 					
-					$.get("http://www.pumpn.net" + window.location.pathname.slice(0, nthIndex(currentpath, "/", 3) + 1) + "ids/" + logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", function(response) {}, "text")
+					$.get(window.location.origin + window.location.pathname.slice(0, nthIndex(currentpath, "/", 3) + 1) + "ids/" + logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", function(response) {}, "text")
 							.done(function(response) {
 								if (response.length < 10) {
 									id = response;
@@ -1359,7 +1223,7 @@ function init() {
 
 				else {
 						if (id_given == "yes") {
-							geniusurl = "http://api.genius.com/users/" + id + "?access_token=lUQ8rzBeb78dJdtUcBbE4Jh-jfO88nfoDxHV3Ji3iOz268lNbYAYh8G0PjlcV-ma";
+							geniusurl = "https://api.genius.com/users/" + id + "?access_token=lUQ8rzBeb78dJdtUcBbE4Jh-jfO88nfoDxHV3Ji3iOz268lNbYAYh8G0PjlcV-ma";
 
 							geniussource = $.getJSON(geniusurl).done(function() {
 								console.log("got json from genius api");
@@ -1394,8 +1258,7 @@ function init() {
 								$("#info").attr({
 									style: "display: none;"
 								});
-								$("#loadingcontainer").fadeOut(1000, function() {
-									$("#loadingcontaineroverlay").fadeOut(1000);
+								$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function() {
 
 
 									$("#profilebox").attr({
@@ -1427,7 +1290,7 @@ function init() {
 									html_generatedtext.innerHTML = "";
 
 									html_nouser.innerHTML = logininput;
-									$("#usererror:hidden").fadeIn("slow");
+									$("#usererror:hidden").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
 								});
 							}
 							else {
@@ -1447,8 +1310,7 @@ function init() {
 									style: "display: none;"
 								});
 
-								$("#loadingcontainer").fadeOut(1000, function() {
-									$("#loadingcontaineroverlay").fadeOut(1000);
+								$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function() {
 									endtime = $.now();
 									waitingtime = endtime - starttime;
 									waitingtimeinseconds = waitingtime / 1000;
@@ -1483,7 +1345,7 @@ function init() {
 									html_generatedtext.innerHTML = "";
 
 									html_wait.innerHTML = waitingtimeinseconds;
-									$("#nothing:hidden").fadeIn("slow");
+									$("#nothing:hidden").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
 								});
 							}
 						}
@@ -1491,9 +1353,8 @@ function init() {
 			}
 		}
 	};
-}
-
-bind = function() {
+	
+	bind = function() {
 	html_search.onclick = function() {
 
 		logininput = $("#userinput").val();
@@ -1523,26 +1384,249 @@ bind = function() {
 		userpagegiven = 0;
 
 		if ($("#optionscontainer").css("height") == "initial") {
-			$("#userinfo").fadeOut("slow", function() {
-				$("#loadingcontainer:hidden").fadeIn(1000, function() {
-					$("#loadingcontaineroverlay:hidden").fadeIn(1000, function() {
-							loop();
-					});
+			$("#userinfo").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function() {
+				$("#loadingcontainer:hidden").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]), function() {
+					loop();
 				});
 			});
 		}
 		else {
-			$("#optionscontainer").fadeOut("slow", function() {
-				$("#userinfo").fadeOut("slow", function() {
-					$("#loadingcontainer:hidden").fadeIn(1000, function() {
-						$("#loadingcontaineroverlay:hidden").fadeIn(1000, function() {
-								loop();
-						});
+			$("#optionscontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function() {
+				$("#userinfo").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function() {
+					$("#loadingcontainer:hidden").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]), function() {
+						loop();
 					});
 				});
 			});
 		}
 	};
+};
+
+init = function () {
+	
+	allElements = $("*");
+	for (var i = 0, n = allElements.length; i < n; ++i) {
+		var el = allElements[i];
+		if (el.id) { window["html_" + el.id] = el; }
+	}
+	
+	if (currentpath.indexOf("/collection") == -1) {
+		if (localStorage.getItem("access_token") !== null) {
+			if (localStorage.getItem("tokentime") !== null) {
+				if (jQuery.now() - (localStorage.getItem("tokentime")) < 1209600000) {
+					html_authenticate.parentNode.attributes.href.nodeValue = "collection";
+				}
+			}
+		}
+		if (currentpath.length != nthIndex(currentpath, "/", 3) + 1) {
+			usergiven = 1;
+			usergivenfunc();
+		}
+	}
+	
+	if (usergiven === 0) {
+		$("#loadingcontainer").attr({
+			style: "display: none"
+		});
+	}
+	
+	$(document).ready(function() {
+		$("#donate").click(function() {
+			donate();
+		});
+	});
+
+	$(document).ready(function() {
+		$("#profile").click(function() {
+			if (userhere === 0) {}
+			else {
+				if (html_profile.innerHTML == "CLOSE THAT") {
+					$("#profilebox").animate({
+						opacity: 0
+					}, 250, $.bez([0.4, 0.0, 1, 1]), function() {
+						$("#profilebox").animate({
+							height: 0
+						}, 400, $.bez([0.4, 0.0, 0.2, 1]), function() {
+							$("#profilebox").attr({
+								style: "height: 0;display:none;opacity: 0;"
+							});
+						});
+					});
+					html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
+					
+				}
+				else {
+					if (collectionhere === 0) {
+						urlarray = [];
+
+						if (starbadge1 != "undefined") {
+							urlarray.push(starbadge1.firstChild.src.slice(0, starbadge1.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (starbadge2 != "undefined") {
+							urlarray.push(starbadge2.firstChild.src.slice(0, starbadge2.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (starbadge3 != "undefined") {
+							urlarray.push(starbadge3.firstChild.src.slice(0, starbadge3.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (rolebadge1 != "undefined") {
+							urlarray.push(rolebadge1.firstChild.src.slice(0, rolebadge1.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (rolebadge2 != "undefined") {
+							urlarray.push(rolebadge2.firstChild.src.slice(0, rolebadge2.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (verifiedartistbadge != "undefined") {
+							urlarray.push(verifiedartistbadge.firstChild.src.slice(0, verifiedartistbadge.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+					}
+					else {
+						urlarray = [];
+			
+						z = 0;
+						
+						while (z < collectiondom.children.length) {
+							urlarray.push(collectiondom.children[z].firstChild.src.slice(0, collectiondom.children[z].firstChild.src.indexOf("500px")) + "170px.png");
+							z = z + 1;
+						}
+					}
+					
+					realstart = "<table><tbody>";
+
+					littlestart = "<tr>";
+
+					itemstart = "<td><img src='";
+
+					itemend = "'></td>";
+
+					littleend = "</tr>";
+
+					realend = "</tbody></table>";
+
+					if (urlarray.length === 0) {
+						gentexthtml = "This user has no badges. :(";
+					}
+					if (urlarray.length == 1) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += littleend + realend;
+					}
+					if (urlarray.length == 2) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += itemstart + urlarray[1] + itemend;
+						gentexthtml += littleend + realend;
+					}
+					if (urlarray.length == 3) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += itemstart + urlarray[1] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[2] + itemend;
+						gentexthtml += littleend + realend;
+					}
+					if (urlarray.length == 4) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += itemstart + urlarray[1] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[2] + itemend;
+						gentexthtml += itemstart + urlarray[3] + itemend;
+						gentexthtml += littleend + realend;
+					}
+					if (urlarray.length == 5) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += itemstart + urlarray[1] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[2] + itemend;
+						gentexthtml += itemstart + urlarray[3] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[4] + itemend;
+						gentexthtml += littleend + realend;
+					}
+					if (urlarray.length == 6) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += itemstart + urlarray[1] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[2] + itemend;
+						gentexthtml += itemstart + urlarray[3] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[4] + itemend;
+						gentexthtml += itemstart + urlarray[5] + itemend;
+						gentexthtml += littleend + realend;
+					}
+
+					gentext = htmlEntities(gentexthtml);
+					html_generatedtext.innerHTML = gentext;
+					html_profiletext.innerHTML = "You are " + name + "? Just copy-paste this text to your profile bio:";
+					$("#profilebox").attr({
+						style: "height: 0;display:flex;opacity: 0;"
+					});
+					$("#generatedtext").attr({
+						style: "opacity: 1;"
+					});
+					$("#profilehr").attr({
+						style: "opacity: 1;"
+					});
+					$("#customize").attr({
+						style: "opacity: 1;"
+					});
+					$("#authenticate").attr({
+						style: "opacity: 1;"
+					});
+					$("#profiletext").attr({
+						style: "opacity: 1;"
+					});
+					$("#profilebox").animate({
+						height: "350px"
+					}, 400, $.bez([0.4, 0.0, 0.2, 1]), function() {
+						html_profile.innerHTML = "CLOSE THAT";
+						$("#profilebox").animate({
+							opacity: 1
+						}, 250, $.bez([0.0, 0.0, 0.2, 1]));
+					});
+				}
+			}
+		});
+	});
+
+	$(document).ready(function() {
+		$("#about").click(function() {
+			about();
+		});
+	});
+	
+	bind();
+	
+
+	// warmupyahooapi();
+
+	$("input").keypress(function(event) {
+		if (event.which == 13) {
+			event.preventDefault();
+			html_search.onclick();
+		}
+	});
+
+	// ---------------------------------------------
+	// CHECK IF IN ELECTRON ------------------------
+	// ---------------------------------------------
+	if (navigator.userAgent === "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36") {
+		userindexvalue = 172;
+	}
+	else {
+		userindexvalue = 175;
+	}
+	// ---------------------------------------------
+	// ---------------------------------------------
+	// ---------------------------------------------
+
 };
 
 usergivenfunc = function() {
@@ -1551,7 +1635,7 @@ usergivenfunc = function() {
 	
 	$(".mdl-textfield").addClass("is-dirty");
 	
-	document.getElementById("userinput").value = window.location.pathname.slice(nthIndex(currentpath, "/", 3) + 1);
+	html_userinput.value = window.location.pathname.slice(nthIndex(currentpath, "/", 3) + 1);
 
 	starttime = $.now();
 
@@ -1577,12 +1661,10 @@ usergivenfunc = function() {
 	
 	userpagegiven = 0;
 	
-		$("#optionscontainer").fadeOut("slow", function() {
-			$("#userinfo").fadeOut("slow", function() {
-				$("#loadingcontainer").fadeIn(1000, function() {
-					$("#loadingcontaineroverlay").fadeIn(1000, function() {
-						loop();
-					});
+		$("#optionscontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function() {
+			$("#userinfo").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function() {
+				$("#loadingcontainer").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]), function() {
+					loop();
 				});
 			});
 		});

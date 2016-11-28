@@ -16,13 +16,13 @@ collectioninit = function() {
 				"code": code,
 				"client_id": "kB4bzMdamqUMJqZsigFyrWzWLYYLwq7e6Zm9pjOF1dWxx71-iJsCjpHpkAx2FaJA",
 				"client_secret": "kB4bzMdamqUMJqZsigFyrWzWLYYLwq7e6Zm9pjOF1dWxx71-iJsCjpHpkAx2FaJA",
-				"redirect_uri": "http://www.pumpn.net/mag/badges2.1-weekly-201648/collection/",
+				"redirect_uri": collectionpath,
 				"response_type": "code",
 				"grant_type": "authorization_code"
 			})
 			.done(function(data) {
 				source = data;
-				geniusurl = "http://api.genius.com/account?access_token=" + source.access_token;
+				geniusurl = "https://api.genius.com/account?access_token=" + source.access_token;
 				geniussource = $.getJSON(geniusurl)
 					.done(function() {
 						doit();
@@ -54,7 +54,7 @@ collectioninit = function() {
 		getsource();
 	}
 	else {
-		geniusurl = "http://api.genius.com/account?access_token=" + localStorage.getItem("access_token");
+		geniusurl = "https://api.genius.com/account?access_token=" + localStorage.getItem("access_token");
 		geniussource = $.getJSON(geniusurl)
 			.done(function() {
 				doit();
@@ -456,7 +456,7 @@ collectioninit = function() {
 			phpcollection.append("phplogin", login.toUpperCase().replace(/\s+/g, "-"));
 			phpcollection.append("phpcollection", "collectionobject = " + JSON.stringify(collectionobject) + ";");
 			xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
-			xhr.open('post', 'http://www.pumpn.net/mag/badges2.1-weekly-201648/savecollection.php', true);
+			xhr.open('post', window.location.origin + window.location.pathname.slice(0, nthIndex(currentpath, "/", 3) + 1) + "savecollection.php", true);
 			xhr.send(phpcollection);
 			console.log("saved collection on server");
 
@@ -554,7 +554,7 @@ collectioninit = function() {
 			$("#generatedtext")
 				.animate({
 					opacity: 1
-				}, 400);
+				}, 250, $.bez([0.0, 0.0, 0.2, 1]));
 
 
 
