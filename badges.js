@@ -1,5 +1,73 @@
 /*global name:true */
 
+	var badges = angular.module('badges', ['ngMaterial', 'material.svgAssetsCache']);
+	
+	
+	badges.controller('all', function all($scope, $timeout, $mdSidenav, $mdDialog) {
+		$scope.toggleLeft = buildToggler('left');
+		
+		function buildToggler(componentId) {
+		  return function() {
+			$mdSidenav(componentId).toggle();
+		  }
+		}
+		
+		$scope.doPrimaryAction = function(event) {
+		$mdDialog.show(
+			  $mdDialog.alert()
+				.title('Primary Action')
+				.textContent('Primary actions can be used for one click actions')
+				.ariaLabel('Primary click demo')
+				.ok('Awesome!')
+				.targetEvent(event)
+			);
+		};
+
+		$scope.doSecondaryAction = function(event) {
+			$mdDialog.show(
+			  $mdDialog.alert()
+				.title('Secondary Action')
+				.textContent('Secondary actions can be used for one click actions')
+				.ariaLabel('Secondary click demo')
+				.ok('Neat!')
+				.targetEvent(event)
+			);
+		};
+		
+		$scope.manifest = "Badges";
+		$scope.currentpath = window.location.pathname;
+		$scope.swag = [
+			{
+				name: 'Nexus S',
+				snippet: 'Fast just got faster with Nexus S.'
+			},
+			{
+				name: 'Motorola XOOM™ with Wi-Fi',
+				snippet: 'The Next, Next Generation tablet.'
+			},
+			{
+				name: 'MOTOROLA XOOM™',
+				snippet: 'The Next, Next Generation tablet.'
+			}
+		];
+		
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	jQuery2html = function(prefix, attribute) {
+	allElements = $("*");
+	for (var i = 0, n = allElements.length; i < n; ++i) {
+		var el = allElements[i];
+		if (el.id) { window[prefix + el[attribute]] = el; }
+	}
+	};
 	nthIndex = function(str, pat, n) {
 		var L = str.length;
 		var i = -1;
@@ -13,11 +81,23 @@
 	
 	currentpath = window.location.pathname;
 	
-	badgespath = window.location.origin + window.location.pathname.slice(0, nthIndex(window.location.pathname, "/", 3) + 1) + "badges/";
+	homepath = function() {
+		if ((currentpath.match(/\//g) || []).length > 3) {
+			return window.location.origin + currentpath.slice(0, nthIndex(currentpath, "/", (currentpath.match(/\//g) || []).length - 1));
+		}
+		else {
+			return window.location.origin + currentpath.slice(0, nthIndex(currentpath, "/", (currentpath.match(/\//g) || []).length) + 1);
+		}
+	}
 	
-	collectionpath = window.location.origin + window.location.pathname.slice(0, nthIndex(window.location.pathname, "/", 3) + 1) + "collection/";
-	
-	collectionspath = window.location.origin + window.location.pathname.slice(0, nthIndex(window.location.pathname, "/", 3) + 1) + "collections/";
+	pathgenerator = function(directory) {
+		if ((currentpath.match(/\//g) || []).length > 3) {
+			window[directory + "path"] = homepath() + "/" + directory + "/";
+		}
+		else {
+			window[directory + "path"] = homepath() + "/" + directory + "/";
+		}
+	}
 
 	pathactivated = 1;
 	circleactivated = 0;
@@ -84,6 +164,27 @@
 		while (x < Object.size(collectionobject.collection)) {
 			collectiondom.innerHTML += "<div class='badgebox' id='" + collectionobject.collection[x].id1 + "-" + collectionobject.collection[x].id2 + collectionobject.collection[x].badgename + "'><img src='" + collectionobject.collection[x].src + "?time=" + jQuery.now() + "' class='badge'/></div>";
 			x = x + 1;
+		}
+	};
+	
+	imageloop = function() {
+		if (html_badgescontainer.firstChild.firstChild.complete === true) {
+			$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function() {
+				if (location.pathname.indexOf("collection") == -1) {
+					$(".mdl-layout__content").animate({
+						scrollTop: $('#userinfo').offset().top - 75
+					}, 1000, $.bez([0.4, 0.0, 0.2, 1]));
+				}
+			});
+			NProgress.done();
+			console.log("images loaded");
+		}
+		else {
+			setTimeout(function() {
+				NProgress.inc();
+				console.log("images not loaded yet");
+				imageloop();
+			}, 500);
 		}
 	};
 	
@@ -849,6 +950,14 @@
 								$(currentfooter).fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
 							}
 						});
+						
+						if (isnothing == "no") {
+							imageloop();
+						}
+						else {
+							$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
+							NProgress.done();
+						}
 					}
 				}
 				else {
@@ -937,27 +1046,6 @@
 				
 				NProgress.inc();
 
-				imageloop = function() {
-					if (html_badgescontainer.firstChild.firstChild.complete === true) {
-						$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function() {
-							$("#sitecontainer").attr({
-								style: "position: relative;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
-							});
-							$(".mdl-layout__content").animate({
-								scrollTop: $('#userinfo').offset().top - 75
-							}, 1000, $.bez([0.4, 0.0, 0.2, 1]));
-						});
-						NProgress.done();
-						console.log("images loaded");
-					}
-					else {
-						setTimeout(function() {
-							NProgress.inc();
-							console.log("images not loaded yet");
-							imageloop();
-						}, 500);
-					}
-				};
 				if (isnothing == "no") {
 					imageloop();
 				}
@@ -966,7 +1054,7 @@
 					NProgress.done();
 				}
 					
-				window.history.pushState("object or string", "Title", window.location.pathname.slice(0, (nthIndex(currentpath, "/", 3) + 1)) + login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
+				window.history.pushState({}, document.title, currentpath.slice(0, (nthIndex(currentpath, "/", 3) + 1)) + login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
 
 				data = [
 					["avatar", avatar],
@@ -1073,27 +1161,6 @@
 					
 					NProgress.inc();
 
-					imageloop = function() {
-						if (html_badgescontainer.firstChild.firstChild.complete === true) {
-							$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function() {
-								$("#sitecontainer").attr({
-									style: "position: relative;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
-								});
-								$(".mdl-layout__content").animate({
-									scrollTop: $('#userinfo').offset().top - 75
-								}, 1000, $.bez([0.4, 0.0, 0.2, 1]));
-							});
-							NProgress.done();
-							console.log("images loaded");
-						}
-						else {
-							setTimeout(function() {
-								NProgress.inc();
-								console.log("images not loaded yet");
-								imageloop();
-							}, 500);
-						}
-					};
 					if (isnothing == "no") {
 						imageloop();
 					}
@@ -1102,7 +1169,7 @@
 						NProgress.done();
 					}
 						
-				window.history.pushState("object or string", "Title", window.location.pathname.slice(0, (nthIndex(currentpath, "/", 3) + 1)) + login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
+				window.history.pushState("object or string", "Title", currentpath.slice(0, (nthIndex(currentpath, "/", 3) + 1)) + login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
 
 					data = [
 						["avatar", avatar],
@@ -1403,12 +1470,14 @@
 };
 
 init = function () {
+	jQuery2html("html_", "id");
 	
-	allElements = $("*");
-	for (var i = 0, n = allElements.length; i < n; ++i) {
-		var el = allElements[i];
-		if (el.id) { window["html_" + el.id] = el; }
-	}
+	html_badgesdrawertitle.href = homepath();
+	
+	pathgenerator("badges");
+	pathgenerator("collection");
+	pathgenerator("collections");
+	pathgenerator("ids");
 	
 	if (currentpath.indexOf("/collection") == -1) {
 		if (localStorage.getItem("access_token") !== null) {
@@ -1424,11 +1493,13 @@ init = function () {
 		}
 	}
 	
+	/*
 	if (usergiven === 0) {
 		$("#loadingcontainer").attr({
 			style: "display: none"
 		});
 	}
+	*/
 	
 	$(document).ready(function() {
 		$("#donate").click(function() {
