@@ -8,12 +8,26 @@ body {
 	font-family: "Programme2";
 	letter-spacing: normal;
     font-weight: 700;
+	overflow: hidden;
+	background-color: #f7f7f7;
 }
 
-.badges-layout #site {
+/* .badges-layout #site {
 	width: 100%;
     height: 100%;
-    padding: 3% 10%;
+    padding: 2% 10% 4%;
+	background: none;
+	margin-top: 41px;
+    position: fixed;
+} */
+
+.badges-layout #site {
+    width: 100%;
+    height: calc(100% - 41px);
+    padding: 2% 10% 2%;
+    background: none;
+    top: 41px;
+    position: absolute;
 }
 
 .badges-layout h2 {
@@ -21,6 +35,19 @@ body {
 	letter-spacing: normal;
     font-weight: 700;
 	color: #000000;
+	margin-bottom: 0;
+}
+
+.badges-layout md-list md-list-item .md-list-item-text p {
+    color: rgba(0,0,0,0.54);
+}
+
+.badges-layout md-icon svg {
+    fill: black;
+}
+
+.badges-layout .md-open-menu-container {
+	z-index: 100;
 }
 
 .badges-layout h1 {
@@ -42,18 +69,54 @@ body {
 	min-height: 0;
 }
 
+.badges-layout .md-toolbar-tools {
+	justify-content: space-between;
+}
+
+#titlecontainer {
+	display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+}
+
+#geniuslogo {
+	height: 50%;
+	margin-right: 10px;
+}
+
+.badges-layout md-toolbar .md-menu {
+    margin: 0 -8px 0 0;
+}
+
+.badges-layout .md-icon-button.md-focused {
+	background: none;
+}
+
+.badges-layout .md-button.md-focused {
+	background: none;
+}
+
+.badges-layout md-menu-item>.md-button.md-focused {
+	background-color: rgba(158,158,158,0.2);
+}
+
+
+
 .badges-layout md-sidenav {
-    top: 41px;
     border-right-width: 3px;
     border-right-style: solid;
     border-right-color: #ffff64;
 }
 
 .badges-layout md-backdrop.md-opaque {
-	opacity: 0;
+/* 	opacity: 0;
 	background-color: rgba(255, 255, 255, 0);
-	display: none;
+	display: none; */
 }
+
+
 
 #black-icon {
 	color: #000000;
@@ -71,9 +134,85 @@ body {
     padding: 0;
 }
 
-.badges-layout .md-primary ._md-list-item-inner>p {
+.badges-layout .md-primary p {
 	color: #99a7ee;
 }
+
+.badges-layout md-card {
+	box-shadow: none;
+	margin: 0;
+}
+
+.badges-layout md-card md-card-content {
+	height: 100%;
+}
+
+#top {
+	width: 100%;
+	height: 100%;
+}
+
+.badges-layout md-input-container {
+    min-width: 30vw;
+    max-width: 50vw;
+}
+
+.badges-layout label {
+	font-size: 24px;
+	font-weight: 400;
+}
+
+.badges-layout input[type=text] {
+	font-family: "Programme2";
+}
+
+.badges-layout input {
+	font-size: 24px;
+	transition: border-color 0.4s cubic-bezier(.25,.8,.25,1);
+	border-bottom: 1px solid #cecece;
+}
+
+.badges-layout md-input-container:not(.md-input-invalid).md-input-focused .md-input {
+    border-color: #ff1464;
+}
+
+.badges-layout md-input-container:not(.md-input-invalid).md-input-focused label {
+    color: #ff1464;
+}
+
+.badges-layout md-input-container:not(.md-input-invalid).md-input-has-value .md-input {
+    border-color: #ff1464;
+}
+
+.badges-layout md-input-container:not(.md-input-invalid).md-input-has-value label {
+    color: #ff1464;
+}
+
+.badges-layout .md-button.md-primary.md-raised {
+	font-family: "Programme2";
+	letter-spacing: normal;
+	font-size: 26px;
+	height: initial;
+	padding: 15px 30px;
+	margin-top: 15px;
+	background-color: #ff1464;
+}
+
+.badges-layout .md-button.md-primary.md-raised:not([disabled]):hover {
+	background-color: #ff1464;
+}
+
+.badges-layout .md-button.md-primary.md-raised:not([disabled]) {
+	box-shadow: none;
+}
+
+/* .badges-layout md-input-container.md-input-focused > label {
+	font-size: 16px;
+}
+
+.badges-layout md-input-container.md-input-has-value > label {
+	font-size: 16px;
+} */
 
 .badges-layout.mdl-layout {
     overflow-y: hidden;
@@ -105,33 +244,6 @@ body {
     flex-direction: column;
 }
 
-.badges-layout .mdl-textfield {
-    min-width: 30vw;
-    max-width: 50vw;
-}
-
-.badges-layout input[type=text] {
-	font-family: "Programme2";
-}
-
-.badges-layout input {
-	font-size: 26px;
-	border-bottom: 1px solid #cecece;
-}
-
-.badges-layout label {
-	font-size: 26px;
-	top: 27px;
-}
-
-.badges-layout .mdl-textfield.is-dirty > .mdl-textfield__label {
-	font-size: 16px;
-}
-
-.badges-layout .mdl-textfield.is-focused > .mdl-textfield__label {
-	font-size: 16px;
-}
-
 .badges-layout .mdl-layout__header {
     color: black;
     background-color: #ffff64;
@@ -161,14 +273,6 @@ body {
     padding: 0;
     justify-content: center;
     margin: 0 auto;
-}
-
-.logo_container {
-    background: url(https://docs.genius.com/images/snarly_wordmark_hires.png) no-repeat center;
-    background-size: contain;
-    height: 41px;
-    width: 122px;
-    display: block;
 }
 
 .badges-layout .mdl-layout__tab-bar {
@@ -260,11 +364,6 @@ input:-webkit-autofill {
 	cursor: pointer;
 }
 
-#top {
-	width: 100%;
-	height: 100%;
-}
-
 form {
 	margin: 0;
 }
@@ -306,6 +405,38 @@ form {
 }
 
 /* ---------------------- GENIUS ---------------------- */
+
+.logo_container {
+    animation: fade_in 1s backwards;
+    position: relative;
+    width: 135px;
+}
+
+.logo_link {
+    box-sizing: border-box;
+    height: 41px;
+    margin: 0;
+    padding: .6rem 0 0 27px;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    width: 135px;
+    text-indent: -9999px;
+}
+
+.logo_link:before {
+    background: url(//assets.genius.com/images/site-sprites-ffa098375e26136fe66cceab81e077744baf68d5.png) no-repeat;
+    background-position: -682px -539px;
+    height: 19px;
+    width: 124px;
+    content: '';
+    float: left;
+    width: 124px;
+    height: 19px;
+    position: absolute;
+    left: 6px;
+    top: 11px;
+}
 
 .statistics_panel {
     display: -webkit-box;
@@ -588,12 +719,6 @@ button.close {
 
 * {
 	box-sizing: border-box;
-}
-
-body {
-	background: #f7f7f7;
-	margin: 0;
-	overflow: auto;
 }
 
 #search {

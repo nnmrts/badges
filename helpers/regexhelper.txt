@@ -26,3 +26,15 @@ https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20u
 
 
 FILTER: *.1;*.css;*.eot;*.gif;*.gitignore;*.htaccess;*.html;*.ico;*.js;*.json;*.md;*.npmignore;*.php;*.svg;*.ttf;*.txt;*.webapp;*.woff;*.woff2;*.xml;*.yml
+
+
+
+
+((?!"var")[\[\.+_+-+0-9+a-z+ +\"\]]+) (\=|\+=)
+
+\$scope.\1 \2
+
+
+(?!scope\.)nthIndex
+
+\$scope.nthIndex

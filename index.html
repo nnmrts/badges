@@ -1,23 +1,26 @@
 <!doctype html>
 <html lang="en" class="mdl-js">
 	<head>
-		<!-- TITLE -->
+		<!-- | TITLE -->
 		<title>Badges</title>
 		<link rel="author" href="humans.txt" />
-		<!-- Web Application Manifest -->
+		<!-- | Web Application Manifest -->
 		<link rel="manifest" href="manifest.json">
 		<meta name="mobile-web-app-capable" content="yes">
 		<meta name="application-name" content="Badges">
-		<!-- META -->
+		<!-- | META -->
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="description" content="badgesbadgesbadgesbadgesbadgesbadges">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">		<meta name="apple-mobile-web-app-title" content="Badges">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="apple-mobile-web-app-title" content="Badges">
 		<meta name="application-name" content="Badges">
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="msapplication-TileImage" content="favicon/mstile-144x144.png?v=m2dBzPMjbw">
 		<meta name="msapplication-config" content="favicon/browserconfig.xml?v=m2dBzPMjbw">
 		<meta name="msapplication-tap-highlight" content="no">
-		<meta name="theme-color" content="#ffffff">		<!-- FAVICON -->
+		<meta name="theme-color" content="#ffffff">
+		<!-- | FAVICON -->
 		<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png?v=m2dBzPMjbw">
 		<link rel="icon" type="image/png" href="favicon/favicon-32x32.png?v=m2dBzPMjbw" sizes="32x32">
 		<link rel="icon" type="image/png" href="favicon/favicon-194x194.png?v=m2dBzPMjbw" sizes="194x194">
@@ -25,21 +28,31 @@
 		<link rel="icon" type="image/png" href="favicon/favicon-16x16.png?v=m2dBzPMjbw" sizes="16x16">
 		<!-- <link rel="manifest" href="favicon/manifest.json?v=m2dBzPMjbw"> -->
 		<link rel="mask-icon" href="favicon/safari-pinned-tab.svg?v=m2dBzPMjbw" color="#ffff64">
-		<link rel="shortcut icon" href="favicon/favicon.ico?v=m2dBzPMjbw">		<!-- CSS -->
-		<!--- LIBRARIES --->
+		<link rel="shortcut icon" href="favicon/favicon.ico?v=m2dBzPMjbw">
+		<!-- | CSS -->
+		<!-- || LIBRARIES -->
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<link rel="stylesheet" href="libraries/normalize/normalize.css">		<link rel="stylesheet" href="libraries/emojione/assets/css/emojione.css" />
-		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+		<link rel="stylesheet" href="libraries/normalize/normalize.css">
+		<link rel="stylesheet" href="libraries/emojione/assets/css/emojione.css" />
 		<link rel="stylesheet" href="libraries/mdl/material.css" />
-		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">		<link rel='stylesheet' href="libraries/nprogress/nprogress.css" />		<!--- MAIN --->
-		<link rel="stylesheet" href="fonts/fonts.css">		<link rel="stylesheet" href="style.css">		<!-- JS -->
-		<!--- LIBRARIES --->
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel='stylesheet' href="libraries/nprogress/nprogress.css" />
+		<!-- || MAIN -->
+		<link rel="stylesheet" href="fonts/fonts.css">
+		<link rel="stylesheet" href="style.css">
+		<!-- | JS -->
+		<!-- || LIBRARIES -->
+		<!-- ||| JQUERY -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script src="libraries/jquery-ui-1.12.1/jquery-ui.js"></script>		<script src="libraries/bez/jquery.bez.js"></script>		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script src="libraries/jquery-ui-1.12.1/jquery-ui.js"></script>
+		<!-- |||| JQUERY PLUGINS -->
+		<script src="libraries/bez/jquery.bez.js"></script>
+		<script src="libraries/jquery-disablescroll/jquery.disablescroll.js"></script>
+		<!-- ||| BOOTSTRAP -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<!-- |||| BOOTSTRAP PLUGINS -->
 		<script src="libraries/bootbox/bootbox.min.js"></script>
-		<script src="libraries/browserify/bundle.js"></script>
-		<script src="libraries/emojione/emojione.js"></script>
-		<script src="libraries/is.js/is.js"></script>
 		<!-- Angular Material Dependencies -->
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.2/angular.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.2/angular-animate.min.js"></script>
@@ -47,34 +60,48 @@
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.2/angular-messages.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.2/angular-sanitize.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.2/angular-route.js"></script>
-		<!-- Angular Material Javascript now available via Google CDN; version 0.9.4 used here -->
-		<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+		<!-- ||| ANGULAR MATERIAL -->
+		<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.js"></script>
 		<script src="libraries/angular-material/svg-icons.js"></script>
+		<script src="libraries/browserify/bundle.js"></script>
+		<script src="libraries/emojione/emojione.js"></script>
+		<script src="libraries/is.js/is.js"></script>
+		<script src="libraries/svg4everybody/dist/svg4everybody.legacy.js"></script>
 		<script src="libraries/mdl/material.js"></script>
 		<script src="libraries/nprogress/nprogress.js"></script>
-		<script src="libraries/xhr/xhr.js"></script>		<!--- MAIN --->
+		<script src="libraries/xhr/xhr.js"></script>
+		<!--- MAIN --->
 		<script src="badges.js"></script>
 		<!--[if lt IE 9]>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
 		<![endif]-->
 	</head>
-	<body onload="init();" class="badges-layout" ng-app="badges" ng-controller="all" ng-cloak>
+	<body class="badges-layout" ng-app="badges" ng-controller="all" ng-cloak>
 	<md-content>
 		<md-toolbar>
 		  <div class="md-toolbar-tools">
 			<md-button class="md-icon-button" ng-click="toggleLeft()" aria-label="Settings">
 			  <md-icon id="black-icon" md-svg-icon="img/icons/menu.svg"></md-icon>
 			</md-button>
-			<h2>
-			  <span>BADGES</span>
-			</h2>
-			<span flex></span>
-			<md-button class="md-icon-button" aria-label="Favorite">
-			  <md-icon id="black-icon" md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
-			</md-button>
-			<md-button class="md-icon-button" aria-label="More">
-			  <md-icon id="black-icon" md-svg-icon="img/icons/more_vert.svg"></md-icon>
-			</md-button>
+			<div id="titlecontainer">
+			<div class="logo_container">
+				<a href="http://genius.com/" class="logo_link">GENIUS</a>
+			</div>
+			</div>
+			<md-menu md-position-mode="target-right target">
+			  <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+				<md-icon md-menu-origin md-svg-icon="dots-vertical"></md-icon>
+			  </md-button>
+			  <md-menu-content width="6" >
+				<md-menu-item>
+				  <md-button md-menu-align-target ng-click="ctrl.announceClick($index)">
+					  <div layout="row" flex>
+						<p flex>Customize your collection!</p>
+					  </div>
+				  </md-button>
+				</md-menu-item>
+			  </md-menu-content>
+			</md-menu>
 		  </div>
 		</md-toolbar>
 	</md-content>
@@ -83,59 +110,48 @@
 		
 		<md-list>
 		<md-list-item>
-		<h2><a href="" id="badgesdrawertitle">BADGES</a></h2>
+		<div class="md-list-item-text" layout="column">
+		<h2><a ng-href="{{homepath}}" id="badgesdrawertitle">BADGES</a></h2>
+		<p>{{version}}</p>
+		</div>
 		</md-list-item>
 		<md-divider></md-divider>
 		<md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+		<md-icon md-svg-icon="help-circle"></md-icon>
 		  <p>ABOUT</p>
 	    </md-list-item>
 		<md-list-item class="secondary-button-padding" ng-click="doSecondaryAction($event)">
+		<md-icon md-svg-icon="currency-usd"></md-icon>
 		  <p>DONATE</p>
 	    </md-list-item>
 		<md-divider></md-divider>
-		<md-list-item id="github" class="secondary-button-padding md-primary" href="https://github.com/nnmrts/badges" target="_blank">
+		<md-list-item id="github" class="secondary-button-padding md-primary" target="_blank" ng-href="{{url.github}}" ng-mousedown="newtab()">
+		<md-icon md-svg-icon="github-circle"></md-icon>
 		  <p>GITHUB</p>
 	    </md-list-item>
-		<md-list-item class="secondary-button-padding md-primary" href="http://www.pumpn.net/impressum.html" target="_blank">
+		<md-list-item id="impressum" class="secondary-button-padding md-primary" target="_blank" ng-href="{{url.impressum}}" ng-mousedown="newtab()">
+		<md-icon md-svg-icon="lock"></md-icon>
 		  <p>PRIVACY & TERMS</p>
 	    </md-list-item>
 		</md-list>
-
-
 		</md-sidenav>
-	</md-content>
-		<!-- <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header badges-layout">
-			<header class="mdl-layout__header badges-header">
-				<div class="mdl-layout__header-row">
-					<a href="http://genius.com/" class="logo_container"></a>
-				</div>
-			</header>
-			<div class="mdl-layout__drawer">
-				<span class="mdl-layout-title"><a href="" id="badgesdrawertitle">BADGES</a></span>
-				<nav class="mdl-navigation">
-					<div class="mdl-navigation__link" id="about">ABOUT</div>
-					<div class="mdl-navigation__link" id="donate">DONATE</div>
-					<a class="mdl-navigation__link" id="github" href="https://github.com/nnmrts/badges" target="_blank">GITHUB REPOSITORY</a>
-					<a class="mdl-navigation__link" href="http://www.pumpn.net/impressum.html" target="_blank">PRIVACY & TERMS</a>
-				</nav>
-			</div>
-			<main class="mdl-layout__content">
-				<div id="top" class="mdl-card mdl-shadow--2dp">
+		<md-card id="top">
+			<md-card-content>
 					<div id="optionscontainer">
 						<div id="info">
 							<img id="badgeslogo" src="images/badgeslogooncircle.png" />
 							<h1 id="title">BADGES</h1>
 						</div>
-						<form action="#">
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label badges-textfield">
-								<input id="userinput" class="mdl-textfield__input" type="text">
-								<label class="mdl-textfield__label" for="userinput">USER</label>
-							</div>
+						<form action="">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>USER</label>
+							<input id="userinput" ng-model="logininput" type="text">
+						</md-input-container>
 						</form>
-						<button id="search" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">search</button>
+						<md-button ng-click="bind()" id="search" class="md-raised md-primary">{{buttons.search.text | uppercase}}</md-button>
 					</div>
 					<div id="menucontainer" style="display: none">
-						<button id="profile" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">ADD THEM TO YOUR PROFILE</button>
+						<button id="profile" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">{{buttons.profile.text | uppercase}}</button>
 					</div>
 					<div id="profilebox" style="height: 0;display:none;opacity: 1;">
 						<span id="profiletext" style="opacity: 0;">You are SinaTheQueen? Just copy-paste this text to your profile bio:</span>
@@ -143,11 +159,12 @@
 						<hr id="profilehr" style="opacity: 0; display: none">
 						<span id="customize" style="opacity: 0; display: none">Do you want to customize your badges collection? Connect with your Genius account below!</span>
 						<a href="https://api.genius.com/oauth/authorize?client_id=kB4bzMdamqUMJqZsigFyrWzWLYYLwq7e6Zm9pjOF1dWxx71-iJsCjpHpkAx2FaJA&redirect_uri=http://www.pumpn.net/mag/badges2.1-weekly-201648/collection/&scope=me&state=loggedin&response_type=code" style="text-decoration: none; color: black;">
-							<div class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="authenticate" style="opacity: 0; display: none">CONNECT</div>
+							<md-button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="authenticate" style="opacity: 0; display: none">CONNECT</md-button>
 						</a>
 					</div>
-				</div>
-				<div id="userinfo" class="mdl-card mdl-shadow--2dp" style="display: none;">
+			</md-card-content>
+		</md-card>
+		<md-card id="userinfo" style="display: none;">
 					<div class="BOXavatar">
 						<div id="avatar" style="background-image: url(&quot;https://images.genius.com/avatars/medium/a775893c8c742f8b8dcdae21ef8c6a91&quot;);">
 						</div>
@@ -231,13 +248,13 @@
 						<div class="badgebox" id="004-004moderator"><img src="badges/004%20Role%20Badges/genius-004-004moderator500px.png?time=1477737861149" class="badge"></div>
 						<div class="badgebox" id="005-001verifiedartist"><img src="badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=1477737861150" class="badge"></div>
 					</div>
-				</div>
-				<div id="usererror" style="display:none">
+				</md-card>
+				<md-card id="usererror" style="display:none">
 					<div class="BOXerror">
 						<span>There is no user called "</span><span id="nouser">SwigSwagSwigSwag</span><span>".</span>
 					</div>
-				</div>
-				<div id="nothing" style="display:none">
+				</md-card>
+				<md-card id="nothing" style="display:none">
 					<div class="BOXnothing">
 						<span>Wow. You entered nothing, searched for it and waited even </span><span id="wait">3.34</span><span> seconds expecting a result.
 						<br>
@@ -246,14 +263,13 @@
 						<br><br><br>
 						<small id="muhahaha">Of course I could have checked if you entered nothing, <i>before</i> the whole script started and loaded through. Of course I could have <i>notified</i> you that the input box is empty.<br>By the way, have you heard my "Muhahaha" already?</small></span>
 					</div>
-				</div>
-			</main>
-			<div id="loadingcontainer" style="display:none">
+				</md-card>
+	</md-content>
+	<div id="loadingcontainer" ng-style="styles.loadingcontainer">
 				<div id="loading">
 					<img id="load" src="https://i.imgur.com/7qHrFCE.gif" />
 				</div>
 			</div>
-		</div> -->
 		<script>
 			(function (i, s, o, g, r, a, m) {
 				i['GoogleAnalyticsObject'] = r;
