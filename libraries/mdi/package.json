@@ -2,7 +2,7 @@
   "_args": [
     [
       "mdi",
-      "C:\\Users\\Anton\\Documents\\GitHub\\badges2.1-weekly-201648\\libraries"
+      "C:\\Users\\Anton\\Documents\\GitHub\\badges2.1-weekly-201649\\libraries"
     ]
   ],
   "_from": "mdi@*",
@@ -36,7 +36,7 @@
   "_shasum": "b01ff825a91c19d388b033ea768e17ff6e7a0904",
   "_shrinkwrap": null,
   "_spec": "mdi",
-  "_where": "C:\\Users\\Anton\\Documents\\GitHub\\badges2.1-weekly-201648\\libraries",
+  "_where": "C:\\Users\\Anton\\Documents\\GitHub\\badges2.1-weekly-201649\\libraries",
   "author": {
     "name": "Austin Andrews",
     "url": "http://twitter.com/templarian"

@@ -75,8 +75,7 @@ badges.config(function ($mdIconProvider, $qProvider) {
 				originatorEv = ev;
 				$mdOpenMenu(ev);
 			};
-
-			$scope.manifest = "Badges";
+			
 			$scope.currentpath = window.location.pathname;
 
 			svg4everybody();

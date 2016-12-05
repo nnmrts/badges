@@ -33,8 +33,8 @@ function getsource() {
 		type: 'POST',
 		data: {
 			"code": code,
-			"client_id": "kB4bzMdamqUMJqZsigFyrWzWLYYLwq7e6Zm9pjOF1dWxx71-iJsCjpHpkAx2FaJA",
-			"client_secret": "hs8liSjBbL2NHxZ7i1MEn_LCXp9K_8Fmf6-w4zP8_UE2mrh-TT9xyw2AX6e1VTb0L5T73PMbapGS8qlC5O3LEA",
+			"client_id": "rGoLmLmJDZkIynkbytsVHLYICi-102p4OGqjMUPoIktV0xjvP66rR1ZT3_CuM3XQ",
+			"client_secret": "AyXqdRzvM3y4tXKGj95pnSTnFO62pYD6SZEi56TBhCyCQC_XU2SCQbzvFOFQT48zQfbOm7-ZGYPuW4G5VRCaDw",
 			"redirect_uri": collectionpath,
 			"response_type": "code",
 			"grant_type": "authorization_code"
@@ -409,7 +409,7 @@ collectioninit = function () {
 		getsource();
 	}
 	else {
-		window.location.replace("https://api.genius.com/oauth/authorize?client_id=kB4bzMdamqUMJqZsigFyrWzWLYYLwq7e6Zm9pjOF1dWxx71-iJsCjpHpkAx2FaJA&redirect_uri=http://www.pumpn.net/mag/badges2.1-weekly-201648/collection/&scope=me&state=loggedin&response_type=code");
+		window.location.replace("https://api.genius.com/oauth/authorize?client_id=rGoLmLmJDZkIynkbytsVHLYICi-102p4OGqjMUPoIktV0xjvP66rR1ZT3_CuM3XQ&redirect_uri=http://www.pumpn.net/mag/badges2.1-weekly-201649/collection/&scope=me&state=loggedin&response_type=code");
 	}
 
 	sorterinit();

@@ -25,7 +25,7 @@ RewriteEngine On
 RewriteCond %{REQUEST_URI} !\.(png|jpe?g|gif|css|js|html|svg)$ [NC]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ /mag/badges2.1-weekly-201648/index\.html [L]
+RewriteRule ^ /mag/badges2.1-weekly-201649/index\.html [L]
 
 
 <IfModule mod_speling.c>
