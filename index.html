@@ -70,6 +70,21 @@
 		<script src="libraries/mdl/material.js"></script>
 		<script src="libraries/nprogress/nprogress.js"></script>
 		<script src="libraries/xhr/xhr.js"></script>
+		<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async='async'></script>
+		<script>
+			var OneSignal = window.OneSignal || [];
+			OneSignal.push(["init", {
+			  appId: "df0170e8-ef9f-4a50-8748-63d50cfc1d98",
+			  autoRegister: false, /* Set to true to automatically prompt visitors */
+			  subdomainName: 'badges',   
+			  httpPermissionRequest: {
+				enable: true
+			  },
+			  notifyButton: {
+				  enable: true /* Set to false to hide */
+			  }
+			}]);
+		</script>
 		<!--- MAIN --->
 		<script src="badges.js"></script>
 		<!--[if lt IE 9]>
@@ -125,11 +140,11 @@
 		  <p>DONATE</p>
 	    </md-list-item>
 		<md-divider></md-divider>
-		<md-list-item id="github" class="secondary-button-padding md-primary" target="_blank" ng-href="{{url.github}}" ng-mousedown="newtab()">
+		<md-list-item id="github" class="secondary-button-padding md-primary" target="_blank" ng-href="{{url.github}}" ng-mousedown="ui.newtab()">
 		<md-icon md-svg-icon="github-circle"></md-icon>
 		  <p>GITHUB</p>
 	    </md-list-item>
-		<md-list-item id="impressum" class="secondary-button-padding md-primary" target="_blank" ng-href="{{url.impressum}}" ng-mousedown="newtab()">
+		<md-list-item id="impressum" class="secondary-button-padding md-primary" target="_blank" ng-href="{{url.impressum}}" ng-mousedown="ui.newtab()">
 		<md-icon md-svg-icon="lock"></md-icon>
 		  <p>PRIVACY & TERMS</p>
 	    </md-list-item>
@@ -148,7 +163,7 @@
 							<input id="userinput" ng-model="logininput" type="text">
 						</md-input-container>
 						</form>
-						<md-button ng-click="bind()" id="search" class="md-raised md-primary">{{buttons.search.text | uppercase}}</md-button>
+						<md-button ng-click="ui.search()" id="search" class="md-raised md-primary">{{buttons.search.text | uppercase}}</md-button>
 					</div>
 					<div id="menucontainer" style="display: none">
 						<button id="profile" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">{{buttons.profile.text | uppercase}}</button>
@@ -166,21 +181,21 @@
 		</md-card>
 		<md-card id="userinfo" style="display: none;">
 					<div class="BOXavatar">
-						<div id="avatar" style="background-image: url(&quot;https://images.genius.com/avatars/medium/a775893c8c742f8b8dcdae21ef8c6a91&quot;);">
+						<div id="avatar" ng-style="{'background-image':'url('+user.avatar.medium.url+')'}"> 
 						</div>
 					</div>
 					<div class="identity">
 						<div class="line1">
 							<div class="BOXname">
-								<a id="namelink" href="https://genius.com/SinaTheQueen"><span id="name">SinaTheQueen</span></a>
+								<a id="namelink" href="https://genius.com/SinaTheQueen"><span id="name">{{user.name}}</span></a>
 							</div>
 							<div class="BOXiq_for_display">
-								<span id="iq_for_display">169,880</span>
+								<span id="iq_for_display">{{user.iq_for_display}}</span>
 							</div>
 						</div>
 						<div class="line2">
 							<div class="BOXlogin">
-								<span>@</span><span id="login">SinaTheQueen</span>
+								<span>@</span><span id="login">{{user.login}}</span>
 							</div>
 							<span id="divider" style="display: inline-block"> | </span>
 							<div class="BOXrole_for_display">
@@ -193,7 +208,7 @@
 									<svg id="role_icon3">
 									</svg>
 								</div>
-								<span id="role_for_display" style="display: inline-block">moderator</span>
+								<span id="role_for_display" style="display: inline-block">{{user.role_for_display}}</span>
 							</div>
 						</div>
 					</div>
@@ -212,7 +227,7 @@
 													</g>
 												</g>
 											</svg>
-											<span id="annotations_count" class="statistic_and_label-number">4513</span>
+											<span id="annotations_count" class="statistic_and_label-number">{{user.stats.annotations_count}}</span>
 										</div>
 										<div class="statistic_and_label-subtext">Annotations</div>
 									</div>
@@ -228,7 +243,7 @@
 												<path d="M-3392 6367.9v20h17.4v-20h-17.4zm15.2 17.8h-13v-15.6h13v15.6z"></path>
 												<path d="M-3386.3 6374.3h6v1.1h-6zm0 3.3h6v1.1h-6zm0 4.3h6v-1.1h-6v1.1"></path>
 											</svg>
-											<span id="transcriptions_count" class="statistic_and_label-number">339</span>
+											<span id="transcriptions_count" class="statistic_and_label-number">{{user.stats.transcriptions_count}}</span>
 										</div>
 										<div class="statistic_and_label-subtext">Transcriptions</div>
 									</div>
@@ -236,9 +251,9 @@
 							</statistics-panel-item>
 						</div>
 					</div>
-					<div id="starscontainer" style="height: 9.792156862745099vh">
+					<div id="starscontainer" ng-style="styles.starscontainer">
 						<img src="images/badgesstar.png" id="starleft">
-						<span id="stars" style="font-size: 7.792156862745099vh">28 STARS</span>
+						<span id="stars" ng-style="styles.stars">{{user.stars + " stars" | uppercase}}</span>
 						<img src="images/badgesstar.png" id="starright">
 					</div>
 					<div id="badgescontainer">
@@ -256,7 +271,7 @@
 				</md-card>
 				<md-card id="nothing" style="display:none">
 					<div class="BOXnothing">
-						<span>Wow. You entered nothing, searched for it and waited even </span><span id="wait">3.34</span><span> seconds expecting a result.
+						<span>Wow. You entered nothing, searched for it and waited even {{l.time.waitingtimeinseconds}} seconds expecting a result.
 						<br>
 						<br>
 						So, yeah, here you have it.
