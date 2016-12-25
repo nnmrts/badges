@@ -190,6 +190,7 @@ body {
 
 .badges-layout .md-button.md-primary.md-raised {
 	font-family: "Programme2";
+	color: white;
 	letter-spacing: normal;
 	font-size: 26px;
 	height: initial;

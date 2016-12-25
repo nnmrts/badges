@@ -213,9 +213,11 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 	// MANIFEST & VERSION
 	$scope.manifest = $.get("manifest.json").done(function () {
 		$scope.version = $scope.manifest.responseJSON.version;
+		$scope.client_id = $scope.manifest.responseJSON.client_id;
 	});
-
-
+	
+	$scope.currenthref = location.href;
+	
 	$scope.currentpath = location.pathname;
 
 	$scope.homepath = findhomepath();
