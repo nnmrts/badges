@@ -267,7 +267,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		newtab: function () {
 			$scope.url = {
 				github: 'https://github.com/nnmrts/badges',
-				impressum: 'http://www.pumpn.net/impressum.html'
+				impressum: 'https://www.pumpn.net/impressum.html'
 			};
 		},
 		search: function () {
@@ -400,7 +400,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 									// IS YAHOO INDEX OVER -1?
 									if ($scope.l.yahoo.index > -1) {
 
-										$scope.l.yahoo.url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='http://genius.com/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + "'and%20xpath=%27(//preload-content)[last()-" + $scope.l.yahoo.index + "]%27&format=json";
+										$scope.l.yahoo.url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='https://genius.com/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + "'and%20xpath=%27(//preload-content)[last()-" + $scope.l.yahoo.index + "]%27&format=json";
 
 										$scope.l.yahoo.data = $http.get($scope.l.yahoo.url);
 
@@ -1115,7 +1115,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			$scope.html_role_icon.setAttribute("style", "display: none");
 			$scope.html_iconbox.removeChild($scope.html_role_icon);
 
-			fragment = create("<svg id='role_icon' src='equilateral_triangle.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 7' version='1.1' style='fill: #ffffff;width: 1rem;height: 1rem;stroke: #9a9a9a;stroke-width: 1px;top: 2px;position: relative;display: block'><path id='role_icon_path' d='M8.25 6.418L4.25 0l-4 6.418z' cx='74' cy='10' r='9'></path></svg>");
+			fragment = create("<svg id='role_icon' src='equilateral_triangle.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 9 7' version='1.1' style='fill: #ffffff;width: 1rem;height: 1rem;stroke: #9a9a9a;stroke-width: 1px;top: 2px;position: relative;display: block'><path id='role_icon_path' d='M8.25 6.418L4.25 0l-4 6.418z' cx='74' cy='10' r='9'></path></svg>");
 			// You can use native DOM methods to insert the fragment:
 			$scope.html_iconbox.insertBefore(fragment, $scope.html_iconbox.childNodes[0]);
 			$scope.html_role_icon = $("#role_icon")[0];
@@ -1133,7 +1133,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 				$scope.html_role_icon.setAttribute("style", "display: none");
 				$scope.html_iconbox.removeChild($scope.html_role_icon);
 
-				fragment = create("<svg id='role_icon' src='square.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' version='1.1' style='fill: #ff518c;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></path></svg>");
+				fragment = create("<svg id='role_icon' src='square.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 20 20' version='1.1' style='fill: #ff518c;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></path></svg>");
 				// You can use native DOM methods to insert the fragment:
 				$scope.html_iconbox.insertBefore(fragment, $scope.html_iconbox.childNodes[0]);
 				$scope.html_role_icon = $("#role_icon")[0];
@@ -1151,7 +1151,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 					$scope.html_role_icon.setAttribute("style", "display: none");
 					$scope.html_iconbox.removeChild($scope.html_role_icon);
 
-					fragment = create("<svg id='role_icon' src='square.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' version='1.1' style='fill: #ffff64;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></path></svg>");
+					fragment = create("<svg id='role_icon' src='square.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 20 20' version='1.1' style='fill: #ffff64;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></path></svg>");
 					// You can use native DOM methods to insert the fragment:
 					$scope.html_iconbox.insertBefore(fragment, $scope.html_iconbox.childNodes[0]);
 					$scope.html_role_icon = $("#role_icon")[0];
@@ -1169,7 +1169,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 						$scope.html_role_icon.setAttribute("style", "display: none");
 						$scope.html_iconbox.removeChild($scope.html_role_icon);
 
-						fragment = create("<svg id='role_icon' src='diamond.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22' version='1.1' style='fill: #7689e8;width: 1.05rem;height: 1.05rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M11 1.95l8.98 8.98L11 19.91l-8.98-8.98z' cx='74' cy='10' r='9'></path></svg>");
+						fragment = create("<svg id='role_icon' src='diamond.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 22 22' version='1.1' style='fill: #7689e8;width: 1.05rem;height: 1.05rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M11 1.95l8.98 8.98L11 19.91l-8.98-8.98z' cx='74' cy='10' r='9'></path></svg>");
 						// You can use native DOM methods to insert the fragment:
 						$scope.html_iconbox.insertBefore(fragment, $scope.html_iconbox.childNodes[0]);
 						$scope.html_role_icon = $("#role_icon")[0];
@@ -1188,7 +1188,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 							$scope.html_role_icon.setAttribute("style", "display: none");
 							$scope.html_iconbox.removeChild($scope.html_role_icon);
 
-							fragment = create("<svg id='role_icon' src='circle.svg' xmlns='http://www.w3.org/2000/svg' viewBox='64 0 20 20' version='1.1' style='fill: #b0c4de;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><circle id='role_icon_circle' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></circle></svg>");
+							fragment = create("<svg id='role_icon' src='circle.svg' xmlns='https://www.w3.org/2000/svg' viewBox='64 0 20 20' version='1.1' style='fill: #b0c4de;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><circle id='role_icon_circle' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></circle></svg>");
 							// You can use native DOM methods to insert the fragment:
 							$scope.html_iconbox.insertBefore(fragment, $scope.html_iconbox.childNodes[0]);
 							$scope.html_role_icon = $("#role_icon")[0];
@@ -1205,7 +1205,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 								$scope.html_role_icon.setAttribute("style", "display: none");
 								$scope.html_iconbox.removeChild($scope.html_role_icon);
 
-								fragment = create("<svg id='role_icon' src='checky.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 11' version='1.1' width='14px' height='14px' style='fill: #38ef51;    height: 17px;margin: 0 2px;top: 2px;width: 17px;stroke: #fff;position: relative;display: block'><polygon points='5.5 0 10.2631397 2.75 10.2631397 8.25 5.5 11 0.736860279 8.25 0.736860279 2.75 '></polygon><path d='M2.5,5.5 L4.5,7.5' stroke-width='1.2' stroke-linecap='square'></path><path d='M4.5,7.5 L8.5,3.5' stroke-width='1.2' stroke-linecap='square'></path></svg>");
+								fragment = create("<svg id='role_icon' src='checky.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 11 11' version='1.1' width='14px' height='14px' style='fill: #38ef51;    height: 17px;margin: 0 2px;top: 2px;width: 17px;stroke: #fff;position: relative;display: block'><polygon points='5.5 0 10.2631397 2.75 10.2631397 8.25 5.5 11 0.736860279 8.25 0.736860279 2.75 '></polygon><path d='M2.5,5.5 L4.5,7.5' stroke-width='1.2' stroke-linecap='square'></path><path d='M4.5,7.5 L8.5,3.5' stroke-width='1.2' stroke-linecap='square'></path></svg>");
 								// You can use native DOM methods to insert the fragment:
 								$scope.html_iconbox.insertBefore(fragment, $scope.html_iconbox.childNodes[0]);
 								$scope.html_role_icon = $("#role_icon")[0];
@@ -1686,7 +1686,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 	};
 
 	warmupyahooapi = function () {
-		url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='http://genius.com/SinaTheQueen'&format=json";
+		url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='https://genius.com/SinaTheQueen'&format=json";
 
 		source = $.getJSON(url).done(function () {
 			sourcestring1 = JSON.stringify(source);
