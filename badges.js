@@ -260,7 +260,9 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		}
 	};
 
-	$scope.l = {};
+	$scope.s = {};
+	
+	$scope.d = {};
 
 	// UI FUNCTIONS
 	$scope.ui = {
@@ -280,10 +282,180 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			});
 			
 			// RESET FIRST LOOP BOOLEAN
-			$scope.l.firstloop = true;
+			$scope.s.firstloop = true;
 
 			// INIT LOOP
-			$scope.loop();
+			$scope.searchloop();
+		},
+		profile: function () {
+			
+			animateclass = "animated pulse";
+			
+			if ($scope.s.user.given) {
+				if ($scope.buttons.profile.text == "close that") {
+					
+					$scope.buttons.profile.text = "add them to your profile";
+					
+					$('#profile').removeClass(animateclass).addClass(animateclass).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+						$(this).removeClass(animateclass);
+					});
+					
+					$("#profilebox").animate({
+						opacity: 0
+					}, 250, $.bez([0.4, 0.0, 1, 1]), function () {
+						$("#profilebox").animate({
+							height: 0
+						}, 400, $.bez([0.4, 0.0, 0.2, 1]), function () {
+							$("#profilebox").attr({
+								style: "height: 0;display:none;opacity: 0;"
+							});
+						});
+					});
+
+				}
+				else {
+					$scope.buttons.profile.text = "close that";
+					
+					$('#profile').removeClass(animateclass).addClass(animateclass).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+						$(this).removeClass(animateclass);
+					});
+					
+					if (!$scope.d.collection.given) {
+						
+						urlarray = [];
+
+						if (starbadge1 != "undefined") {
+							urlarray.push(starbadge1.firstChild.src.slice(0, starbadge1.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (starbadge2 != "undefined") {
+							urlarray.push(starbadge2.firstChild.src.slice(0, starbadge2.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (starbadge3 != "undefined") {
+							urlarray.push(starbadge3.firstChild.src.slice(0, starbadge3.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (rolebadge1 != "undefined") {
+							urlarray.push(rolebadge1.firstChild.src.slice(0, rolebadge1.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (rolebadge2 != "undefined") {
+							urlarray.push(rolebadge2.firstChild.src.slice(0, rolebadge2.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (verifiedartistbadge != "undefined") {
+							urlarray.push(verifiedartistbadge.firstChild.src.slice(0, verifiedartistbadge.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+					}
+					else {
+						urlarray = [];
+
+						z = 0;
+						while (z < collectiondom.children.length) {
+							urlarray.push(collectiondom.children[z].firstChild.src.slice(0, collectiondom.children[z].firstChild.src.indexOf("500px")) + "170px.png");
+							z = z + 1;
+						}
+					}
+
+					realstart = "<table><tbody>";
+
+					littlestart = "<tr>";
+
+					itemstart = "<td><img src='";
+
+					itemend = "'></td>";
+
+					littleend = "</tr>";
+
+					realend = "</tbody></table>";
+
+					if (urlarray.length === 0) {
+						gentexthtml = "This user has no badges. :(";
+					}
+					if (urlarray.length == 1) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += littleend + realend;
+					}
+					if (urlarray.length == 2) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += itemstart + urlarray[1] + itemend;
+						gentexthtml += littleend + realend;
+					}
+					if (urlarray.length == 3) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += itemstart + urlarray[1] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[2] + itemend;
+						gentexthtml += littleend + realend;
+					}
+					if (urlarray.length == 4) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += itemstart + urlarray[1] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[2] + itemend;
+						gentexthtml += itemstart + urlarray[3] + itemend;
+						gentexthtml += littleend + realend;
+					}
+					if (urlarray.length == 5) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += itemstart + urlarray[1] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[2] + itemend;
+						gentexthtml += itemstart + urlarray[3] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[4] + itemend;
+						gentexthtml += littleend + realend;
+					}
+					if (urlarray.length == 6) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += itemstart + urlarray[1] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[2] + itemend;
+						gentexthtml += itemstart + urlarray[3] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[4] + itemend;
+						gentexthtml += itemstart + urlarray[5] + itemend;
+						gentexthtml += littleend + realend;
+					}
+
+					gentext = htmlEntities(gentexthtml);
+					$scope.html_generatedtext.innerHTML = gentext;
+					$("#profilebox").attr({
+						style: "height: 0;display:flex;opacity: 0;"
+					});
+					$("#generatedtext").attr({
+						style: "opacity: 1;"
+					});
+					$("#profilehr").attr({
+						style: "opacity: 1;"
+					});
+					$("#customize").attr({
+						style: "opacity: 1;"
+					});
+					$("#authenticate").attr({
+						style: "opacity: 1;"
+					});
+					$("#profiletext").attr({
+						style: "opacity: 1;"
+					});
+					$("#profilebox").animate({
+						height: "350px"
+					}, 400, $.bez([0.4, 0.0, 0.2, 1]), function () {
+						
+						$("#profilebox").animate({
+							opacity: 1
+						}, 250, $.bez([0.0, 0.0, 0.2, 1]));
+					});
+				}
+			}
 		}
 	};
 
@@ -295,25 +467,24 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		}
 	});
 	
-	$scope.user = {};
-	
-	
 	// BIG LOOP FUNCTION
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
 	
-	$scope.loop = function () {
+	$scope.searchloop = function () {
 		NProgress.inc();
 
 		$scope.$applyAsync();
 
 		// FIRST LOOP (for setup and resetting...)
-		if ($scope.l.firstloop) {
+		if ($scope.s.firstloop) {
+			
+			$scope.user = {};
 
 			isnothing = "no";
 
 			// RESET/DEFINE VARIABLES
-			$scope.l = {
+			$scope.s = {
 				firstloop: false,
 				input: {
 					checked: false
@@ -346,164 +517,360 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			};
 
 			// LOOP IT BRUH
-			$scope.loop();
+			$scope.searchloop();
 		}
-
-		if (!$scope.l.error.occurred) {
-			if (!$scope.l.user.given) {
-				// IS ID GIVEN?
-				if (!$scope.l.id.given) {
-					// IS INPUT CHECKED?
-					if (!$scope.l.input.checked) {
-						// CHECK IF INPUT VALID
-						if ($scope.logininput.match("^[#%^&\{\}\]\[\(\)\`\'<>\|\ ]*$") !== null || $scope.logininput.match(/\\/) !== null || $scope.logininput.match("\"") !== null) {
-							$scope.l.input.valid = false;
-							console.log("L: INPUT NOT VALID");
-							$scope.l.input.checked = true;
-							console.log("L: INPUT CHECKED");
-							$scope.loop();
+		else {
+			if (!$scope.s.error.occurred) {
+				if (!$scope.s.user.given) {
+					// IS ID GIVEN?
+					if (!$scope.s.id.given) {
+						// IS INPUT CHECKED?
+						if (!$scope.s.input.checked) {
+							// CHECK IF INPUT VALID
+							if ($scope.logininput.match("^[#%^&\{\}\]\[\(\)\`\'<>\|\ ]*$") !== null || $scope.logininput.match(/\\/) !== null || $scope.logininput.match("\"") !== null) {
+								$scope.s.input.valid = false;
+								console.log("S: INPUT NOT VALID");
+								$scope.s.input.checked = true;
+								console.log("S: INPUT CHECKED");
+							}
+							else {
+								$scope.s.input.valid = true;
+								console.log("S: INPUT VALID");
+								$scope.s.input.checked = true;
+								console.log("S: INPUT CHECKED");
+							}
+							
+							$scope.searchloop();
 						}
 						else {
-							$scope.l.input.valid = true;
-							console.log("L: INPUT VALID");
-							$scope.l.input.checked = true;
-							console.log("L: INPUT CHECKED");
-							$scope.loop();
+							// IS INPUT VALID?
+							if ($scope.s.input.valid) {
+								// IS SERVER CHECKED?
+								if (!$scope.s.server.checked) {
+									// CHECK IF ID ON SERVER
+									$scope.s.server.data = $http.get($scope.homepath + "ids/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", {
+										responseType: "text"
+									});
+
+									$q.when($scope.s.server.data, function () {
+										if ($scope.s.server.data.$$state.value.data.length < 10) {
+											$scope.user.id = $scope.s.server.data.$$state.value.data;
+											$scope.s.id.given = true;
+											console.log("S: ID GIVEN");
+											$scope.s.id.fromserver = true;
+											console.log("S: ID FROM SERVER");
+										}
+										$scope.s.server.checked = true;
+										console.log("S: SERVER CHECKED");
+										
+										$scope.searchloop();
+									});
+								}
+								else {
+									// IS YAHOO CHECKED?
+									if (!$scope.s.yahoo.checked) {
+										// IS YAHOO INDEX OVER -1?
+										if ($scope.s.yahoo.index > -1) {
+
+											$scope.s.yahoo.url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='https://genius.com/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + "'and%20xpath=%27(//preload-content)[last()-" + $scope.s.yahoo.index + "]%27&format=json";
+
+											$scope.s.yahoo.data = $http.get($scope.s.yahoo.url);
+
+											$q.when($scope.s.yahoo.data, function () {
+												$scope.s.yahoo.source = $scope.s.yahoo.data.$$state.value.data;
+												sourcestring1 = JSON.stringify($scope.s.yahoo.source);
+												if (sourcestring1.indexOf("user") < 200 && sourcestring1.indexOf("user") != -1) {
+													findid();
+													$scope.s.id.given = true;
+													console.log("S: ID GIVEN");
+													$scope.s.id.fromyahoo = true;
+													console.log("S: ID FROM YAHOO");
+													$scope.s.yahoo.checked = true;
+													console.log("S: YAHOO CHECKED");
+													$scope.s.yahoo.oldindex = $scope.s.yahoo.index;
+													$scope.s.yahoo.index = -1;
+												}
+												else {
+													$scope.s.yahoo.index = $scope.s.yahoo.index - 1;
+												}
+												$scope.searchloop();
+											});
+										}
+										else {
+											$scope.s.yahoo.checked = true;
+											console.log("S: YAHOO CHECKED");
+											$scope.searchloop();
+										}
+									}
+									else {
+										if ($scope.logininput !== "") {
+											$scope.s.error.occurred = true;
+											console.log("S: ERROR OCCURRED");
+											$scope.s.error.notfound = true;
+											console.log("S: ERROR: NOT FOUND");
+										}
+										else {
+											// EASTER EGG
+											$scope.s.error.occurred = true;
+											console.log("S: ERROR OCCURRED");
+											$scope.s.error.inputempty = true;
+											console.log("S: ERROR: INPUT EMPTY");
+										}
+										$scope.searchloop();
+									}
+								}
+							}
+							else {
+								$scope.s.error.occurred = true;
+								console.log("S: ERROR OCCURRED");
+								$scope.s.error.inputinvalid = true;
+								console.log("S: ERROR: INPUT INVALID");
+								$scope.searchloop();
+							}
+
 						}
 					}
 					else {
-						// IS INPUT VALID?
-						if ($scope.l.input.valid) {
-							// IS SERVER CHECKED?
-							if (!$scope.l.server.checked) {
-								// CHECK IF ID ON SERVER
-								$scope.l.server.data = $http.get($scope.homepath + "ids/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", {
-									responseType: "text"
-								});
-
-								$q.when($scope.l.server.data, function () {
-									if ($scope.l.server.data.$$state.value.data.length < 10) {
-										$scope.user.id = $scope.l.server.data.$$state.value.data;
-										$scope.l.id.given = true;
-										console.log("L: ID GIVEN");
-										$scope.l.id.fromserver = true;
-										console.log("L: ID FROM SERVER");
-									}
-									$scope.l.server.checked = true;
-									console.log("L: SERVER CHECKED");
-									$scope.loop();
-								});
-							}
-							else {
-								// IS YAHOO CHECKED?
-								if (!$scope.l.yahoo.checked) {
-									// IS YAHOO INDEX OVER -1?
-									if ($scope.l.yahoo.index > -1) {
-
-										$scope.l.yahoo.url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='https://genius.com/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + "'and%20xpath=%27(//preload-content)[last()-" + $scope.l.yahoo.index + "]%27&format=json";
-
-										$scope.l.yahoo.data = $http.get($scope.l.yahoo.url);
-
-										$q.when($scope.l.yahoo.data, function () {
-											$scope.l.yahoo.source = $scope.l.yahoo.data.$$state.value.data;
-											sourcestring1 = JSON.stringify($scope.l.yahoo.source);
-											if (sourcestring1.indexOf("user") < 200 && sourcestring1.indexOf("user") != -1) {
-												findid();
-												$scope.l.id.given = true;
-												console.log("L: ID GIVEN");
-												$scope.l.id.fromyahoo = true;
-												console.log("L: ID FROM YAHOO");
-												$scope.l.yahoo.checked = true;
-												console.log("L: YAHOO CHECKED");
-												$scope.l.yahoo.oldindex = $scope.l.yahoo.index;
-												$scope.l.yahoo.index = -1;
-											}
-											else {
-												$scope.l.yahoo.index = $scope.l.yahoo.index - 1;
-											}
-											$scope.loop();
-										});
-									}
-									else {
-										$scope.l.yahoo.checked = true;
-										console.log("L: YAHOO CHECKED");
-										$scope.loop();
-									}
-								}
-								else {
-									if ($scope.logininput !== "") {
-										$scope.l.error.occurred = true;
-										console.log("ERROR OCCURRED");
-										$scope.l.error.notfound = true;
-										console.log("ERROR: NOT FOUND");
-										$scope.loop();
-									}
-									else {
-										// EASTER EGG
-										$scope.l.error.occurred = true;
-										console.log("ERROR OCCURRED");
-										$scope.l.error.inputempty = true;
-										console.log("ERROR: INPUT EMPTY");
-										$scope.loop();
-									}
-								}
-							}
-						}
-						else {
-							$scope.l.error.occurred = true;
-							console.log("ERROR OCCURRED");
-							$scope.l.error.inputinvalid = true;
-							console.log("ERROR: INPUT INVALID");
-							$scope.loop();
+						// IS ID FROM SERVER?
+						if (!$scope.s.id.fromserver) {
+							// SAVE ID ON SERVER
+							phpid = new FormData();
+							phpid.append("phpid", $scope.user.id);
+							phpid.append("phplogin", $scope.logininput.toUpperCase().replace(/\s+/g, "-"));
+							xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
+							xhr.open('post', 'saveid.php', true);
+							xhr.send(phpid);
+							console.log("S: ID SAVED ON SERVER");
 						}
 
+						// GET JSON FROM GENIUS
+						geniusurl = "https://api.genius.com/users/" + $scope.user.id + "?access_token=lUQ8rzBeb78dJdtUcBbE4Jh-jfO88nfoDxHV3Ji3iOz268lNbYAYh8G0PjlcV-ma";
+
+						$.getJSON(geniusurl).done(function (data) {
+							$scope.s.genius.source = data;
+							$scope.s.user.given = true;
+							scope.$apply(function () {
+								scope.s.user.given = true;
+								console.log("S: USER GIVEN");
+							});
+							$scope.searchloop();
+
+						});
 					}
 				}
 				else {
-					// IS ID FROM SERVER?
-					if (!$scope.l.id.fromserver) {
-						// SAVE ID ON SERVER
-						phpid = new FormData();
-						phpid.append("phpid", $scope.user.id);
-						phpid.append("phplogin", $scope.logininput.toUpperCase().replace(/\s+/g, "-"));
-						xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
-						xhr.open('post', 'saveid.php', true);
-						xhr.send(phpid);
-						console.log("ID SAVED ON SERVER");
-					}
-
-					// GET JSON FROM GENIUS
-					geniusurl = "https://api.genius.com/users/" + $scope.user.id + "?access_token=lUQ8rzBeb78dJdtUcBbE4Jh-jfO88nfoDxHV3Ji3iOz268lNbYAYh8G0PjlcV-ma";
-
-					$.getJSON(geniusurl).done(function (data) {
-						$scope.l.genius.source = data;
-						$scope.l.user.given = true;
-						scope.$apply(function () {
-							scope.l.user.given = true;
-							console.log("USER GIVEN");
-						});
-						$scope.loop();
-
-					});
+					$scope.user = $scope.s.genius.source.response.user;
+					console.log("S: END LOOP");
+					$scope.doit();
 				}
 			}
 			else {
-				$scope.user = $scope.l.genius.source.response.user;
-				console.log("END LOOP");
-				$scope.doit();
+				if ($scope.s.error.inputinvalid) {
+
+				}
+				else {
+					if ($scope.s.error.notfound) {
+						$scope.buttons.profile.text = "nothing here";
+
+						$scope.html_generatedtext.innerHTML = "";
+
+						$scope.html_nouser.innerHTML = $scope.logininput;
+
+						$("#optionscontainer").attr({
+							style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
+						});
+
+						$("#buttoncontainer").attr({
+							style: "padding-top: 5vh;padding-bottom: 5vh;"
+						});
+
+						$("#profilebox").attr({
+							style: "height: 0;display:none;opacity: 0;"
+						});
+
+						$("#profiletext").attr({
+							style: "opacity: 0"
+						});
+
+						$("#generatedtext").attr({
+							style: "opacity: 0"
+						});
+
+						$("#profilehr").attr({
+							style: "opacity: 0"
+						});
+
+						$("#customize").attr({
+							style: "opacity: 0"
+						});
+
+						$("#authenticate").attr({
+							style: "opacity: 0"
+						});
+
+						$("#info").attr({
+							style: "width: initial;"
+						});
+
+						$("#badgeslogo").attr({
+							style: "width: 3vw;align-self: center;height: initial;"
+						});
+
+						$("#version").attr({
+							style: "font-size: 5vmin;color: #000000;font-weight: 700;margin-top: 0;margin-bottom: 0;line-height: 80%;padding-bottom:0;"
+						});
+
+						$("#menucontainer").attr({
+							style: "display: flex"
+						});
+
+						$("#top").attr({
+							style: "height: initial;margin-bottom: 41px;"
+						});
+
+						$("#search").attr({
+							style: "margin-top: 0;"
+						});
+
+						NProgress.done();
+
+						$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function () {
+
+
+							$("#usererror:hidden").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
+						});
+					}
+					else {
+						if ($scope.s.error.inputempty) {
+							NProgress.done();
+							$("#optionscontainer").attr({
+								style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
+							});
+
+							$("#buttoncontainer").attr({
+								style: "padding-top: 5vh;padding-bottom: 5vh;"
+							});
+
+							$("#info").attr({
+								style: "display: none;"
+							});
+
+
+							$scope.s.time.endtime = $.now();
+							$scope.s.time.waitingtime = $scope.s.time.endtime - $scope.s.time.starttime;
+							$scope.s.time.waitingtimeinseconds = $scope.s.time.waitingtime / 1000;
+
+							$("#profilebox").attr({
+								style: "height: 0;display:none;opacity: 0;"
+							});
+
+							$("#profiletext").attr({
+								style: "opacity: 0"
+							});
+
+							$("#generatedtext").attr({
+								style: "opacity: 0"
+							});
+
+							$("#profilehr").attr({
+								style: "opacity: 0"
+							});
+
+							$("#customize").attr({
+								style: "opacity: 0"
+							});
+
+							$("#authenticate").attr({
+								style: "opacity: 0"
+							});
+
+							$scope.buttons.profile.text = "nothing here";
+
+							$scope.html_generatedtext.innerHTML = "";
+							$("#nothing:hidden").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
+
+							$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
+						}
+					}
+				}
 			}
 		}
-		else {
-			if ($scope.l.error.inputinvalid) {
+	};
+	
+	$scope.doit = function () {
+		// RESET FIRST LOOP BOOLEAN
+		$scope.d.firstloop = true;
 
+		// INIT LOOP
+		$scope.doitloop();
+	};
+	
+	$scope.doitloop = function () {
+		
+		NProgress.inc();
+		
+		$scope.$applyAsync();
+		
+		if ($scope.d.firstloop) {
+			
+			$scope.user.stars = 0;
+
+			$scope.d = {
+				firstloop: false,
+				collection: {
+					checked: false,
+					given: false
+				},
+				badgescontainer: {
+					emptied: false
+				}
+			};
+
+			// LOOP IT BRUH
+			$scope.doitloop();
+		}
+		else {
+			if (!$scope.d.badgescontainer.emptied) {
+				while ($scope.html_badgescontainer.firstChild) {
+					$scope.html_badgescontainer.removeChild($scope.html_badgescontainer.firstChild);
+				}
+				
+				$scope.d.badgescontainer.emptied = true;
+				console.log("D: BADGESCONTAINER EMPTIED");
+				
+				$scope.doitloop();
 			}
 			else {
-				if ($scope.l.error.notfound) {
-					$scope.html_profile.innerHTML = "NOTHING HERE";
+				if (!$scope.d.collection.checked) {
+					
+					$scope.d.collection.data = $http.get($scope.homepath + "collections/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", {
+							responseType: "text"
+					});
 
-					$scope.html_generatedtext.innerHTML = "";
-
-					$scope.html_nouser.innerHTML = $scope.logininput;
+					$q.when($scope.d.collection.data, function () {
+						if (JSON.stringify($scope.d.collection.data.$$state.value.data).indexOf("{") === 0) {
+							$scope.user.collection = $scope.d.collection.data.$$state.value.data;
+							
+							$scope.d.collection.given = true;
+							console.log("D: COLLECTION GIVEN");
+						}
+						
+						$scope.d.collection.checked = true;
+						console.log("D: COLLECTION CHECKED");
+						
+						$scope.doitloop();
+					});
+				}
+				else {
+					insert();
+					
+					$scope.$applyAsync();
+					
+					$scope.html_usererror.style.display = "none";
+					
+					$("#userinfo:hidden").attr({
+						style: "display: flex;"
+					});
 
 					$("#optionscontainer").attr({
 						style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
@@ -537,6 +904,10 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 						style: "opacity: 0"
 					});
 
+					$scope.buttons.profile.text = "add them to your profile";
+
+					$scope.html_generatedtext.innerHTML = "";
+
 					$("#info").attr({
 						style: "width: initial;"
 					});
@@ -561,135 +932,23 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 						style: "margin-top: 0;"
 					});
 
-					NProgress.done();
+					NProgress.inc();
 
-					$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function () {
-
-
-						$("#usererror:hidden").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
-					});
-				}
-				else {
-					if ($scope.l.error.inputempty) {
-						NProgress.done();
-						console.log("user entered nothing");
-						$("#optionscontainer").attr({
-							style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
-						});
-
-						$("#buttoncontainer").attr({
-							style: "padding-top: 5vh;padding-bottom: 5vh;"
-						});
-
-						$("#info").attr({
-							style: "display: none;"
-						});
-
-
-						$scope.l.time.endtime = $.now();
-						$scope.l.time.waitingtime = $scope.l.time.endtime - $scope.l.time.starttime;
-						$scope.l.time.waitingtimeinseconds = $scope.l.time.waitingtime / 1000;
-
-						$("#profilebox").attr({
-							style: "height: 0;display:none;opacity: 0;"
-						});
-
-						$("#profiletext").attr({
-							style: "opacity: 0"
-						});
-
-						$("#generatedtext").attr({
-							style: "opacity: 0"
-						});
-
-						$("#profilehr").attr({
-							style: "opacity: 0"
-						});
-
-						$("#customize").attr({
-							style: "opacity: 0"
-						});
-
-						$("#authenticate").attr({
-							style: "opacity: 0"
-						});
-
-						$scope.html_profile.innerHTML = "NOTHING HERE";
-
-						$scope.html_generatedtext.innerHTML = "";
-						$("#nothing:hidden").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
-
-						$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
+					if (isnothing == "no") {
+						imageloop();
 					}
+					else {
+						$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
+						NProgress.done();
+					}
+
+					window.history.pushState($scope.user.login + "'s badges collection", "Badges", $scope.currentpath.slice(0, (nthIndex($scope.currentpath, "/", 3) + 1)) + $scope.user.login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
 				}
 			}
 		}
 	};
-
-
-
-
-	/*
-	usergivenfunc = function () {
-
-		$scope.logininput = window.location.pathname.slice(nthIndex(currentpath, "/", 3) + 1);
-
-		$(".mdl-textfield").addClass("is-dirty");
-
-		starttime = $.now();
-
-		id_given = "no";
-
-		isnothing = "no";
-
-		n = 0;
-
-		index = 0;
-
-		arraychecked = 0;
-
-		i = 9;
-
-		serverchecked = 0;
-
-		logininputchecked = 0;
-
-		idonserver = 0;
-
-		userhere = 0;
-
-		userpagegiven = 0;
-
-		$("#optionscontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function () {
-			$("#userinfo").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function () {
-				$("#loadingcontainer").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]), function () {
-					$scope.$apply(function () {
-						loop();
-					});
-				});
-			});
-		});
-	};
-
-	if ($scope.currentpath.indexOf("/collection") == -1) {
-		if (localStorage.getItem("access_token") !== null) {
-			if (localStorage.getItem("tokentime") !== null) {
-				if (jQuery.now() - (localStorage.getItem("tokentime")) < 1209600000) {
-					$scope.html_authenticate.parentNode.attributes.href.nodeValue = "collection";
-				}
-			}
-		}
-		if ($scope.currentpath.length != nthIndex($scope.currentpath, "/", 3) + 1) {
-			usergiven = 1;
-			$scope.styles.loadingcontainer = "";
-			usergivenfunc();
-		}
-	}
-	*/
-
-
-
-	$scope.doit = function () {
+	
+	$scope.doit2 = function () {
 
 		$.get($scope.collectionspath + $scope.user.login.toUpperCase().replace(/\s+/g, "-") + ".js").done(function (data) {
 			collectionsource = data;
@@ -820,7 +1079,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 					style: "opacity: 0"
 				});
 
-				$scope.html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
+				$scope.buttons.profile.text = "add them to your profile";
 
 				$scope.html_generatedtext.innerHTML = "";
 
@@ -933,7 +1192,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 					style: "opacity: 0"
 				});
 
-				$scope.html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
+				$scope.buttons.profile.text = "add them to your profile";
 
 				$scope.html_generatedtext.innerHTML = "";
 
@@ -1026,23 +1285,23 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 
 	findid = function () {
 		if (location.pathname.indexOf("collection") !== -1) {
-			$scope.user.id = $scope.l.genius.source.response.user.id;
+			$scope.user.id = $scope.s.genius.source.response.user.id;
 		}
 		else {
-			$scope.user.id = JSON.parse($scope.l.yahoo.source.query.results["preload-content"]["data-preload_data"]).user.id;
+			$scope.user.id = JSON.parse($scope.s.yahoo.source.query.results["preload-content"]["data-preload_data"]).user.id;
 		}
 	};
 
 	/* findavatar = function () {
-		$scope.user.avatar = $scope.l.genius.source.responseJSON.response.user.avatar;
+		$scope.user.avatar = $scope.s.genius.source.responseJSON.response.user.avatar;
 	};
 
 	findname = function () {
-		$scope.user.name = $scope.l.genius.source.responseJSON.response.user.name;
+		$scope.user.name = $scope.s.genius.source.responseJSON.response.user.name;
 	};
 
 	findlogin = function () {
-		$scope.user.login = $scope.l.genius.source.responseJSON.response.user.login;
+		$scope.user.login = $scope.s.genius.source.responseJSON.response.user.login;
 	};
 
 	findlink = function () {
@@ -1050,27 +1309,27 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 	};
 
 	findiq_for_display = function () {
-		$scope.user.iq_for_display = $scope.l.genius.source.responseJSON.response.user.iq_for_display;
+		$scope.user.iq_for_display = $scope.s.genius.source.responseJSON.response.user.iq_for_display;
 	};
 
 	findrole_for_display = function () {
-		$scope.user.role_for_display = $scope.l.genius.source.responseJSON.response.user.role_for_display;
+		$scope.user.role_for_display = $scope.s.genius.source.responseJSON.response.user.role_for_display;
 	};
 
 	findroles_for_display = function () {
-		$scope.user.roles_for_display = $scope.l.genius.source.responseJSON.response.user.roles_for_display;
+		$scope.user.roles_for_display = $scope.s.genius.source.responseJSON.response.user.roles_for_display;
 	};
 
 	findiq = function () {
-		$scope.user.iq = $scope.l.genius.source.responseJSON.response.user.iq;
+		$scope.user.iq = $scope.s.genius.source.responseJSON.response.user.iq;
 	};
 
 	findtranscriptions_count = function () {
-		$scope.user.transcriptions_count = $scope.l.genius.source.responseJSON.response.user.stats.transcriptions_count;
+		$scope.user.transcriptions_count = $scope.s.genius.source.responseJSON.response.user.stats.transcriptions_count;
 	};
 
 	findannotations_count = function () {
-		$scope.user.annotations_count = $scope.l.genius.source.responseJSON.response.user.stats.annotations_count;
+		$scope.user.annotations_count = $scope.s.genius.source.responseJSON.response.user.stats.annotations_count;
 	}; */
 
 	//-------------------------------------------------------------------------
@@ -1317,10 +1576,8 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 				}
 			}
 		}
-		stars = stars + badgeid;
-		$scope.$apply(function () {
-			$scope.user.stars = stars;
-		});
+		
+		$scope.user.stars = $scope.user.stars + badgeid;
 	};
 
 	badgeelement = "div";
@@ -1388,7 +1645,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 				badgebox.setAttribute("class", badgeclass);
 				badgebox.setAttribute("id", zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category);
 				badge = document.createElement("img");
-				badge.setAttribute("src", badgespath + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
+				badge.setAttribute("src", $scope.badgespath + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
 				badge.setAttribute("class", "badge");
 				badgebox.appendChild(badge);
 
@@ -1407,7 +1664,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 				badgebox.setAttribute("class", badgeclass);
 				badgebox.setAttribute("id", zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category);
 				badge = document.createElement("img");
-				badge.setAttribute("src", badgespath + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
+				badge.setAttribute("src", $scope.badgespath + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
 				badge.setAttribute("class", "badge");
 				badgebox.appendChild(badge);
 
@@ -1426,7 +1683,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 
 	role2id = function (role) {
 		roleloop = function () {
-			if (role_for_display === null) {
+			if ($scope.user.role_for_display === null) {
 				badgeid = 0;
 			}
 			else {
@@ -1490,7 +1747,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			badgebox.setAttribute("class", badgeclass);
 			badgebox.setAttribute("id", "004-" + zeroFill(badgeid, 3) + badgename);
 			badge = document.createElement("img");
-			badge.setAttribute("src", badgespath + "004%20Role%20Badges/genius-004-" + zeroFill(badgeid, 3) + badgename + "500px.png?time=" + jQuery.now());
+			badge.setAttribute("src", $scope.badgespath + "004%20Role%20Badges/genius-004-" + zeroFill(badgeid, 3) + badgename + "500px.png?time=" + jQuery.now());
 			badge.setAttribute("class", "badge");
 			badgebox.appendChild(badge);
 
@@ -1507,7 +1764,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			badgebox.setAttribute("class", badgeclass);
 			badgebox.setAttribute("id", "005-001verifiedartist");
 			badge = document.createElement("img");
-			badge.setAttribute("src", badgespath + "005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=" + jQuery.now());
+			badge.setAttribute("src", $scope.badgespath + "005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=" + jQuery.now());
 			badge.setAttribute("class", "badge");
 			badgebox.appendChild(badge);
 
@@ -1598,7 +1855,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 				starbadge3.appendChild($scope.html_smallfooter.cloneNode(true));
 			}
 
-			rolebadgechooser(role_for_display, 1);
+			rolebadgechooser($scope.user.role_for_display, 1);
 			if (rolebadge1 !== "undefined") {
 				$scope.html_editbadges.appendChild(rolebadge1);
 				rolebadge1.appendChild($scope.html_smallfooter.cloneNode(true));
@@ -1712,164 +1969,6 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 	$(document).ready(function () {
 		$("#donate").click(function () {
 			donate();
-		});
-	});
-
-	$(document).ready(function () {
-		$("#profile").click(function () {
-			if (l.user.given) {
-				if ($scope.html_profile.innerHTML == "CLOSE THAT") {
-					$("#profilebox").animate({
-						opacity: 0
-					}, 250, $.bez([0.4, 0.0, 1, 1]), function () {
-						$("#profilebox").animate({
-							height: 0
-						}, 400, $.bez([0.4, 0.0, 0.2, 1]), function () {
-							$("#profilebox").attr({
-								style: "height: 0;display:none;opacity: 0;"
-							});
-						});
-					});
-					$scope.html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
-
-				}
-				else {
-					if (collectionhere === 0) {
-						urlarray = [];
-
-						if (starbadge1 != "undefined") {
-							urlarray.push(starbadge1.firstChild.src.slice(0, starbadge1.firstChild.src.indexOf("500px")) + "170px.png");
-						}
-						if (starbadge2 != "undefined") {
-							urlarray.push(starbadge2.firstChild.src.slice(0, starbadge2.firstChild.src.indexOf("500px")) + "170px.png");
-						}
-						if (starbadge3 != "undefined") {
-							urlarray.push(starbadge3.firstChild.src.slice(0, starbadge3.firstChild.src.indexOf("500px")) + "170px.png");
-						}
-						if (rolebadge1 != "undefined") {
-							urlarray.push(rolebadge1.firstChild.src.slice(0, rolebadge1.firstChild.src.indexOf("500px")) + "170px.png");
-						}
-						if (rolebadge2 != "undefined") {
-							urlarray.push(rolebadge2.firstChild.src.slice(0, rolebadge2.firstChild.src.indexOf("500px")) + "170px.png");
-						}
-						if (verifiedartistbadge != "undefined") {
-							urlarray.push(verifiedartistbadge.firstChild.src.slice(0, verifiedartistbadge.firstChild.src.indexOf("500px")) + "170px.png");
-						}
-					}
-					else {
-						urlarray = [];
-
-						z = 0;
-						while (z < collectiondom.children.length) {
-							urlarray.push(collectiondom.children[z].firstChild.src.slice(0, collectiondom.children[z].firstChild.src.indexOf("500px")) + "170px.png");
-							z = z + 1;
-						}
-					}
-
-					realstart = "<table><tbody>";
-
-					littlestart = "<tr>";
-
-					itemstart = "<td><img src='";
-
-					itemend = "'></td>";
-
-					littleend = "</tr>";
-
-					realend = "</tbody></table>";
-
-					if (urlarray.length === 0) {
-						gentexthtml = "This user has no badges. :(";
-					}
-					if (urlarray.length == 1) {
-						gentexthtml = realstart + littlestart;
-						gentexthtml += itemstart + urlarray[0] + itemend;
-						gentexthtml += littleend + realend;
-					}
-					if (urlarray.length == 2) {
-						gentexthtml = realstart + littlestart;
-						gentexthtml += itemstart + urlarray[0] + itemend;
-						gentexthtml += itemstart + urlarray[1] + itemend;
-						gentexthtml += littleend + realend;
-					}
-					if (urlarray.length == 3) {
-						gentexthtml = realstart + littlestart;
-						gentexthtml += itemstart + urlarray[0] + itemend;
-						gentexthtml += itemstart + urlarray[1] + itemend;
-						gentexthtml += littleend;
-						gentexthtml += littlestart;
-						gentexthtml += itemstart + urlarray[2] + itemend;
-						gentexthtml += littleend + realend;
-					}
-					if (urlarray.length == 4) {
-						gentexthtml = realstart + littlestart;
-						gentexthtml += itemstart + urlarray[0] + itemend;
-						gentexthtml += itemstart + urlarray[1] + itemend;
-						gentexthtml += littleend;
-						gentexthtml += littlestart;
-						gentexthtml += itemstart + urlarray[2] + itemend;
-						gentexthtml += itemstart + urlarray[3] + itemend;
-						gentexthtml += littleend + realend;
-					}
-					if (urlarray.length == 5) {
-						gentexthtml = realstart + littlestart;
-						gentexthtml += itemstart + urlarray[0] + itemend;
-						gentexthtml += itemstart + urlarray[1] + itemend;
-						gentexthtml += littleend;
-						gentexthtml += littlestart;
-						gentexthtml += itemstart + urlarray[2] + itemend;
-						gentexthtml += itemstart + urlarray[3] + itemend;
-						gentexthtml += littleend;
-						gentexthtml += littlestart;
-						gentexthtml += itemstart + urlarray[4] + itemend;
-						gentexthtml += littleend + realend;
-					}
-					if (urlarray.length == 6) {
-						gentexthtml = realstart + littlestart;
-						gentexthtml += itemstart + urlarray[0] + itemend;
-						gentexthtml += itemstart + urlarray[1] + itemend;
-						gentexthtml += littleend;
-						gentexthtml += littlestart;
-						gentexthtml += itemstart + urlarray[2] + itemend;
-						gentexthtml += itemstart + urlarray[3] + itemend;
-						gentexthtml += littleend;
-						gentexthtml += littlestart;
-						gentexthtml += itemstart + urlarray[4] + itemend;
-						gentexthtml += itemstart + urlarray[5] + itemend;
-						gentexthtml += littleend + realend;
-					}
-
-					gentext = htmlEntities(gentexthtml);
-					$scope.html_generatedtext.innerHTML = gentext;
-					$scope.html_profiletext.innerHTML = "You are " + name + "? Just copy-paste this text to your profile bio:";
-					$("#profilebox").attr({
-						style: "height: 0;display:flex;opacity: 0;"
-					});
-					$("#generatedtext").attr({
-						style: "opacity: 1;"
-					});
-					$("#profilehr").attr({
-						style: "opacity: 1;"
-					});
-					$("#customize").attr({
-						style: "opacity: 1;"
-					});
-					$("#authenticate").attr({
-						style: "opacity: 1;"
-					});
-					$("#profiletext").attr({
-						style: "opacity: 1;"
-					});
-					$("#profilebox").animate({
-						height: "350px"
-					}, 400, $.bez([0.4, 0.0, 0.2, 1]), function () {
-						$scope.html_profile.innerHTML = "CLOSE THAT";
-						$("#profilebox").animate({
-							opacity: 1
-						}, 250, $.bez([0.0, 0.0, 0.2, 1]));
-					});
-				}
-			}
 		});
 	});
 

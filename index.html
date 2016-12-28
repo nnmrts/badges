@@ -38,6 +38,7 @@
 		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link rel='stylesheet' href="libraries/nprogress/nprogress.css" />
+		<link rel='stylesheet' href="libraries/animate.css/animate.css" />
 		<!-- || MAIN -->
 		<link rel="stylesheet" href="fonts/fonts.css">
 		<link rel="stylesheet" href="style.css">
@@ -63,6 +64,8 @@
 		<!-- ||| ANGULAR MATERIAL -->
 		<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.js"></script>
 		<script src="libraries/angular-material/svg-icons.js"></script>
+		
+		
 		<script src="libraries/browserify/bundle.js"></script>
 		<script src="libraries/emojione/emojione.js"></script>
 		<script src="libraries/is.js/is.js"></script>
@@ -70,19 +73,16 @@
 		<script src="libraries/mdl/material.js"></script>
 		<script src="libraries/nprogress/nprogress.js"></script>
 		<script src="libraries/xhr/xhr.js"></script>
-		<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async='async'></script>
+		<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
 		<script>
 			var OneSignal = window.OneSignal || [];
 			OneSignal.push(["init", {
 			  appId: "df0170e8-ef9f-4a50-8748-63d50cfc1d98",
-			  autoRegister: false, /* Set to true to automatically prompt visitors */
-			  subdomainName: 'badges',   
-			  httpPermissionRequest: {
-				enable: true
-			  },
+			  autoRegister: false,
 			  notifyButton: {
-				  enable: true /* Set to false to hide */
-			  }
+				enable: true /* Set to false to hide */
+			  },
+			  safari_web_id: 'web.onesignal.auto.66c7fbb6-f0f6-47ab-9f8e-1bd725d1f3d2'
 			}]);
 		</script>
 		<!--- MAIN --->
@@ -166,15 +166,15 @@
 						<md-button ng-click="ui.search()" id="search" class="md-raised md-primary">{{buttons.search.text | uppercase}}</md-button>
 					</div>
 					<div id="menucontainer" style="display: none">
-						<button id="profile" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">{{buttons.profile.text | uppercase}}</button>
+						<md-button ng-click="ui.profile()" id="profile" class="md-raised md-primary">{{buttons.profile.text | uppercase}}</md-button>
 					</div>
 					<div id="profilebox" style="height: 0;display:none;opacity: 1;">
-						<span id="profiletext" style="opacity: 0;">You are SinaTheQueen? Just copy-paste this text to your profile bio:</span>
+						<span id="profiletext" style="opacity: 0;">You are {{user.name}}? Just copy-paste this text to your profile bio:</span>
 						<span id="generatedtext" style="opacity: 0;"></span>
 						<hr id="profilehr" style="opacity: 0; display: none">
 						<span id="customize" style="opacity: 0; display: none">Do you want to customize your badges collection? Connect with your Genius account below!</span>
 						<a ng-href="https://api.genius.com/oauth/authorize?client_id={{client_id}}&redirect_uri={{currenthref}}&scope=me&state=loggedin&response_type=code" style="text-decoration: none; color: black;">
-							<md-button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="authenticate" style="opacity: 0; display: none">CONNECT</md-button>
+							<md-button id="authenticate" class="md-raised md-primary" style="opacity: 0; display: none">CONNECT</md-button>
 						</a>
 					</div>
 			</md-card-content>
@@ -186,9 +186,11 @@
 					</div>
 					<div class="identity">
 						<div class="line1">
-							<div class="BOXname">
-								<a id="namelink" href="https://genius.com/SinaTheQueen"><span id="name">{{user.name}}</span></a>
-							</div>
+							<a ng-href="https://genius.com/{{user.login}}">
+								<div class="BOXname">
+									<span id="name">{{user.name}}</span>
+								</div>
+							</a>
 							<div class="BOXiq_for_display">
 								<span id="iq_for_display">{{user.iq_for_display}}</span>
 							</div>
@@ -200,12 +202,25 @@
 							<span id="divider" style="display: inline-block"> | </span>
 							<div class="BOXrole_for_display">
 								<div class="BOXrole_icon" id="iconbox" style="display: inline-block">
-									<svg id="role_icon" src="diamond.svg" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 22 22" version="1.1" style="fill: #7689e8;width: 1.05rem;height: 1.05rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block">
-										<path id="role_icon_path" d="M11 1.95l8.98 8.98L11 19.91l-8.98-8.98z" cx="74" cy="10" r="9"></path>
+									<svg ng-if="user.role_for_display == 'contributor'" id='role_icon' src='equilateral_triangle.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 9 7' version='1.1' style='fill: #ffffff;width: 1rem;height: 1rem;stroke: #9a9a9a;stroke-width: 1px;top: 2px;position: relative;display: block'>
+										<path id='role_icon_path' d='M8.25 6.418L4.25 0l-4 6.418z' cx='74' cy='10' r='9'></path>
 									</svg>
-									<svg id="role_icon2">
+									<svg ng-if="user.role_for_display == 'mediator'" id='role_icon' src='square.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 20 20' version='1.1' style='fill: #ff518c;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'>
+										<path id='role_icon_path' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></path>
 									</svg>
-									<svg id="role_icon3">
+									<svg ng-if="user.role_for_display == 'editor'" id='role_icon' src='square.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 20 20' version='1.1' style='fill: #ffff64;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'>
+										<path id='role_icon_path' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></path>
+									</svg>
+									<svg ng-if="user.role_for_display == 'moderator'" id='role_icon' src='diamond.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 22 22' version='1.1' style='fill: #7689e8;width: 1.05rem;height: 1.05rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'>
+										<path id='role_icon_path' d='M11 1.95l8.98 8.98L11 19.91l-8.98-8.98z' cx='74' cy='10' r='9'></path>
+									</svg>
+									<svg ng-if="user.role_for_display == 'regulator'" id='role_icon' src='circle.svg' xmlns='https://www.w3.org/2000/svg' viewBox='64 0 20 20' version='1.1' style='fill: #b0c4de;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'>
+										<circle id='role_icon_circle' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></circle>
+									</svg>
+									<svg ng-if="user.role_for_display == 'verified_artist'" id='role_icon' src='checky.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 11 11' version='1.1' width='14px' height='14px' style='fill: #38ef51;    height: 17px;margin: 0 2px;top: 2px;width: 17px;stroke: #fff;position: relative;display: block'>
+										<polygon points='5.5 0 10.2631397 2.75 10.2631397 8.25 5.5 11 0.736860279 8.25 0.736860279 2.75 '></polygon>
+										<path d='M2.5,5.5 L4.5,7.5' stroke-width='1.2' stroke-linecap='square'></path>
+										<path d='M4.5,7.5 L8.5,3.5' stroke-width='1.2' stroke-linecap='square'></path>
 									</svg>
 								</div>
 								<span id="role_for_display" style="display: inline-block">{{user.role_for_display}}</span>

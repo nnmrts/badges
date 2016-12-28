@@ -207,6 +207,49 @@ body {
 	box-shadow: none;
 }
 
+.badges-layout .md-button.md-primary.md-raised:not([disabled]).md-focused {
+	background-color: #ff1464;
+}
+
+#loadingcontainer {
+	position: fixed;
+    top: 41px;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    -webkit-transform: translatez(0);
+    -moz-transform: translatez(0);
+    -ms-transform: translatez(0);
+    -o-transform: translatez(0);
+    transform: translatez(0);
+}
+
+#loading {
+	width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 100;
+    -webkit-transform: translatez(0);
+    -moz-transform: translatez(0);
+    -ms-transform: translatez(0);
+    -o-transform: translatez(0);
+    transform: translatez(0);
+    background-color: #f7f7f7;
+}
+
+#name {
+	text-decoration: none;
+	color: #000;
+	font-size: 1.9em;
+	font-weight: 700;
+	margin-bottom: .125rem;
+	z-index: 500;
+	position: relative;
+}
+
 /* .badges-layout md-input-container.md-input-focused > label {
 	font-size: 16px;
 }
@@ -773,17 +816,6 @@ button.close {
 	display: inline-block;
 }
 
-#namelink {
-	text-decoration: none;
-	color: #000;
-}
-
-#name {
-	font-size: 1.9em;
-	font-weight: 700;
-	margin-bottom: .125rem;
-}
-
 .BOXiq_for_display {
 	display: inline-block;
 }
@@ -881,49 +913,6 @@ button.close {
 
 #nouser {
 }
-
-/*--------------------------------------------*/
-
-#loading {
-    width: 100%;
-    height: 100%;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 100;
-    -webkit-transform: translatez(0);
-    -moz-transform: translatez(0);
-    -ms-transform: translatez(0);
-    -o-transform: translatez(0);
-    transform: translatez(0);
-}
-
-#loadingoverlay {
-    width: 100%;
-    height: 100%;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 100;
-}
-
-#loadingcontainer {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: 4;
-    -webkit-transform: translatez(0);
-    -moz-transform: translatez(0);
-    -ms-transform: translatez(0);
-    -o-transform: translatez(0);
-    transform: translatez(0);
-}
-
-#loadingcontaineroverlay {width: 100%;height: 150%;position: fixed;padding: 82px 5vw 41px 5vw;z-index: 3;}
 
 /*--------------------------------------------*/
 
