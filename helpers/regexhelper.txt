@@ -38,3 +38,9 @@ FILTER: *.1;*.css;*.eot;*.gif;*.gitignore;*.htaccess;*.html;*.ico;*.js;*.json;*.
 (?!scope\.)nthIndex
 
 \$scope.nthIndex
+
+
+
+: (.*?);
+
+": "\1",\r"

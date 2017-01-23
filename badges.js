@@ -45,6 +45,8 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		originatorEv = ev;
 		$mdOpenMenu(ev);
 	};
+	
+	NProgress.configure({ parent: '#site' });
 
 	// SMALL FUNCTIONS FOR DEVELOPMENT
 
@@ -189,18 +191,71 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		}
 		return frag;
 	};
-
-
-
-
+	
+	cardinandout = function (outel, inel, options = {}) {
+		$scope.styles.site = {"overflow": "hidden"};
+		$scope.$applyAsync();
+		outel.removeClass($scope.animations.slideOutDown).addClass($scope.animations.slideOutDown).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+			outel.hide();
+			outel.removeClass($scope.animations.slideOutDown);
+			if(options.before) {
+				$q.when(options.before()).then(function() {
+					inel.show();
+					inel.removeClass($scope.animations.slideInUp).addClass($scope.animations.slideInUp).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+						inel.removeClass($scope.animations.slideInUp);
+						$scope.styles.site = {"overflow": "overlay"};
+						$scope.$apply();
+						if(options.callback) {
+							options.callback();
+						}
+					});	
+				});
+			}
+			inel.show();
+			inel.removeClass($scope.animations.slideInUp).addClass($scope.animations.slideInUp).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+				inel.removeClass($scope.animations.slideInUp);
+				$scope.styles.site = {"overflow": "overlay"};
+				$scope.$apply();
+				if(options.callback) {
+					options.callback();
+				}
+			});	
+		});
+	};
+	
+	cardin = function (inel, options = {}) {
+		if(options.before) {
+			options.before();
+		}
+		inel.show();
+		inel.removeClass($scope.animations.slideInUp).addClass($scope.animations.slideInUp).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+			inel.removeClass($scope.animations.slideInUp);
+			$scope.$apply();
+			if(options.callback) {
+				options.callback();
+			}
+		});
+	};
+	
+	cardout = function (outel, options = {}) {
+		if(options.before) {
+			options.before();
+		}
+		outel.removeClass($scope.animations.slideOutDown).addClass($scope.animations.slideOutDown).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+			outel.hide();
+			outel.removeClass($scope.animations.slideOutDown);
+			if(options.callback) {
+				options.callback();
+			}
+		});
+	};			scaleconvert = function (value, oldscale, newscale) {		oldmin = Number(oldscale.slice(0, oldscale.indexOf("-")));				oldmax = Number(oldscale.slice(oldscale.indexOf("-") + 1));				newmin = Number(newscale.slice(0, newscale.indexOf("-")));				newmax = Number(newscale.slice(newscale.indexOf("-") + 1));				return (((value - oldmin) * (newmax - newmin)) / (oldmax - oldmin)) + newmin;	};	
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
-
-
-
+	
+	
 	// APP DATA
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
@@ -230,7 +285,23 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 	pathgenerator("collection");
 	pathgenerator("collections");
 	pathgenerator("ids");
-
+	
+	$scope.apiobject = {
+		["api" + location.search.slice(1, location.search.indexOf("="))]: location.search.slice(location.search.indexOf("=") + 1, location.search.indexOf("&")),
+		["api" + location.search.slice(nthIndex(location.search, "&", 1) + 1, nthIndex(location.search, "=", 2))]: (location.search.slice(nthIndex(location.search, "&", 1) + 1)).slice((location.search.slice(nthIndex(location.search, "&", 1) + 1)).indexOf("=") + 1)
+	};
+	
+	$scope.animationprefix = "animated ";
+	
+	$scope.animations = {
+		slideOutDown: $scope.animationprefix + "slideOutDown",
+		slideInUp: $scope.animationprefix + "slideInUp",
+		bounceOutDown: $scope.animationprefix + "bounceOutDown",
+		bounceInUp: $scope.animationprefix + "bounceInUp",
+		zoomOut: $scope.animationprefix + "zoomOut",
+		zoomIn: $scope.animationprefix + "zoomIn",
+		pulse: $scope.animationprefix + "pulse"
+	}
 
 	// DATA THAT WILL CHANGE THROUGH A SESSION
 	//---------------------------------------------------------------------------------------
@@ -257,6 +328,30 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		},
 		stars: {
 			"font-size": ""
+		},
+		site: {
+			"overflow": ""
+		},
+		top: {
+			"top": ""
+		},
+		optionscontainer: {
+			"top": ""
+		},
+		info: {
+			"top": ""
+		},
+		inputcontainer: {
+			"top": ""
+		},
+		search: {
+			"top": ""
+		},
+		menucontainer: {
+			"display": "none"
+		},
+		profilebox: {
+			"display": "none"
 		}
 	};
 
@@ -273,33 +368,56 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			};
 		},
 		search: function () {
-			$("#loadingcontainer:hidden").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]), function () {
-				// START LOADING BAR
-				NProgress.start();
-
-				// RENAME SEARCH BUTTON
-				$scope.buttons.search.text = "search again";
-			});
-			
-			// RESET FIRST LOOP BOOLEAN
-			$scope.s.firstloop = true;
-
-			// INIT LOOP
-			$scope.searchloop();
+			if ($("#userinfo").css("display") != "none") {
+				cardout($("#userinfo"), {
+					callback: function() {
+						cardinandout($("#top"), $("#loadingcontainer"), {
+							callback: function() {
+								// START LOADING BAR
+								NProgress.start();
+								
+								// RENAME SEARCH BUTTON
+								$scope.buttons.search.text = "search again";
+								
+								// RESET FIRST LOOP BOOLEAN
+								$scope.s.firstloop = true;
+								
+								// INIT LOOP
+								$scope.searchloop();
+							}
+						});
+					}
+				});
+			}
+			else {
+				cardinandout($("#top"), $("#loadingcontainer"), {
+					callback: function() {
+						// START LOADING BAR
+						NProgress.start();
+						
+						// RENAME SEARCH BUTTON
+						$scope.buttons.search.text = "search again";
+						
+						// RESET FIRST LOOP BOOLEAN
+						$scope.s.firstloop = true;
+						
+						// INIT LOOP
+						$scope.searchloop();
+					}
+				});
+			}
 		},
 		profile: function () {
-			
-			animateclass = "animated pulse";
 			
 			if ($scope.s.user.given) {
 				if ($scope.buttons.profile.text == "close that") {
 					
 					$scope.buttons.profile.text = "add them to your profile";
-					
-					$('#profile').removeClass(animateclass).addClass(animateclass).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-						$(this).removeClass(animateclass);
+					/* 
+					$('#profile').removeClass($scope.animations.pulse).addClass($scope.animations.pulse).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+						$(this).removeClass($scope.animations.pulse);
 					});
-					
+					*/
 					$("#profilebox").animate({
 						opacity: 0
 					}, 250, $.bez([0.4, 0.0, 1, 1]), function () {
@@ -311,14 +429,15 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 							});
 						});
 					});
-
 				}
 				else {
 					$scope.buttons.profile.text = "close that";
 					
-					$('#profile').removeClass(animateclass).addClass(animateclass).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-						$(this).removeClass(animateclass);
+					/*
+					$('#profile').removeClass($scope.animations.pulse).addClass($scope.animations.pulse).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+						$(this).removeClass($scope.animations.pulse);
 					});
+					*/
 					
 					if (!$scope.d.collection.given) {
 						
@@ -428,6 +547,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 
 					gentext = htmlEntities(gentexthtml);
 					$scope.html_generatedtext.innerHTML = gentext;
+					
 					$("#profilebox").attr({
 						style: "height: 0;display:flex;opacity: 0;"
 					});
@@ -466,6 +586,14 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			$scope.ui.search();
 		}
 	});
+	
+	// COLLECTION INIT
+	//---------------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------
+	
+	if(scope.apiobject.apicode) {
+		
+	}
 	
 	// BIG LOOP FUNCTION
 	//---------------------------------------------------------------------------------------
@@ -661,6 +789,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 				else {
 					$scope.user = $scope.s.genius.source.response.user;
 					console.log("S: END LOOP");
+					window.history.pushState($scope.user.name + "'s badges collection", "Badges - " + $scope.user.name + "'s badges collection", $scope.currentpath.slice(0, (nthIndex($scope.currentpath, "/", 3) + 1)) + $scope.user.login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
 					$scope.doit();
 				}
 			}
@@ -675,7 +804,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 						$scope.html_generatedtext.innerHTML = "";
 
 						$scope.html_nouser.innerHTML = $scope.logininput;
-
+						
 						$("#optionscontainer").attr({
 							style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
 						});
@@ -868,420 +997,91 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 					
 					$scope.html_usererror.style.display = "none";
 					
+					/*
+					
 					$("#userinfo:hidden").attr({
 						style: "display: flex;"
 					});
-
-					$("#optionscontainer").attr({
-						style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
-					});
-
-					$("#buttoncontainer").attr({
-						style: "padding-top: 5vh;padding-bottom: 5vh;"
-					});
-
-					$("#profilebox").attr({
-						style: "height: 0;display:none;opacity: 0;"
-					});
-
-					$("#profiletext").attr({
-						style: "opacity: 0"
-					});
-
-					$("#generatedtext").attr({
-						style: "opacity: 0"
-					});
-
-					$("#profilehr").attr({
-						style: "opacity: 0"
-					});
-
-					$("#customize").attr({
-						style: "opacity: 0"
-					});
-
-					$("#authenticate").attr({
-						style: "opacity: 0"
-					});
+					
+					*/
 
 					$scope.buttons.profile.text = "add them to your profile";
 
-					$scope.html_generatedtext.innerHTML = "";
+					$scope.html_generatedtext.innerHTML = ""
 
-					$("#info").attr({
-						style: "width: initial;"
-					});
-
-					$("#badgeslogo").attr({
-						style: "width: 3vw;align-self: center;height: initial;"
-					});
-
-					$("#version").attr({
-						style: "font-size: 5vmin;color: #000000;font-weight: 700;margin-top: 0;margin-bottom: 0;line-height: 80%;padding-bottom:0;"
-					});
-
-					$("#menucontainer").attr({
-						style: "display: flex"
-					});
-
-					$("#top").attr({
-						style: "height: initial;margin-bottom: 41px;"
-					});
-
-					$("#search").attr({
-						style: "margin-top: 0;"
-					});
-
-					NProgress.inc();
+					NProgress.inc();										$scope.$applyAsync();
 
 					if (isnothing == "no") {
-						imageloop();
+						// imageloop();							scope.$apply(							imagesLoaded(document.querySelectorAll(".badgebox"), function(instance) {								console.log("images loaded");								NProgress.done();								cardinandout($("#loadingcontainer"), $("#top"), {									before: function() {																				// -										$scope.styles.top = {											"height": "initial",											"margin-bottom": "41px"										};										// --										$scope.styles.optionscontainer = {											"height": "initial",											"flex-direction": "row",											"margin": "30px 0 30px"										};										// ---										$scope.styles.info = {											"width": "initial"										};										// ---										$scope.styles.inputcontainer = {											"margin-bottom": "0"										};										// ---										$scope.styles.search = {											"margin": "6px 8px"										};										// --										$scope.styles.menucontainer = {											"display": "flex"										};																				$scope.$applyAsync();									},									callback: function() {										cardin($("#userinfo"), {											callback: function() {												$("#site").animate({													scrollTop: $('#userinfo').offset().top - 75												}, 1000, $.bez([0.4, 0.0, 0.2, 1]));																								$scope.$applyAsync();											}										});																				$scope.$applyAsync();									}								});							});							);
 					}
 					else {
-						$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
 						NProgress.done();
+						cardinandout($("#loadingcontainer"), $("#top"));
 					}
-
-					window.history.pushState($scope.user.login + "'s badges collection", "Badges", $scope.currentpath.slice(0, (nthIndex($scope.currentpath, "/", 3) + 1)) + $scope.user.login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
 				}
 			}
 		}
 	};
-	
-	$scope.doit2 = function () {
 
-		$.get($scope.collectionspath + $scope.user.login.toUpperCase().replace(/\s+/g, "-") + ".js").done(function (data) {
-			collectionsource = data;
-			if (collectionsource.indexOf("<!") !== 0) {
-				console.log("found collection on server");
-				collectionhere = 1;
-				NProgress.inc();
-				object2dom();
-				while ($scope.html_badgescontainer.firstChild) {
-					$scope.html_badgescontainer.removeChild($scope.html_badgescontainer.firstChild);
-				}
-				$scope.html_badgescontainer.innerHTML = collectiondom.innerHTML;
-
-				badgesnumber = $scope.html_badgescontainer.childElementCount;
-
-				if (location.pathname.indexOf("collection") == -1) {
-					/* insertavatar();
-					insertstats();
-					insertnamelink();
-					insertname();
-					insertlogin();
-					insertiq_for_display();
-					insertrole_for_display();
-					insertrole_icon();
-					insertstars(); */
-
-					NProgress.inc();
-				}
-				else {
-					$scope.html_editbadges.innerHTML = collectiondom.innerHTML;
-
-					mapObj2 = {
-						'class="badgebox"': 'class="badgebox ui-state-default"',
-						'div': 'li'
-					};
-
-					$scope.html_editbadges.innerHTML = $scope.html_editbadges.innerHTML.replace(/class="badgebox"|div/g, function (matched) {
-						return mapObj2[matched];
-					});
-
-					m = 0;
-					while (m < Object.size(collectionobject.collection)) {
-						$scope.html_editbadges.children[m].appendChild($scope.html_smallfooter.cloneNode(true));
-						m = m + 1;
-					}
-
-					hoverEnabled = 1;
-					$(".smallfooter").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
-
-					$(".badgebox").hover(function () {
-							childindex = getChildrenIndex(this);
-							currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
-							if (currentfooter.id == "smallfooter") {
-								if (hoverEnabled == 1) {
-									$(currentfooter).fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
-								}
-							}
-						},
-						function () {
-							childindex = getChildrenIndex(this);
-							currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
-							if (currentfooter.id == "smallfooter") {
-								$(currentfooter).fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
+	imageloop = function () {								
+		if ($scope.html_badgescontainer.firstElementChild.firstElementChild.complete) {
+			bgImg = new Image();
+			bgImg.src = $scope.user.avatar.medium.url;
+			bgImg.onload = function(){
+			   $(this).remove();
+				console.log("images loaded");
+				NProgress.done();
+				cardinandout($("#loadingcontainer"), $("#top"), {
+					before: function() {
+						
+						// -
+						$scope.styles.top = {
+							"height": "initial",
+							"margin-bottom": "41px"
+						};
+						// --
+						$scope.styles.optionscontainer = {
+							"height": "initial",
+							"flex-direction": "row",
+							"margin": "30px 0 30px"
+						};
+						// ---
+						$scope.styles.info = {
+							"width": "initial"
+						};
+						// ---
+						$scope.styles.inputcontainer = {
+							"margin-bottom": "0"
+						};
+						// ---
+						$scope.styles.search = {
+							"margin": "6px 8px"
+						};
+						// --
+						$scope.styles.menucontainer = {
+							"display": "flex"
+						};
+					},
+					callback: function() {
+						cardin($("#userinfo"), {
+							callback: function() {
+								$("#site").animate({
+									scrollTop: $('#userinfo').offset().top - 75
+								}, 1000, $.bez([0.4, 0.0, 0.2, 1]));
 							}
 						});
-
-					if (isnothing == "no") {
-						imageloop();
 					}
-					else {
-						$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
-						NProgress.done();
-					}
-				}
-			}
-			else {
-				collectionhere = 0;
-
-				NProgress.inc();
-
-				if (location.pathname.indexOf("collection") == -1) {
-
-					insert();
-				}
-				else {
-					insertbadges();
-				}
-
-				NProgress.inc();
-			}
-
-			if (location.pathname.indexOf("collection") == -1) {
-				$scope.html_usererror.style.display = "none";
-
-				$("#userinfo:hidden").attr({
-					style: "display: flex;"
 				});
-
-				$("#optionscontainer").attr({
-					style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
-				});
-
-				$("#buttoncontainer").attr({
-					style: "padding-top: 5vh;padding-bottom: 5vh;"
-				});
-
-				$("#profilebox").attr({
-					style: "height: 0;display:none;opacity: 0;"
-				});
-
-				$("#profiletext").attr({
-					style: "opacity: 0"
-				});
-
-				$("#generatedtext").attr({
-					style: "opacity: 0"
-				});
-
-				$("#profilehr").attr({
-					style: "opacity: 0"
-				});
-
-				$("#customize").attr({
-					style: "opacity: 0"
-				});
-
-				$("#authenticate").attr({
-					style: "opacity: 0"
-				});
-
-				$scope.buttons.profile.text = "add them to your profile";
-
-				$scope.html_generatedtext.innerHTML = "";
-
-				$("#info").attr({
-					style: "width: initial;"
-				});
-
-				$("#badgeslogo").attr({
-					style: "width: 3vw;align-self: center;height: initial;"
-				});
-
-				$("#version").attr({
-					style: "font-size: 5vmin;color: #000000;font-weight: 700;margin-top: 0;margin-bottom: 0;line-height: 80%;padding-bottom:0;"
-				});
-
-				$("#menucontainer").attr({
-					style: "display: flex"
-				});
-
-				$("#top").attr({
-					style: "height: initial;margin-bottom: 41px;"
-				});
-
-				$("#search").attr({
-					style: "margin-top: 0;"
-				});
-
-				NProgress.inc();
-
-				if (isnothing == "no") {
-					imageloop();
-				}
-				else {
-					$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
-					NProgress.done();
-				}
-
-				history.pushState({}, document.title, $scope.currentpath.slice(0, (nthIndex($scope.currentpath, "/", 3) + 1)) + $scope.user.login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
-
-				/* data = [
-					["avatar", $scope.user.avatar],
-					["link", link],
-					["name", name],
-					["login", login],
-					["iq_for_display", iq_for_display],
-					["iq", iq],
-					["id", id],
-					["transcriptions_count", transcriptions_count],
-					["annotations_count", annotations_count],
-					["role_for_display", role_for_display],
-					["swag?", "swag."]
-				];
-				console.table(data); */
-			}
-			else {
-				NProgress.done();
-			}
-		}).fail(function () {
-			console.log("didn't find collection on server");
-			collectionhere = 0;
-
-			NProgress.inc();
-
-			if (location.pathname.indexOf("collection") == -1) {
-
-				insert();
-			}
-			else {
-				insertbadges();
-			}
-
-			NProgress.inc();
-
-			if (location.pathname.indexOf("collection") == -1) {
-				$scope.html_usererror.style.display = "none";
-
-				$("#userinfo:hidden").attr({
-					style: "display: flex;"
-				});
-
-				$("#optionscontainer").attr({
-					style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
-				});
-
-				$("#buttoncontainer").attr({
-					style: "padding-top: 5vh;padding-bottom: 5vh;"
-				});
-
-				$("#profilebox").attr({
-					style: "height: 0;display:none;opacity: 0;"
-				});
-
-				$("#profiletext").attr({
-					style: "opacity: 0"
-				});
-
-				$("#generatedtext").attr({
-					style: "opacity: 0"
-				});
-
-				$("#profilehr").attr({
-					style: "opacity: 0"
-				});
-
-				$("#customize").attr({
-					style: "opacity: 0"
-				});
-
-				$("#authenticate").attr({
-					style: "opacity: 0"
-				});
-
-				$scope.buttons.profile.text = "add them to your profile";
-
-				$scope.html_generatedtext.innerHTML = "";
-
-				$("#info").attr({
-					style: "width: initial;"
-				});
-
-				$("#badgeslogo").attr({
-					style: "width: 3vw;align-self: center;height: initial;"
-				});
-
-				$("#version").attr({
-					style: "font-size: 5vmin;color: #000000;font-weight: 700;margin-top: 0;margin-bottom: 0;line-height: 80%;padding-bottom:0;"
-				});
-
-				$("#menucontainer").attr({
-					style: "display: flex"
-				});
-
-				$("#top").attr({
-					style: "height: initial;margin-bottom: 41px;"
-				});
-
-				$("#search").attr({
-					style: "margin-top: 0;"
-				});
-
-				NProgress.inc();
-
-				if (isnothing == "no") {
-					imageloop();
-				}
-				else {
-					$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
-					NProgress.done();
-				}
-
-				window.history.pushState("object or string", "Title", currentpath.slice(0, (nthIndex(currentpath, "/", 3) + 1)) + $scope.user.login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
-
-				/* data = [
-					["avatar", avatar],
-					["link", link],
-					["name", name],
-					["login", login],
-					["iq_for_display", iq_for_display],
-					["iq", iq],
-					["id", id],
-					["transcriptions_count", transcriptions_count],
-					["annotations_count", annotations_count],
-					["role_for_display", role_for_display],
-					["swag?", "swag."]
-				];
-				console.table(data); */
-			}
-			else {
-				NProgress.done();
-			}
-		});
-	};
-
-
-	pathactivated = 1;
-	circleactivated = 0;
-	polygonactivated = 0;
-
-	imageloop = function () {
-		if ($scope.html_badgescontainer.firstElementChild.firstElementChild.complete === true) {
-			$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function () {
-				if (location.pathname.indexOf("collection") == -1) {
-					$("md-content").animate({
-						scrollTop: $('#userinfo').offset().top - 75
-					}, 1000, $.bez([0.4, 0.0, 0.2, 1]));
-				}
-			});
-			NProgress.done();
-			console.log("images loaded");
+			};
 		}
 		else {
 			setTimeout(function () {
 				NProgress.inc();
 				console.log("images not loaded yet");
 				imageloop();
-			}, 500);
+			}, 200);
 		}
 	};
-
-	//-----------------
-	//-----------------
-	//-----------------
 
 	findid = function () {
 		if (location.pathname.indexOf("collection") !== -1) {
@@ -1289,198 +1089,6 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		}
 		else {
 			$scope.user.id = JSON.parse($scope.s.yahoo.source.query.results["preload-content"]["data-preload_data"]).user.id;
-		}
-	};
-
-	/* findavatar = function () {
-		$scope.user.avatar = $scope.s.genius.source.responseJSON.response.user.avatar;
-	};
-
-	findname = function () {
-		$scope.user.name = $scope.s.genius.source.responseJSON.response.user.name;
-	};
-
-	findlogin = function () {
-		$scope.user.login = $scope.s.genius.source.responseJSON.response.user.login;
-	};
-
-	findlink = function () {
-		link = "https://genius.com/" + login;
-	};
-
-	findiq_for_display = function () {
-		$scope.user.iq_for_display = $scope.s.genius.source.responseJSON.response.user.iq_for_display;
-	};
-
-	findrole_for_display = function () {
-		$scope.user.role_for_display = $scope.s.genius.source.responseJSON.response.user.role_for_display;
-	};
-
-	findroles_for_display = function () {
-		$scope.user.roles_for_display = $scope.s.genius.source.responseJSON.response.user.roles_for_display;
-	};
-
-	findiq = function () {
-		$scope.user.iq = $scope.s.genius.source.responseJSON.response.user.iq;
-	};
-
-	findtranscriptions_count = function () {
-		$scope.user.transcriptions_count = $scope.s.genius.source.responseJSON.response.user.stats.transcriptions_count;
-	};
-
-	findannotations_count = function () {
-		$scope.user.annotations_count = $scope.s.genius.source.responseJSON.response.user.stats.annotations_count;
-	}; */
-
-	//-------------------------------------------------------------------------
-	//-------------------------------------------------------------------------
-	//-------------------------------------------------------------------------
-
-	/* insertavatar = function () {
-		$scope.html_avatar.style = "background-image: url(" + avatar + ")";
-	};
-	insertstats = function () {
-		$scope.html_annotations_count.innerHTML = annotations_count;
-		$scope.html_transcriptions_count.innerHTML = transcriptions_count;
-	};
-
-	insertnamelink = function () {
-		$scope.html_namelink.setAttribute("href", link);
-	};
-	insertname = function () {
-		$scope.html_name.innerHTML = emojione.shortnameToImage(emojione.toShort(name));
-	};
-	insertlogin = function () {
-		$scope.html_login.innerHTML = login;
-	};
-	insertiq_for_display = function () {
-		$scope.html_iq_for_display.innerHTML = iq_for_display;
-	};
-	insertrole_for_display = function () {
-		if (role_for_display !== null) {
-			$scope.html_role_for_display.innerHTML = role_for_display.replace(/[_]/g, " ");
-		}
-	}; */
-	insertrole_icon = function () {
-		// CONTRIBUTOR
-		if (is.startWith(role_for_display, 'co') === true) {
-			$scope.html_divider.setAttribute("style", "display: inline-block");
-			$scope.html_iconbox.setAttribute("style", "display: inline-block");
-			$scope.html_role_for_display.setAttribute("style", "display: inline-block");
-			//------------------------------------------------------------
-			//------------------------------------------------------------
-			//------------------------------------------------------------
-
-			$scope.html_role_icon.setAttribute("style", "display: none");
-			$scope.html_iconbox.removeChild($scope.html_role_icon);
-
-			fragment = create("<svg id='role_icon' src='equilateral_triangle.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 9 7' version='1.1' style='fill: #ffffff;width: 1rem;height: 1rem;stroke: #9a9a9a;stroke-width: 1px;top: 2px;position: relative;display: block'><path id='role_icon_path' d='M8.25 6.418L4.25 0l-4 6.418z' cx='74' cy='10' r='9'></path></svg>");
-			// You can use native DOM methods to insert the fragment:
-			$scope.html_iconbox.insertBefore(fragment, $scope.html_iconbox.childNodes[0]);
-			$scope.html_role_icon = $("#role_icon")[0];
-		}
-		else {
-			// MEDIATOR
-			if (is.startWith(role_for_display, 'me') === true) {
-				$scope.html_divider.setAttribute("style", "display: inline-block");
-				$scope.html_iconbox.setAttribute("style", "display: inline-block");
-				$scope.html_role_for_display.setAttribute("style", "display: inline-block");
-				//------------------------------------------------------------
-				//------------------------------------------------------------
-				//------------------------------------------------------------
-
-				$scope.html_role_icon.setAttribute("style", "display: none");
-				$scope.html_iconbox.removeChild($scope.html_role_icon);
-
-				fragment = create("<svg id='role_icon' src='square.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 20 20' version='1.1' style='fill: #ff518c;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></path></svg>");
-				// You can use native DOM methods to insert the fragment:
-				$scope.html_iconbox.insertBefore(fragment, $scope.html_iconbox.childNodes[0]);
-				$scope.html_role_icon = $("#role_icon")[0];
-			}
-			else {
-				// EDITOR
-				if (is.startWith(role_for_display, 'ed') === true) {
-					$scope.html_divider.setAttribute("style", "display: inline-block");
-					$scope.html_iconbox.setAttribute("style", "display: inline-block");
-					$scope.html_role_for_display.setAttribute("style", "display: inline-block");
-					//------------------------------------------------------------
-					//------------------------------------------------------------
-					//------------------------------------------------------------
-
-					$scope.html_role_icon.setAttribute("style", "display: none");
-					$scope.html_iconbox.removeChild($scope.html_role_icon);
-
-					fragment = create("<svg id='role_icon' src='square.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 20 20' version='1.1' style='fill: #ffff64;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></path></svg>");
-					// You can use native DOM methods to insert the fragment:
-					$scope.html_iconbox.insertBefore(fragment, $scope.html_iconbox.childNodes[0]);
-					$scope.html_role_icon = $("#role_icon")[0];
-				}
-				else {
-					// MODERATOR
-					if (is.startWith(role_for_display, 'mo') === true) {
-						$scope.html_divider.setAttribute("style", "display: inline-block");
-						$scope.html_iconbox.setAttribute("style", "display: inline-block");
-						$scope.html_role_for_display.setAttribute("style", "display: inline-block");
-						//------------------------------------------------------------
-						//------------------------------------------------------------
-						//------------------------------------------------------------
-
-						$scope.html_role_icon.setAttribute("style", "display: none");
-						$scope.html_iconbox.removeChild($scope.html_role_icon);
-
-						fragment = create("<svg id='role_icon' src='diamond.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 22 22' version='1.1' style='fill: #7689e8;width: 1.05rem;height: 1.05rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M11 1.95l8.98 8.98L11 19.91l-8.98-8.98z' cx='74' cy='10' r='9'></path></svg>");
-						// You can use native DOM methods to insert the fragment:
-						$scope.html_iconbox.insertBefore(fragment, $scope.html_iconbox.childNodes[0]);
-						$scope.html_role_icon = $("#role_icon")[0];
-					}
-					else {
-						// REGULATOR
-						if (is.startWith(role_for_display, 're') === true) {
-							$scope.html_role_for_display.innerHTML = "Staff";
-							$scope.html_divider.setAttribute("style", "display: inline-block");
-							$scope.html_iconbox.setAttribute("style", "display: inline-block");
-							$scope.html_role_for_display.setAttribute("style", "display: inline-block");
-							//------------------------------------------------------------
-							//------------------------------------------------------------
-							//------------------------------------------------------------
-
-							$scope.html_role_icon.setAttribute("style", "display: none");
-							$scope.html_iconbox.removeChild($scope.html_role_icon);
-
-							fragment = create("<svg id='role_icon' src='circle.svg' xmlns='https://www.w3.org/2000/svg' viewBox='64 0 20 20' version='1.1' style='fill: #b0c4de;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><circle id='role_icon_circle' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></circle></svg>");
-							// You can use native DOM methods to insert the fragment:
-							$scope.html_iconbox.insertBefore(fragment, $scope.html_iconbox.childNodes[0]);
-							$scope.html_role_icon = $("#role_icon")[0];
-						}
-						else {
-							// VERIFIED ARTIST
-							if (is.startWith(role_for_display, 've') === true) {
-								$scope.html_divider.setAttribute("style", "display: inline-block");
-								$scope.html_iconbox.setAttribute("style", "display: inline-block");
-								$scope.html_role_for_display.setAttribute("style", "display: inline-block");
-								//------------------------------------------------------------
-								//------------------------------------------------------------
-								//------------------------------------------------------------
-								$scope.html_role_icon.setAttribute("style", "display: none");
-								$scope.html_iconbox.removeChild($scope.html_role_icon);
-
-								fragment = create("<svg id='role_icon' src='checky.svg' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 11 11' version='1.1' width='14px' height='14px' style='fill: #38ef51;    height: 17px;margin: 0 2px;top: 2px;width: 17px;stroke: #fff;position: relative;display: block'><polygon points='5.5 0 10.2631397 2.75 10.2631397 8.25 5.5 11 0.736860279 8.25 0.736860279 2.75 '></polygon><path d='M2.5,5.5 L4.5,7.5' stroke-width='1.2' stroke-linecap='square'></path><path d='M4.5,7.5 L8.5,3.5' stroke-width='1.2' stroke-linecap='square'></path></svg>");
-								// You can use native DOM methods to insert the fragment:
-								$scope.html_iconbox.insertBefore(fragment, $scope.html_iconbox.childNodes[0]);
-								$scope.html_role_icon = $("#role_icon")[0];
-							}
-							else {
-								// NO ROLE
-								$scope.html_divider.setAttribute("style", "display: none");
-								$scope.html_role_icon.setAttribute("style", "display: none");
-								$scope.html_iconbox.setAttribute("style", "display: none");
-								$scope.html_role_for_display.setAttribute("style", "display: none");
-								$scope.html_role_icon = $("#role_icon")[0];
-							}
-						}
-					}
-				}
-			}
 		}
 	};
 
@@ -1897,49 +1505,10 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 
 	};
 
-	/* insertstars = function () {
-		if (stars > 0) {
-			$("#starscontainer").attr({
-				style: "display: flex"
-			});
-			if (stars == 1) {
-				$scope.html_stars.innerHTML = stars + " STAR";
-				$("#starscontainer").attr({
-					style: "height: " + ((8 * stars / 51 + 17 / 5) + 2) + "vh"
-				});
-				$("#stars").attr({
-					style: "font-size: " + (8 * stars / 51 + 17 / 5) + "vh"
-				});
-			} else {
-				$scope.html_stars.innerHTML = stars + " STARS";
-			}
-			$("#starscontainer").attr({
-				style: "height: " + ((8 * stars / 51 + 17 / 5) + 2) + "vh"
-			});
-			$("#stars").attr({
-				style: "font-size: " + (8 * stars / 51 + 17 / 5) + "vh"
-			});
-		} else {
-			$("#starscontainer").attr({
-				style: "display: none"
-			});
-		}
-	}; */
-
 	insert = function () {
 		$scope.insertbadges();
-		$scope.styles.starscontainer.height = round(((8 * $scope.user.stars / 51 + 17 / 5) + 2), 3) + "vh";
-		$scope.styles.stars["font-size"] = round((8 * $scope.user.stars / 51 + 17 / 5), 3) + "vh";
-		/*
-		insertavatar();
-		insertstats();
-		insertnamelink();
-		insertname();
-		insertlogin();
-		insertiq_for_display();
-		insertrole_for_display();
-		insertrole_icon();
-		insertstars(); */
+		$scope.styles.starscontainer.height = round(scaleconvert($scope.user.stars, "1-51", "34-80")) + "px";
+		$scope.styles.stars["font-size"] = round(scaleconvert($scope.user.stars, "1-51", "24-70")) + "px";
 	};
 
 	warmupyahooapi = function () {
@@ -1977,24 +1546,6 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			about();
 		});
 	});
-
-	// bind();
-
-
-	// warmupyahooapi();
-
-	// ---------------------------------------------
-	// CHECK IF IN ELECTRON ------------------------
-	// ---------------------------------------------
-	if (navigator.userAgent === "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36") {
-		userindexvalue = 172;
-	}
-	else {
-		userindexvalue = 175;
-	}
-	// ---------------------------------------------
-	// ---------------------------------------------
-	// ---------------------------------------------
 };
 
 // ANGULARJS
