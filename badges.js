@@ -1,57 +1,113 @@
-/*global name:true */
-function init() {
-	$.get("ids2.js");
-	
-	
-	html_search = document.getElementById("search");
-	html_generatedtext = document.getElementById("generatedtext");
-	html_profiletext = document.getElementById("profiletext");
-	html_profile = document.getElementById("profile");
+mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $http, $q) {
 
-	html_userinfo = document.getElementById("userinfo");
-	html_usererror = document.getElementById("usererror");
-	html_loading = document.getElementById("loading");
+	// LIBRARIES
 
-	html_avatar = document.getElementById("avatar");
-	html_annotations_count = document.getElementById("annotations_count");
-	html_transcriptions_count = document.getElementById("transcriptions_count");
-	html_namelink = document.getElementById("namelink");
-	html_name = document.getElementById("name");
-	html_login = document.getElementById("login");
-	html_iq_for_display = document.getElementById("iq_for_display");
-	html_divider = document.getElementById("divider");
-	html_iconbox = document.getElementById("iconbox");
-	html_role_icon = document.getElementById("role_icon");
-	html_role_icon_path = document.getElementById("role_icon_path");
-	html_role_icon2 = document.getElementById("role_icon2");
-	html_role_for_display = document.getElementById("role_for_display");
+	svg4everybody();
 
-	html_badgescontainer = document.getElementById("badgescontainer");
-
-	html_stars = document.getElementById("stars");
-
-	html_nouser = document.getElementById("nouser");
-
-	html_wait = document.getElementById("wait");
-
-	pathactivated = 1;
-	circleactivated = 0;
-	polygonactivated = 0;
-
-	nthIndex = function(str, pat, n) {
-		var L = str.length;
-		var i = -1;
-		while (n-- && i++ < L) {
-			i = str.indexOf(pat, i);
-		}
-		return i;
+	$scope.buildToggler = function (componentId) {
+		return function () {
+			$mdSidenav(componentId).toggle();
+			console.log($mdSidenav(componentId).isOpen());
+			if ($mdSidenav(componentId).isOpen() === true) {
+				// something
+			}
+			else {
+				// something other
+			}
+		};
 	};
 
-	function htmlEntities(str) {
-		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-	}
+	$scope.toggleLeft = $scope.buildToggler('left');
 
-	function createVariable(varName, varContent) {
+	$scope.doPrimaryAction = function (event) {
+		$mdDialog.show(
+			$mdDialog.alert()
+			.title('Primary Action')
+			.textContent('Primary actions can be used for one click actions')
+			.ariaLabel('Primary click demo')
+			.ok('Awesome!')
+			.targetEvent(event));
+	};
+
+	$scope.doSecondaryAction = function (event) {
+		$mdDialog.show(
+			$mdDialog.alert()
+			.title('Secondary Action')
+			.textContent('Secondary actions can be used for one click actions')
+			.ariaLabel('Secondary click demo')
+			.ok('Neat!')
+			.targetEvent(event));
+	};
+
+	var originatorEv;
+
+	$scope.openMenu = function ($mdOpenMenu, ev) {
+		originatorEv = ev;
+		$mdOpenMenu(ev);
+	};
+	
+	NProgress.configure({ parent: '#site' });
+
+	// SMALL FUNCTIONS FOR DEVELOPMENT
+
+	// rounds numbers - value: number to round, exp: how many decimals
+	round = function (value, exp) {
+		if (typeof exp === 'undefined' || +exp === 0)
+			return Math.round(value);
+
+		value = +value;
+		exp = +exp;
+
+		if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
+			return NaN;
+
+		// Shift
+		value = value.toString().split('e');
+		value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
+
+		// Shift back
+		value = value.toString().split('e');
+		return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
+	};
+
+	jQuery2html = function (prefix, attribute) {
+		allElements = $("*");
+		for (var i = 0, n = allElements.length; i < n; ++i) {
+			var el = allElements[i];
+			if (el.id) {
+				$scope[prefix + el[attribute]] = el;
+			}
+		}
+	};
+
+	nthIndex = function (string, char, index) {
+		return string.split(char, index).join(char).length;
+	};
+
+
+	findhomepath = function () {
+		if (($scope.currentpath.match(/\//g) || []).length > 3) {
+			return location.origin + $scope.currentpath.slice(0, nthIndex($scope.currentpath, "/", ($scope.currentpath.match(/\//g) || []).length - 1));
+		}
+		else {
+			return location.origin + $scope.currentpath.slice(0, nthIndex($scope.currentpath, "/", ($scope.currentpath.match(/\//g) || []).length) + 1);
+		}
+	};
+
+	pathgenerator = function (directory) {
+		if (($scope.currentpath.match(/\//g) || []).length > 3) {
+			$scope[directory + "path"] = $scope.homepath + "/" + directory + "/";
+		}
+		else {
+			$scope[directory + "path"] = $scope.homepath + directory + "/";
+		}
+	};
+
+	htmlEntities = function (str) {
+		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+	};
+
+	createVariable = function (varName, varContent) {
 		var scriptStr = "var " + varName + "= " + varContent + "";
 
 		var nodescriptCode = document.createTextNode(scriptStr);
@@ -62,64 +118,358 @@ function init() {
 
 		var nodehead = document.getElementsByTagName("head")[0];
 		nodehead.appendChild(nodescript);
-	}
+	};
 
-	function donate() {
-		bootbox.dialog({
-			message: '<div id="message1"><h2>GIMME MONEY<\/h2><br>sooo, i\'m 17 and did all this just for fun...you don\'t need to give me money to earn a badge or something like that, but if you want to support this project, feel free to go on <a href="https://nnmrts.bandcamp.com/album/mittlerweile?action=download&from=embed">my bandcamp page</a> and just enter a price you want for an album you want<br><small>- nano miratus, was too lazy to setup a paypal donate button</small><br><br><br><\/div><iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album=1755031164/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless><a href="http://nnmrts.bandcamp.com/album/mittlerweile">Mittlerweile by Nano Miratus</a></iframe><br><h3>cheerio<\/h3>',
-			title: "DONATE",
-			buttons: {
-				success: {
-					label: "No!",
-					className: "button",
-					callback: function() {}
+
+	// -----------------------------
+	// CONVERTING
+	// -----------------------------
+
+	Object.size = function (obj) {
+		var size = 0,
+			key;
+		for (key in obj) {
+			if (obj.hasOwnProperty(key))
+				size++;
+		}
+		return size;
+	};
+
+	dom2object = function () {
+		collectionobject = {};
+		collectionobject.user = login;
+		collectionobject.collection = {};
+
+		pushobjectbadge = function (collectionbadge, auto) {
+			if (collectionbadge != "undefined") {
+				x = getChildrenIndex(collectionbadge);
+
+				collectionobject.collection[x] = "swag";
+				collectionobject.collection[x] = {
+					id1: (collectionbadge.attributes.id.nodeValue).slice(0, (collectionbadge.attributes.id.nodeValue).indexOf("-")),
+					id2: (collectionbadge.attributes.id.nodeValue).slice(((collectionbadge.attributes.id.nodeValue).indexOf("-") + 1), ((collectionbadge.attributes.id.nodeValue).indexOf("-") + 4)),
+					badgename: (collectionbadge.attributes.id.nodeValue).slice((collectionbadge.attributes.id.nodeValue).indexOf("-") + 4),
+					src: collectionbadge.firstElementChild.attributes.src.nodeValue.slice(0, collectionbadge.firstElementChild.attributes.src.nodeValue.indexOf("?")),
+					auto: auto
+				};
+			}
+		};
+		f = 0;
+		while (f < $scope.html_badgescontainer.childElementCount) {
+			pushobjectbadge($scope.html_badgescontainer.children[f], true);
+			f = f + 1;
+		}
+	};
+
+	object2dom = function () {
+		collectiondom = document.createElement("div");
+		x = 0;
+		while (x < Object.size(collectionobject.collection)) {
+			collectiondom.innerHTML += "<div class='badgebox' id='" + collectionobject.collection[x].id1 + "-" + collectionobject.collection[x].id2 + collectionobject.collection[x].badgename + "'><img src='" + collectionobject.collection[x].src + "?time=" + jQuery.now() + "' class='badge'/></div>";
+			x = x + 1;
+		}
+	};
+
+	zeroFill = function (number, width) {
+		width -= number.toString().length;
+		if (width > 0) {
+			return new Array(width + (/\./.test(number) ? 2 : 1)).join("0") + number;
+		}
+		return number + ""; // always return a string
+	};
+
+	capitalizeFirstLetter = function (string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	};
+
+	create = function (htmlStr) {
+		var frag = document.createDocumentFragment();
+		var temp = document.createElement("div");
+		temp.innerHTML = htmlStr;
+		while (temp.firstChild) {
+			frag.appendChild(temp.firstChild);
+		}
+		return frag;
+	};
+	
+	cardinandout = function (outel, inel, options = {}) {
+		$scope.styles.site = {"overflow": "hidden"};
+		$scope.$applyAsync();
+		outel.removeClass($scope.animations.slideOutDown).addClass($scope.animations.slideOutDown).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+			outel.hide();
+			outel.removeClass($scope.animations.slideOutDown);
+			if(options.before) {
+				$q.when(options.before()).then(function() {
+					inel.show();
+					inel.removeClass($scope.animations.slideInUp).addClass($scope.animations.slideInUp).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+						inel.removeClass($scope.animations.slideInUp);
+						$scope.styles.site = {"overflow": "overlay"};
+						$scope.$apply();
+						if(options.callback) {
+							options.callback();
+						}
+					});	
+				});
+			}
+			inel.show();
+			inel.removeClass($scope.animations.slideInUp).addClass($scope.animations.slideInUp).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+				inel.removeClass($scope.animations.slideInUp);
+				$scope.styles.site = {"overflow": "overlay"};
+				$scope.$apply();
+				if(options.callback) {
+					options.callback();
 				}
+			});	
+		});
+	};
+	
+	cardin = function (inel, options = {}) {
+		if(options.before) {
+			options.before();
+		}
+		inel.show();
+		inel.removeClass($scope.animations.slideInUp).addClass($scope.animations.slideInUp).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+			inel.removeClass($scope.animations.slideInUp);
+			$scope.$apply();
+			if(options.callback) {
+				options.callback();
 			}
 		});
+	};
+	
+	cardout = function (outel, options = {}) {
+		if(options.before) {
+			options.before();
+		}
+		outel.removeClass($scope.animations.slideOutDown).addClass($scope.animations.slideOutDown).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+			outel.hide();
+			outel.removeClass($scope.animations.slideOutDown);
+			if(options.callback) {
+				options.callback();
+			}
+		});
+	};			scaleconvert = function (value, oldscale, newscale) {		oldmin = Number(oldscale.slice(0, oldscale.indexOf("-")));				oldmax = Number(oldscale.slice(oldscale.indexOf("-") + 1));				newmin = Number(newscale.slice(0, newscale.indexOf("-")));				newmax = Number(newscale.slice(newscale.indexOf("-") + 1));				return (((value - oldmin) * (newmax - newmin)) / (oldmax - oldmin)) + newmin;	};	
+	//---------------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------
+	
+	
+	// APP DATA
+	//---------------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------
+
+	// DATA THAT WILL NEVER CHANGE THROUGH A SESSION
+	//---------------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------
+
+	// MANIFEST & VERSION
+	$scope.manifest = $.get("manifest.json").done(function () {
+		$scope.version = $scope.manifest.responseJSON.version;
+		$scope.client_id = $scope.manifest.responseJSON.client_id;
+	});
+	
+	$scope.currenthref = location.href;
+	
+	$scope.currentpath = location.pathname;
+
+	$scope.homepath = findhomepath();
+
+	$scope.logininput = "";
+
+	scope = angular.element("#site").scope();
+
+	pathgenerator("badges");
+	pathgenerator("collection");
+	pathgenerator("collections");
+	pathgenerator("ids");
+	
+	$scope.apiobject = {
+		["api" + location.search.slice(1, location.search.indexOf("="))]: location.search.slice(location.search.indexOf("=") + 1, location.search.indexOf("&")),
+		["api" + location.search.slice(nthIndex(location.search, "&", 1) + 1, nthIndex(location.search, "=", 2))]: (location.search.slice(nthIndex(location.search, "&", 1) + 1)).slice((location.search.slice(nthIndex(location.search, "&", 1) + 1)).indexOf("=") + 1)
+	};
+	
+	$scope.animationprefix = "animated ";
+	
+	$scope.animations = {
+		slideOutDown: $scope.animationprefix + "slideOutDown",
+		slideInUp: $scope.animationprefix + "slideInUp",
+		bounceOutDown: $scope.animationprefix + "bounceOutDown",
+		bounceInUp: $scope.animationprefix + "bounceInUp",
+		zoomOut: $scope.animationprefix + "zoomOut",
+		zoomIn: $scope.animationprefix + "zoomIn",
+		pulse: $scope.animationprefix + "pulse"
 	}
 
-	$(document).ready(function() {
-		$("#donate").click(function() {
-			donate();
-		});
-	});
+	// DATA THAT WILL CHANGE THROUGH A SESSION
+	//---------------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------
 
-	$(document).ready(function() {
-		$("#profile").click(function() {
-			if (userhere === 0) {}
+
+	// BUTTONS
+	$scope.buttons = {
+		search: {
+			text: "search"
+		},
+		profile: {
+			text: "add them to your profile"
+		}
+	};
+
+	// STYLES
+	$scope.styles = {
+		loadingcontainer: {
+			"display": "none"
+		},
+		starscontainer: {
+			"height": ""
+		},
+		stars: {
+			"font-size": ""
+		},
+		site: {
+			"overflow": ""
+		},
+		top: {
+			"top": ""
+		},
+		optionscontainer: {
+			"top": ""
+		},
+		info: {
+			"top": ""
+		},
+		inputcontainer: {
+			"top": ""
+		},
+		search: {
+			"top": ""
+		},
+		menucontainer: {
+			"display": "none"
+		},
+		profilebox: {
+			"display": "none"
+		}
+	};
+
+	$scope.s = {};
+	
+	$scope.d = {};
+
+	// UI FUNCTIONS
+	$scope.ui = {
+		newtab: function () {
+			$scope.url = {
+				github: 'https://github.com/nnmrts/badges',
+				impressum: 'https://www.pumpn.net/impressum.html'
+			};
+		},
+		search: function () {
+			if ($("#userinfo").css("display") != "none") {
+				cardout($("#userinfo"), {
+					callback: function() {
+						cardinandout($("#top"), $("#loadingcontainer"), {
+							callback: function() {
+								// START LOADING BAR
+								NProgress.start();
+								
+								// RENAME SEARCH BUTTON
+								$scope.buttons.search.text = "search again";
+								
+								// RESET FIRST LOOP BOOLEAN
+								$scope.s.firstloop = true;
+								
+								// INIT LOOP
+								$scope.searchloop();
+							}
+						});
+					}
+				});
+			}
 			else {
-				if (html_profile.innerHTML == "CLOSE THAT") {
-					$("#profiletext").animate({
-						opacity: 0
-					}, 500, function() {});
-					$("#generatedtext").animate({
-						opacity: 0
-					}, 500, function() {});
+				cardinandout($("#top"), $("#loadingcontainer"), {
+					callback: function() {
+						// START LOADING BAR
+						NProgress.start();
+						
+						// RENAME SEARCH BUTTON
+						$scope.buttons.search.text = "search again";
+						
+						// RESET FIRST LOOP BOOLEAN
+						$scope.s.firstloop = true;
+						
+						// INIT LOOP
+						$scope.searchloop();
+					}
+				});
+			}
+		},
+		profile: function () {
+			
+			if ($scope.s.user.given) {
+				if ($scope.buttons.profile.text == "close that") {
+					
+					$scope.buttons.profile.text = "add them to your profile";
+					/* 
+					$('#profile').removeClass($scope.animations.pulse).addClass($scope.animations.pulse).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+						$(this).removeClass($scope.animations.pulse);
+					});
+					*/
 					$("#profilebox").animate({
-						marginTop: 0,
-						marginBottom: 0,
-						height: 0
-					}, 1000, function() {
-						html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
+						opacity: 0
+					}, 250, $.bez([0.4, 0.0, 1, 1]), function () {
+						$("#profilebox").animate({
+							height: 0
+						}, 400, $.bez([0.4, 0.0, 0.2, 1]), function () {
+							$("#profilebox").attr({
+								style: "height: 0;display:none;opacity: 0;"
+							});
+						});
 					});
 				}
 				else {
-					urlarray = [];
+					$scope.buttons.profile.text = "close that";
+					
+					/*
+					$('#profile').removeClass($scope.animations.pulse).addClass($scope.animations.pulse).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+						$(this).removeClass($scope.animations.pulse);
+					});
+					*/
+					
+					if (!$scope.d.collection.given) {
+						
+						urlarray = [];
 
-					if (starbadge1 != "undefined") {
-						urlarray.push(starbadge1.firstChild.src.slice(0, starbadge1.firstChild.src.indexOf("500px")) + "170px.png");
+						if (starbadge1 != "undefined") {
+							urlarray.push(starbadge1.firstChild.src.slice(0, starbadge1.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (starbadge2 != "undefined") {
+							urlarray.push(starbadge2.firstChild.src.slice(0, starbadge2.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (starbadge3 != "undefined") {
+							urlarray.push(starbadge3.firstChild.src.slice(0, starbadge3.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (rolebadge1 != "undefined") {
+							urlarray.push(rolebadge1.firstChild.src.slice(0, rolebadge1.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (rolebadge2 != "undefined") {
+							urlarray.push(rolebadge2.firstChild.src.slice(0, rolebadge2.firstChild.src.indexOf("500px")) + "170px.png");
+						}
+						if (verifiedartistbadge != "undefined") {
+							urlarray.push(verifiedartistbadge.firstChild.src.slice(0, verifiedartistbadge.firstChild.src.indexOf("500px")) + "170px.png");
+						}
 					}
-					if (starbadge2 != "undefined") {
-						urlarray.push(starbadge2.firstChild.src.slice(0, starbadge2.firstChild.src.indexOf("500px")) + "170px.png");
-					}
-					if (starbadge3 != "undefined") {
-						urlarray.push(starbadge3.firstChild.src.slice(0, starbadge3.firstChild.src.indexOf("500px")) + "170px.png");
-					}
-					if (rolebadge1 != "undefined") {
-						urlarray.push(rolebadge1.firstChild.src.slice(0, rolebadge1.firstChild.src.indexOf("500px")) + "170px.png");
-					}
-					if (verifiedartistbadge != "undefined") {
-						urlarray.push(verifiedartistbadge.firstChild.src.slice(0, verifiedartistbadge.firstChild.src.indexOf("500px")) + "170px.png");
+					else {
+						urlarray = [];
+
+						z = 0;
+						while (z < collectiondom.children.length) {
+							urlarray.push(collectiondom.children[z].firstChild.src.slice(0, collectiondom.children[z].firstChild.src.indexOf("500px")) + "170px.png");
+							z = z + 1;
+						}
 					}
 
 					realstart = "<table><tbody>";
@@ -180,296 +530,565 @@ function init() {
 						gentexthtml += itemstart + urlarray[4] + itemend;
 						gentexthtml += littleend + realend;
 					}
+					if (urlarray.length == 6) {
+						gentexthtml = realstart + littlestart;
+						gentexthtml += itemstart + urlarray[0] + itemend;
+						gentexthtml += itemstart + urlarray[1] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[2] + itemend;
+						gentexthtml += itemstart + urlarray[3] + itemend;
+						gentexthtml += littleend;
+						gentexthtml += littlestart;
+						gentexthtml += itemstart + urlarray[4] + itemend;
+						gentexthtml += itemstart + urlarray[5] + itemend;
+						gentexthtml += littleend + realend;
+					}
 
 					gentext = htmlEntities(gentexthtml);
-					html_generatedtext.innerHTML = gentext;
-					html_profiletext.innerHTML = "You are " + name + "? Just copy-paste this text to your profile bio:";
-					$("#profilebox").animate({
-						marginTop: "-41px",
-						marginBottom: "41px",
-						height: "200px"
-					}, 1000, function() {
-						$("#profiletext").animate({
-							opacity: 1
-						}, 500, function() {
-							// Animation complete.
-						});
-						$("#generatedtext").animate({
-							opacity: 1
-						}, 500, function() {});
-						html_profile.innerHTML = "CLOSE THAT";
+					$scope.html_generatedtext.innerHTML = gentext;
+					
+					$("#profilebox").attr({
+						style: "height: 0;display:flex;opacity: 0;"
 					});
-
+					$("#generatedtext").attr({
+						style: "opacity: 1;"
+					});
+					$("#profilehr").attr({
+						style: "opacity: 1;"
+					});
+					$("#customize").attr({
+						style: "opacity: 1;"
+					});
+					$("#authenticate").attr({
+						style: "opacity: 1;"
+					});
+					$("#profiletext").attr({
+						style: "opacity: 1;"
+					});
+					$("#profilebox").animate({
+						height: "350px"
+					}, 400, $.bez([0.4, 0.0, 0.2, 1]), function () {
+						
+						$("#profilebox").animate({
+							opacity: 1
+						}, 250, $.bez([0.0, 0.0, 0.2, 1]));
+					});
 				}
 			}
-		});
-	});
+		}
+	};
 
-	function about() {
-		bootbox.dialog({
-			message: '<div id="message1"><h2>HEY HEY HEY<\/h2><br>okay, dis hard to explain...you know, there are some users on a website called genius.com and they can collect points called "iq" for annotating lyrics like darude sandstorm or so...long story short, i made badges for them and reading that text was totally a waste of time for you<br><small>- nano miratus, exaggerating small ass things since 2013</small><br><br><img src="http://i.imgur.com/9PmIlRx.gif"/><\/div><br><h3>swigswag bye<\/h3>',
-			title: "ABOUT",
-			buttons: {
-				success: {
-					label: "Alright!",
-					className: "button",
-					callback: function() {}
+	// INIT SEARCH FUNCTION WHEN PRESSING ENTER
+	$("input").keypress(function (event) {
+		if (event.which == 13) {
+			event.preventDefault();
+			$scope.ui.search();
+		}
+	});
+	
+	// COLLECTION INIT
+	//---------------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------
+	
+	if(scope.apiobject.apicode) {
+		
+	}
+	
+	// BIG LOOP FUNCTION
+	//---------------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------
+	
+	$scope.searchloop = function () {
+		NProgress.inc();
+
+		$scope.$applyAsync();
+
+		// FIRST LOOP (for setup and resetting...)
+		if ($scope.s.firstloop) {
+			
+			$scope.user = {};
+
+			isnothing = "no";
+
+			// RESET/DEFINE VARIABLES
+			$scope.s = {
+				firstloop: false,
+				input: {
+					checked: false
+				},
+				server: {
+					checked: false,
+				},
+				yahoo: {
+					checked: false,
+					index: 9
+				},
+				genius: {
+
+				},
+				id: {
+					given: false
+				},
+				user: {
+					given: false
+				},
+				error: {
+					occurred: false,
+					inputinvalid: false,
+					notfound: false,
+					inputempty: false
+				},
+				time: {
+					starttime: $.now()
 				}
-			}
-		});
-	}
+			};
 
-	$(document).ready(function() {
-		$("#about").click(function() {
-			about();
-		});
-	});
-
-	/* $.get("ids.js", function(response) {}, "script"); */
-
-	
-	
-	
-	function zeroFill(number, width) {
-		width -= number.toString().length;
-		if (width > 0) {
-			return new Array(width + (/\./.test(number) ? 2 : 1)).join("0") + number;
-		}
-		return number + ""; // always return a string
-	}
-
-
-
-	capitalizeFirstLetter = function(string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	};
-
-	function create(htmlStr) {
-		var frag = document.createDocumentFragment();
-		var temp = document.createElement("div");
-		temp.innerHTML = htmlStr;
-		while (temp.firstChild) {
-			frag.appendChild(temp.firstChild);
-		}
-		return frag;
-	}
-
-	findid = function() {
-		var start1 = nthIndex(sourcestring1, "\\\"id\\\"", 2);
-
-		var end1 = nthIndex(sourcestring1, "\\\"iq\\\"", 3);
-
-		id = sourcestring1.slice((start1 + 7), (end1 - 1));
-
-		// id =
-
-
-	};
-
-	findavatar = function() {
-		avatar = geniussource.responseJSON.response.user.avatar.medium.url;
-	};
-
-	findname = function() {
-		name = geniussource.responseJSON.response.user.name;
-	};
-	
-	findlogin = function() {
-		login = geniussource.responseJSON.response.user.login;
-	};
-
-	findlink = function() {
-		link = "https://genius.com/" + login;
-	};
-
-	findiq_for_display = function() {
-		iq_for_display = geniussource.responseJSON.response.user.iq_for_display;
-	};
-
-	findrole_for_display = function() {
-		role_for_display = geniussource.responseJSON.response.user.role_for_display;
-	};
-
-	findroles_for_display = function() {
-		roles_for_display = geniussource.responseJSON.response.user.roles_for_display;
-	};
-
-	findiq = function() {
-		iq = geniussource.responseJSON.response.user.iq;
-	};
-
-	findtranscriptions_count = function() {
-		transcriptions_count = geniussource.responseJSON.response.user.stats.transcriptions_count;
-	};
-
-	findannotations_count = function() {
-		annotations_count = geniussource.responseJSON.response.user.stats.annotations_count;
-	};
-
-	find = function() {
-		findavatar();
-		findname();
-		findlogin();
-		findlink();
-		findiq_for_display();
-		findrole_for_display();
-		findroles_for_display();
-		findiq();
-		findtranscriptions_count();
-		findannotations_count();
-	};
-
-	//-------------------------------------------------------------------------
-	//-------------------------------------------------------------------------
-	//-------------------------------------------------------------------------
-
-	insertavatar = function() {
-		html_avatar.style = "background-image: url(" + avatar + ")";
-	};
-	insertstats = function() {
-		html_annotations_count.innerHTML = annotations_count;
-		html_transcriptions_count.innerHTML = transcriptions_count;
-	};
-
-	insertnamelink = function() {
-		html_namelink.setAttribute("href", link);
-	};
-	insertname = function() {
-		html_name.innerHTML = emojione.shortnameToImage(emojione.toShort(name));
-	};
-	insertlogin = function() {
-		html_login.innerHTML = login;
-	};
-	insertiq_for_display = function() {
-		html_iq_for_display.innerHTML = iq_for_display;
-	};
-	insertrole_for_display = function() {
-		if (role_for_display !== null) {
-			html_role_for_display.innerHTML = role_for_display.replace(/[_]/g, " ");
-		}
-	};
-	insertrole_icon = function() {
-		// CONTRIBUTOR
-		if (is.startWith(role_for_display, 'co') === true) {
-			html_divider.setAttribute("style", "display: inline-block");
-			html_iconbox.setAttribute("style", "display: inline-block");
-			html_role_for_display.setAttribute("style", "display: inline-block");
-			//------------------------------------------------------------
-			//------------------------------------------------------------
-			//------------------------------------------------------------
-
-			html_role_icon.setAttribute("style", "display: none");
-			html_iconbox.removeChild(html_role_icon);
-
-			fragment = create("<svg id='role_icon' src='equilateral_triangle.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 7' version='1.1' style='fill: #ffffff;width: 1rem;height: 1rem;stroke: #9a9a9a;stroke-width: 1px;top: 2px;position: relative;display: block'><path id='role_icon_path' d='M8.25 6.418L4.25 0l-4 6.418z' cx='74' cy='10' r='9'></path></svg>");
-			// You can use native DOM methods to insert the fragment:
-			html_iconbox.insertBefore(fragment, html_iconbox.childNodes[0]);
-			html_role_icon = document.getElementById("role_icon");
+			// LOOP IT BRUH
+			$scope.searchloop();
 		}
 		else {
-			// MEDIATOR
-			if (is.startWith(role_for_display, 'me') === true) {
-				html_divider.setAttribute("style", "display: inline-block");
-				html_iconbox.setAttribute("style", "display: inline-block");
-				html_role_for_display.setAttribute("style", "display: inline-block");
-				//------------------------------------------------------------
-				//------------------------------------------------------------
-				//------------------------------------------------------------
-
-				html_role_icon.setAttribute("style", "display: none");
-				html_iconbox.removeChild(html_role_icon);
-
-				fragment = create("<svg id='role_icon' src='square.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' version='1.1' style='fill: #ff518c;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></path></svg>");
-				// You can use native DOM methods to insert the fragment:
-				html_iconbox.insertBefore(fragment, html_iconbox.childNodes[0]);
-				html_role_icon = document.getElementById("role_icon");
-			}
-			else {
-				// EDITOR
-				if (is.startWith(role_for_display, 'ed') === true) {
-					html_divider.setAttribute("style", "display: inline-block");
-					html_iconbox.setAttribute("style", "display: inline-block");
-					html_role_for_display.setAttribute("style", "display: inline-block");
-					//------------------------------------------------------------
-					//------------------------------------------------------------
-					//------------------------------------------------------------
-
-					html_role_icon.setAttribute("style", "display: none");
-					html_iconbox.removeChild(html_role_icon);
-
-					fragment = create("<svg id='role_icon' src='square.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' version='1.1' style='fill: #ffff64;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></path></svg>");
-					// You can use native DOM methods to insert the fragment:
-					html_iconbox.insertBefore(fragment, html_iconbox.childNodes[0]);
-					html_role_icon = document.getElementById("role_icon");
-				}
-				else {
-					// MODERATOR
-					if (is.startWith(role_for_display, 'mo') === true) {
-						html_divider.setAttribute("style", "display: inline-block");
-						html_iconbox.setAttribute("style", "display: inline-block");
-						html_role_for_display.setAttribute("style", "display: inline-block");
-						//------------------------------------------------------------
-						//------------------------------------------------------------
-						//------------------------------------------------------------
-
-						html_role_icon.setAttribute("style", "display: none");
-						html_iconbox.removeChild(html_role_icon);
-
-						fragment = create("<svg id='role_icon' src='diamond.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22' version='1.1' style='fill: #7689e8;width: 1.05rem;height: 1.05rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><path id='role_icon_path' d='M11 1.95l8.98 8.98L11 19.91l-8.98-8.98z' cx='74' cy='10' r='9'></path></svg>");
-						// You can use native DOM methods to insert the fragment:
-						html_iconbox.insertBefore(fragment, html_iconbox.childNodes[0]);
-						html_role_icon = document.getElementById("role_icon");
-					}
-					else {
-						// REGULATOR
-						if (is.startWith(role_for_display, 're') === true) {
-							html_role_for_display.innerHTML = "Staff";
-							html_divider.setAttribute("style", "display: inline-block");
-							html_iconbox.setAttribute("style", "display: inline-block");
-							html_role_for_display.setAttribute("style", "display: inline-block");
-							//------------------------------------------------------------
-							//------------------------------------------------------------
-							//------------------------------------------------------------
-
-							html_role_icon.setAttribute("style", "display: none");
-							html_iconbox.removeChild(html_role_icon);
-
-
-							fragment = create("<svg id='role_icon' src='circle.svg' xmlns='http://www.w3.org/2000/svg' viewBox='64 0 20 20' version='1.1' style='fill: #b0c4de;width: .9rem;height: .9rem;stroke: #9a9a9a;stroke-width: 2px;position: relative;display: block'><circle id='role_icon_circle' d='M1.5 1.5h17v17h-17z' cx='74' cy='10' r='9'></circle></svg>");
-							// You can use native DOM methods to insert the fragment:
-							html_iconbox.insertBefore(fragment, html_iconbox.childNodes[0]);
-							html_role_icon = document.getElementById("role_icon");
-						}
-						else {
-							// VERIFIED ARTIST
-							if (is.startWith(role_for_display, 've') === true) {
-								html_divider.setAttribute("style", "display: inline-block");
-								html_iconbox.setAttribute("style", "display: inline-block");
-								html_role_for_display.setAttribute("style", "display: inline-block");
-								//------------------------------------------------------------
-								//------------------------------------------------------------
-								//------------------------------------------------------------
-								html_role_icon.setAttribute("style", "display: none");
-								html_iconbox.removeChild(html_role_icon);
-
-
-								fragment = create("<svg id='role_icon' src='checky.svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 11' version='1.1' width='14px' height='14px' style='fill: #38ef51;    height: 17px;margin: 0 2px;top: 2px;width: 17px;stroke: #fff;position: relative;display: block'><polygon points='5.5 0 10.2631397 2.75 10.2631397 8.25 5.5 11 0.736860279 8.25 0.736860279 2.75 '></polygon><path d='M2.5,5.5 L4.5,7.5' stroke-width='1.2' stroke-linecap='square'></path><path d='M4.5,7.5 L8.5,3.5' stroke-width='1.2' stroke-linecap='square'></path></svg>");
-								// You can use native DOM methods to insert the fragment:
-								html_iconbox.insertBefore(fragment, html_iconbox.childNodes[0]);
-								html_role_icon = document.getElementById("role_icon");
+			if (!$scope.s.error.occurred) {
+				if (!$scope.s.user.given) {
+					// IS ID GIVEN?
+					if (!$scope.s.id.given) {
+						// IS INPUT CHECKED?
+						if (!$scope.s.input.checked) {
+							// CHECK IF INPUT VALID
+							if ($scope.logininput.match("^[#%^&\{\}\]\[\(\)\`\'<>\|\ ]*$") !== null || $scope.logininput.match(/\\/) !== null || $scope.logininput.match("\"") !== null) {
+								$scope.s.input.valid = false;
+								console.log("S: INPUT NOT VALID");
+								$scope.s.input.checked = true;
+								console.log("S: INPUT CHECKED");
 							}
 							else {
-								// NO ROLE
-								html_divider.setAttribute("style", "display: none");
-								html_role_icon.setAttribute("style", "display: none");
-								html_iconbox.setAttribute("style", "display: none");
-								html_role_for_display.setAttribute("style", "display: none");
-								html_role_icon = document.getElementById("role_icon");
+								$scope.s.input.valid = true;
+								console.log("S: INPUT VALID");
+								$scope.s.input.checked = true;
+								console.log("S: INPUT CHECKED");
 							}
+							
+							$scope.searchloop();
+						}
+						else {
+							// IS INPUT VALID?
+							if ($scope.s.input.valid) {
+								// IS SERVER CHECKED?
+								if (!$scope.s.server.checked) {
+									// CHECK IF ID ON SERVER
+									$scope.s.server.data = $http.get($scope.homepath + "ids/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", {
+										responseType: "text"
+									});
+
+									$q.when($scope.s.server.data, function () {
+										if ($scope.s.server.data.$$state.value.data.length < 10) {
+											$scope.user.id = $scope.s.server.data.$$state.value.data;
+											$scope.s.id.given = true;
+											console.log("S: ID GIVEN");
+											$scope.s.id.fromserver = true;
+											console.log("S: ID FROM SERVER");
+										}
+										$scope.s.server.checked = true;
+										console.log("S: SERVER CHECKED");
+										
+										$scope.searchloop();
+									});
+								}
+								else {
+									// IS YAHOO CHECKED?
+									if (!$scope.s.yahoo.checked) {
+										// IS YAHOO INDEX OVER -1?
+										if ($scope.s.yahoo.index > -1) {
+
+											$scope.s.yahoo.url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='https://genius.com/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + "'and%20xpath=%27(//preload-content)[last()-" + $scope.s.yahoo.index + "]%27&format=json";
+
+											$scope.s.yahoo.data = $http.get($scope.s.yahoo.url);
+
+											$q.when($scope.s.yahoo.data, function () {
+												$scope.s.yahoo.source = $scope.s.yahoo.data.$$state.value.data;
+												sourcestring1 = JSON.stringify($scope.s.yahoo.source);
+												if (sourcestring1.indexOf("user") < 200 && sourcestring1.indexOf("user") != -1) {
+													findid();
+													$scope.s.id.given = true;
+													console.log("S: ID GIVEN");
+													$scope.s.id.fromyahoo = true;
+													console.log("S: ID FROM YAHOO");
+													$scope.s.yahoo.checked = true;
+													console.log("S: YAHOO CHECKED");
+													$scope.s.yahoo.oldindex = $scope.s.yahoo.index;
+													$scope.s.yahoo.index = -1;
+												}
+												else {
+													$scope.s.yahoo.index = $scope.s.yahoo.index - 1;
+												}
+												$scope.searchloop();
+											});
+										}
+										else {
+											$scope.s.yahoo.checked = true;
+											console.log("S: YAHOO CHECKED");
+											$scope.searchloop();
+										}
+									}
+									else {
+										if ($scope.logininput !== "") {
+											$scope.s.error.occurred = true;
+											console.log("S: ERROR OCCURRED");
+											$scope.s.error.notfound = true;
+											console.log("S: ERROR: NOT FOUND");
+										}
+										else {
+											// EASTER EGG
+											$scope.s.error.occurred = true;
+											console.log("S: ERROR OCCURRED");
+											$scope.s.error.inputempty = true;
+											console.log("S: ERROR: INPUT EMPTY");
+										}
+										$scope.searchloop();
+									}
+								}
+							}
+							else {
+								$scope.s.error.occurred = true;
+								console.log("S: ERROR OCCURRED");
+								$scope.s.error.inputinvalid = true;
+								console.log("S: ERROR: INPUT INVALID");
+								$scope.searchloop();
+							}
+
+						}
+					}
+					else {
+						// IS ID FROM SERVER?
+						if (!$scope.s.id.fromserver) {
+							// SAVE ID ON SERVER
+							phpid = new FormData();
+							phpid.append("phpid", $scope.user.id);
+							phpid.append("phplogin", $scope.logininput.toUpperCase().replace(/\s+/g, "-"));
+							xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
+							xhr.open('post', 'saveid.php', true);
+							xhr.send(phpid);
+							console.log("S: ID SAVED ON SERVER");
+						}
+
+						// GET JSON FROM GENIUS
+						geniusurl = "https://api.genius.com/users/" + $scope.user.id + "?access_token=lUQ8rzBeb78dJdtUcBbE4Jh-jfO88nfoDxHV3Ji3iOz268lNbYAYh8G0PjlcV-ma";
+
+						$.getJSON(geniusurl).done(function (data) {
+							$scope.s.genius.source = data;
+							$scope.s.user.given = true;
+							scope.$apply(function () {
+								scope.s.user.given = true;
+								console.log("S: USER GIVEN");
+							});
+							$scope.searchloop();
+
+						});
+					}
+				}
+				else {
+					$scope.user = $scope.s.genius.source.response.user;
+					console.log("S: END LOOP");
+					window.history.pushState($scope.user.name + "'s badges collection", "Badges - " + $scope.user.name + "'s badges collection", $scope.currentpath.slice(0, (nthIndex($scope.currentpath, "/", 3) + 1)) + $scope.user.login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
+					$scope.doit();
+				}
+			}
+			else {
+				if ($scope.s.error.inputinvalid) {
+
+				}
+				else {
+					if ($scope.s.error.notfound) {
+						$scope.buttons.profile.text = "nothing here";
+
+						$scope.html_generatedtext.innerHTML = "";
+
+						$scope.html_nouser.innerHTML = $scope.logininput;
+						
+						$("#optionscontainer").attr({
+							style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
+						});
+
+						$("#buttoncontainer").attr({
+							style: "padding-top: 5vh;padding-bottom: 5vh;"
+						});
+
+						$("#profilebox").attr({
+							style: "height: 0;display:none;opacity: 0;"
+						});
+
+						$("#profiletext").attr({
+							style: "opacity: 0"
+						});
+
+						$("#generatedtext").attr({
+							style: "opacity: 0"
+						});
+
+						$("#profilehr").attr({
+							style: "opacity: 0"
+						});
+
+						$("#customize").attr({
+							style: "opacity: 0"
+						});
+
+						$("#authenticate").attr({
+							style: "opacity: 0"
+						});
+
+						$("#info").attr({
+							style: "width: initial;"
+						});
+
+						$("#badgeslogo").attr({
+							style: "width: 3vw;align-self: center;height: initial;"
+						});
+
+						$("#version").attr({
+							style: "font-size: 5vmin;color: #000000;font-weight: 700;margin-top: 0;margin-bottom: 0;line-height: 80%;padding-bottom:0;"
+						});
+
+						$("#menucontainer").attr({
+							style: "display: flex"
+						});
+
+						$("#top").attr({
+							style: "height: initial;margin-bottom: 41px;"
+						});
+
+						$("#search").attr({
+							style: "margin-top: 0;"
+						});
+
+						NProgress.done();
+
+						$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]), function () {
+
+
+							$("#usererror:hidden").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
+						});
+					}
+					else {
+						if ($scope.s.error.inputempty) {
+							NProgress.done();
+							$("#optionscontainer").attr({
+								style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
+							});
+
+							$("#buttoncontainer").attr({
+								style: "padding-top: 5vh;padding-bottom: 5vh;"
+							});
+
+							$("#info").attr({
+								style: "display: none;"
+							});
+
+
+							$scope.s.time.endtime = $.now();
+							$scope.s.time.waitingtime = $scope.s.time.endtime - $scope.s.time.starttime;
+							$scope.s.time.waitingtimeinseconds = $scope.s.time.waitingtime / 1000;
+
+							$("#profilebox").attr({
+								style: "height: 0;display:none;opacity: 0;"
+							});
+
+							$("#profiletext").attr({
+								style: "opacity: 0"
+							});
+
+							$("#generatedtext").attr({
+								style: "opacity: 0"
+							});
+
+							$("#profilehr").attr({
+								style: "opacity: 0"
+							});
+
+							$("#customize").attr({
+								style: "opacity: 0"
+							});
+
+							$("#authenticate").attr({
+								style: "opacity: 0"
+							});
+
+							$scope.buttons.profile.text = "nothing here";
+
+							$scope.html_generatedtext.innerHTML = "";
+							$("#nothing:hidden").fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
+
+							$("#loadingcontainer").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
 						}
 					}
 				}
 			}
+		}
+	};
+	
+	$scope.doit = function () {
+		// RESET FIRST LOOP BOOLEAN
+		$scope.d.firstloop = true;
+
+		// INIT LOOP
+		$scope.doitloop();
+	};
+	
+	$scope.doitloop = function () {
+		
+		NProgress.inc();
+		
+		$scope.$applyAsync();
+		
+		if ($scope.d.firstloop) {
+			
+			$scope.user.stars = 0;
+
+			$scope.d = {
+				firstloop: false,
+				collection: {
+					checked: false,
+					given: false
+				},
+				badgescontainer: {
+					emptied: false
+				}
+			};
+
+			// LOOP IT BRUH
+			$scope.doitloop();
+		}
+		else {
+			if (!$scope.d.badgescontainer.emptied) {
+				while ($scope.html_badgescontainer.firstChild) {
+					$scope.html_badgescontainer.removeChild($scope.html_badgescontainer.firstChild);
+				}
+				
+				$scope.d.badgescontainer.emptied = true;
+				console.log("D: BADGESCONTAINER EMPTIED");
+				
+				$scope.doitloop();
+			}
+			else {
+				if (!$scope.d.collection.checked) {
+					
+					$scope.d.collection.data = $http.get($scope.homepath + "collections/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", {
+							responseType: "text"
+					});
+
+					$q.when($scope.d.collection.data, function () {
+						if (JSON.stringify($scope.d.collection.data.$$state.value.data).indexOf("{") === 0) {
+							$scope.user.collection = $scope.d.collection.data.$$state.value.data;
+							
+							$scope.d.collection.given = true;
+							console.log("D: COLLECTION GIVEN");
+						}
+						
+						$scope.d.collection.checked = true;
+						console.log("D: COLLECTION CHECKED");
+						
+						$scope.doitloop();
+					});
+				}
+				else {
+					insert();
+					
+					$scope.$applyAsync();
+					
+					$scope.html_usererror.style.display = "none";
+					
+					/*
+					
+					$("#userinfo:hidden").attr({
+						style: "display: flex;"
+					});
+					
+					*/
+
+					$scope.buttons.profile.text = "add them to your profile";
+
+					$scope.html_generatedtext.innerHTML = ""
+
+					NProgress.inc();										$scope.$applyAsync();
+
+					if (isnothing == "no") {
+						// imageloop();							scope.$apply(							imagesLoaded(document.querySelectorAll(".badgebox"), function(instance) {								console.log("images loaded");								NProgress.done();								cardinandout($("#loadingcontainer"), $("#top"), {									before: function() {																				// -										$scope.styles.top = {											"height": "initial",											"margin-bottom": "41px"										};										// --										$scope.styles.optionscontainer = {											"height": "initial",											"flex-direction": "row",											"margin": "30px 0 30px"										};										// ---										$scope.styles.info = {											"width": "initial"										};										// ---										$scope.styles.inputcontainer = {											"margin-bottom": "0"										};										// ---										$scope.styles.search = {											"margin": "6px 8px"										};										// --										$scope.styles.menucontainer = {											"display": "flex"										};																				$scope.$applyAsync();									},									callback: function() {										cardin($("#userinfo"), {											callback: function() {												$("#site").animate({													scrollTop: $('#userinfo').offset().top - 75												}, 1000, $.bez([0.4, 0.0, 0.2, 1]));																								$scope.$applyAsync();											}										});																				$scope.$applyAsync();									}								});							});							);
+					}
+					else {
+						NProgress.done();
+						cardinandout($("#loadingcontainer"), $("#top"));
+					}
+				}
+			}
+		}
+	};
+
+	imageloop = function () {								
+		if ($scope.html_badgescontainer.firstElementChild.firstElementChild.complete) {
+			bgImg = new Image();
+			bgImg.src = $scope.user.avatar.medium.url;
+			bgImg.onload = function(){
+			   $(this).remove();
+				console.log("images loaded");
+				NProgress.done();
+				cardinandout($("#loadingcontainer"), $("#top"), {
+					before: function() {
+						
+						// -
+						$scope.styles.top = {
+							"height": "initial",
+							"margin-bottom": "41px"
+						};
+						// --
+						$scope.styles.optionscontainer = {
+							"height": "initial",
+							"flex-direction": "row",
+							"margin": "30px 0 30px"
+						};
+						// ---
+						$scope.styles.info = {
+							"width": "initial"
+						};
+						// ---
+						$scope.styles.inputcontainer = {
+							"margin-bottom": "0"
+						};
+						// ---
+						$scope.styles.search = {
+							"margin": "6px 8px"
+						};
+						// --
+						$scope.styles.menucontainer = {
+							"display": "flex"
+						};
+					},
+					callback: function() {
+						cardin($("#userinfo"), {
+							callback: function() {
+								$("#site").animate({
+									scrollTop: $('#userinfo').offset().top - 75
+								}, 1000, $.bez([0.4, 0.0, 0.2, 1]));
+							}
+						});
+					}
+				});
+			};
+		}
+		else {
+			setTimeout(function () {
+				NProgress.inc();
+				console.log("images not loaded yet");
+				imageloop();
+			}, 200);
+		}
+	};
+
+	findid = function () {
+		if (location.pathname.indexOf("collection") !== -1) {
+			$scope.user.id = $scope.s.genius.source.response.user.id;
+		}
+		else {
+			$scope.user.id = JSON.parse($scope.s.yahoo.source.query.results["preload-content"]["data-preload_data"]).user.id;
 		}
 	};
 
@@ -477,7 +1096,8 @@ function init() {
 	//-------------------------------------------
 	//-------------------------------------------
 
-	amount2id = function(type) {
+
+	$scope.amount2id = function (type) {
 		if (type < 100) {
 			badgeid = 0;
 		}
@@ -564,28 +1184,76 @@ function init() {
 				}
 			}
 		}
-		stars = stars + badgeid;
+		
+		$scope.user.stars = $scope.user.stars + badgeid;
 	};
 
-	starbadgenamechooser = function(badgeid) {
-		badgenames = [{0: ""}, {1: "coal"}, {2: "copper"}, {3: "bronze"}, {4: "silver"}, {5: "gold"}, {6: "platinum"}, {7: "sapphire"}, {8: "amber"}, {9: "emerald"}, {10: "topaz"}, {11: "opal"}, {12: "amethyst"}, {13: "ruby"}, {14: "yellowdiamond"}, {15: "greendiamond"}, {16: "reddiamond"}, {17: "diamond"}];
+	badgeelement = "div";
+	badgeclass = "badgebox";
+
+	starbadge1 = "undefined";
+	starbadge2 = "undefined";
+	starbadge3 = "undefined";
+	rolebadge1 = "undefined";
+	rolebadge2 = "undefined";
+	verifiedartistbadge = "undefined";
+
+	starbadgenamechooser = function (badgeid) {
+		badgenames = [{
+				0: ""
+					}, {
+				1: "coal"
+					}, {
+				2: "copper"
+					}, {
+				3: "bronze"
+					}, {
+				4: "silver"
+					}, {
+				5: "gold"
+					}, {
+				6: "platinum"
+					}, {
+				7: "sapphire"
+					}, {
+				8: "amber"
+					}, {
+				9: "emerald"
+					}, {
+				10: "topaz"
+					}, {
+				11: "opal"
+					}, {
+				12: "amethyst"
+					}, {
+				13: "ruby"
+					}, {
+				14: "yellowdiamond"
+					}, {
+				15: "greendiamond"
+					}, {
+				16: "reddiamond"
+					}, {
+				17: "diamond"
+					}
+				];
 		badgename = badgenames[badgeid][badgeid];
 	};
 
 	starbadgecategorylist = ["genius", "transcriber", "annotator"];
 
-	starbadgechooser = function(category, type, count) {
+	$scope.starbadgechooser = function (category, type, count) {
 		categoryid = (starbadgecategorylist.indexOf(category)) + 1;
 		if (categoryid == 1) {
-			amount2id(type);
+			$scope.amount2id(type);
 			starbadgenamechooser(badgeid);
 
 			if (badgeid > 0) {
-				badgebox = document.createElement("div");
-				badgebox.setAttribute("class", "badgebox");
+				badgebox = document.createElement(badgeelement);
+				badgebox.setAttribute("class", badgeclass);
 				badgebox.setAttribute("id", zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category);
 				badge = document.createElement("img");
-				badge.setAttribute("src", "badges/" + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
+				badge.setAttribute("src", $scope.badgespath + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
 				badge.setAttribute("class", "badge");
 				badgebox.appendChild(badge);
 
@@ -596,15 +1264,15 @@ function init() {
 			}
 		}
 		else {
-			amount2id((type) * 100);
+			$scope.amount2id((type) * 100);
 			starbadgenamechooser(badgeid);
 
 			if (badgeid > 0) {
-				badgebox = document.createElement("div");
-				badgebox.setAttribute("class", "badgebox");
+				badgebox = document.createElement(badgeelement);
+				badgebox.setAttribute("class", badgeclass);
 				badgebox.setAttribute("id", zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category);
 				badge = document.createElement("img");
-				badge.setAttribute("src", "badges/" + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
+				badge.setAttribute("src", $scope.badgespath + zeroFill(categoryid, 3) + "%20" + capitalizeFirstLetter(category) + "%20Badges/genius-" + zeroFill(categoryid, 3) + "-" + zeroFill(badgeid, 3) + badgename + category + "500px.png?time=" + jQuery.now());
 				badge.setAttribute("class", "badge");
 				badgebox.appendChild(badge);
 
@@ -620,9 +1288,10 @@ function init() {
 	//-------------------------------------------
 	//-------------------------------------------
 
-	role2id = function(role) {
-		roleloop = function() {
-			if (role_for_display === null) {
+
+	role2id = function (role) {
+		roleloop = function () {
+			if ($scope.user.role_for_display === null) {
 				badgeid = 0;
 			}
 			else {
@@ -660,20 +1329,33 @@ function init() {
 		roleloop();
 	};
 
-	rolebadgenamechooser = function(badgeid) {
-		badgenames = [{0: ""}, {1: "contributor"}, {2: "mediator"}, {3: "editor"}, {4: "moderator"}, {5: "staff"}];
+	rolebadgenamechooser = function (badgeid) {
+		badgenames = [{
+				0: ""
+					}, {
+				1: "contributor"
+					}, {
+				2: "mediator"
+					}, {
+				3: "editor"
+					}, {
+				4: "moderator"
+					}, {
+				5: "staff"
+					}
+				];
 		badgename = badgenames[badgeid][badgeid];
 	};
 
-	rolebadgechooser = function(role, count) {
+	rolebadgechooser = function (role, count) {
 		role2id(role);
 		rolebadgenamechooser(badgeid);
 		if (badgeid > 0) {
-			badgebox = document.createElement("div");
-			badgebox.setAttribute("class", "badgebox");
+			badgebox = document.createElement(badgeelement);
+			badgebox.setAttribute("class", badgeclass);
 			badgebox.setAttribute("id", "004-" + zeroFill(badgeid, 3) + badgename);
 			badge = document.createElement("img");
-			badge.setAttribute("src", "badges/004%20Role%20Badges/genius-004-" + zeroFill(badgeid, 3) + badgename + "500px.png?time=" + jQuery.now());
+			badge.setAttribute("src", $scope.badgespath + "004%20Role%20Badges/genius-004-" + zeroFill(badgeid, 3) + badgename + "500px.png?time=" + jQuery.now());
 			badge.setAttribute("class", "badge");
 			badgebox.appendChild(badge);
 
@@ -684,13 +1366,13 @@ function init() {
 		}
 	};
 
-	verifiedartistbadgechooser = function() {
-		if (geniussource.responseJSON.response.user.artist !== null) {
-			badgebox = document.createElement("div");
-			badgebox.setAttribute("class", "badgebox");
+	verifiedartistbadgechooser = function () {
+		if ($scope.user.artist !== null) {
+			badgebox = document.createElement(badgeelement);
+			badgebox.setAttribute("class", badgeclass);
 			badgebox.setAttribute("id", "005-001verifiedartist");
 			badge = document.createElement("img");
-			badge.setAttribute("src", "badges/005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=" + jQuery.now());
+			badge.setAttribute("src", $scope.badgespath + "005%20Verified%20Artist%20Badges/genius-005-001verifiedartist500px.png?time=" + jQuery.now());
 			badge.setAttribute("class", "badge");
 			badgebox.appendChild(badge);
 
@@ -701,519 +1383,180 @@ function init() {
 		}
 	};
 
-	insertbadges = function() {
-		while (html_badgescontainer.firstChild) {
-			html_badgescontainer.removeChild(html_badgescontainer.firstChild);
+	$scope.insertbadges = function () {
+		while ($scope.html_badgescontainer.firstChild) {
+			$scope.html_badgescontainer.removeChild($scope.html_badgescontainer.firstChild);
 		}
-		starbadgechooser("genius", iq, 1);
+		$scope.starbadgechooser("genius", $scope.user.iq, 1);
 		if (starbadge1 !== "undefined") {
-			html_badgescontainer.appendChild(starbadge1);
+			$scope.html_badgescontainer.appendChild(starbadge1);
 		}
-		starbadgechooser("transcriber", transcriptions_count, 2);
+		$scope.starbadgechooser("transcriber", $scope.user.stats.transcriptions_count, 2);
 		if (starbadge2 !== "undefined") {
-			html_badgescontainer.appendChild(starbadge2);
+			$scope.html_badgescontainer.appendChild(starbadge2);
 		}
-		starbadgechooser("annotator", annotations_count, 3);
+		$scope.starbadgechooser("annotator", $scope.user.stats.annotations_count, 3);
 		if (starbadge3 !== "undefined") {
-			html_badgescontainer.appendChild(starbadge3);
+			$scope.html_badgescontainer.appendChild(starbadge3);
 		}
 
-		rolebadgechooser(role_for_display, 1);
+		rolebadgechooser($scope.user.role_for_display, 1);
 		if (rolebadge1 !== "undefined") {
-			html_badgescontainer.appendChild(rolebadge1);
+			$scope.html_badgescontainer.appendChild(rolebadge1);
+		}
+
+		if ($scope.user.roles_for_display.indexOf("mediator") == 1) {
+			rolebadgechooser("mediator", 2);
+			if (rolebadge2 !== "undefined") {
+				$scope.html_badgescontainer.appendChild(rolebadge2);
+			}
 		}
 
 		verifiedartistbadgechooser();
 		if (verifiedartistbadge !== "undefined") {
-			html_badgescontainer.appendChild(verifiedartistbadge);
+			$scope.html_badgescontainer.appendChild(verifiedartistbadge);
 		}
 
-		badgesnumber = html_badgescontainer.childElementCount;
-
-
+		badgesnumber = $scope.html_badgescontainer.childElementCount;
 
 		if ((4 * (badgesnumber % 4)) === 4 && (4 * (badgesnumber % 4)) > 4) {
-			html_badgescontainer.lastChild.setAttribute("class", "badgebox first");
+			$scope.html_badgescontainer.lastChild.setAttribute("class", "badgebox first");
 		}
 		else {
 			if ((4 * (badgesnumber % 4)) === 8 && (4 * (badgesnumber % 4)) > 4) {
-				html_badgescontainer.lastChild.setAttribute("class", "badgebox second");
+				$scope.html_badgescontainer.lastChild.setAttribute("class", "badgebox second");
 			}
 			else {
 				if ((4 * (badgesnumber % 4)) === 12 && (4 * (badgesnumber % 4)) > 4) {
-					html_badgescontainer.lastChild.setAttribute("class", "badgebox third");
+					$scope.html_badgescontainer.lastChild.setAttribute("class", "badgebox third");
 				}
 				else {
 					if ((4 * (badgesnumber % 4)) === 16 && (4 * (badgesnumber % 4)) > 4) {
-						html_badgescontainer.lastChild.setAttribute("class", "badgebox fourth");
+						$scope.html_badgescontainer.lastChild.setAttribute("class", "badgebox fourth");
 					}
 				}
 				if (badgesnumber === 0) {
 					isnothing = "yes";
-					html_badgescontainer.innerHTML = "<p id='nobadges'>This user has no badges yet. Sad.</p>";
+					$scope.html_badgescontainer.innerHTML = "<p id='nobadges'>This user has no badges yet. Sad.</p>";
 				}
 			}
 		}
+		if (location.pathname.indexOf("collection") !== -1) {
+			badgeelement = "li";
+			badgeclass = "badgebox ui-state-default";
+			while ($scope.html_editbadges.hasChildNodes() === true) {
+				$scope.html_editbadges.removeChild($scope.html_editbadges.firstChild);
+			}
+			starbadgechooser("genius", iq, 1);
+			if (starbadge1 !== "undefined") {
+				$scope.html_editbadges.appendChild(starbadge1);
+				starbadge1.appendChild($scope.html_smallfooter.cloneNode(true));
+			}
+			starbadgechooser("transcriber", transcriptions_count, 2);
+			if (starbadge2 !== "undefined") {
+				$scope.html_editbadges.appendChild(starbadge2);
+				starbadge2.appendChild($scope.html_smallfooter.cloneNode(true));
+			}
+			starbadgechooser("annotator", annotations_count, 3);
+			if (starbadge3 !== "undefined") {
+				$scope.html_editbadges.appendChild(starbadge3);
+				starbadge3.appendChild($scope.html_smallfooter.cloneNode(true));
+			}
 
-	};
+			rolebadgechooser($scope.user.role_for_display, 1);
+			if (rolebadge1 !== "undefined") {
+				$scope.html_editbadges.appendChild(rolebadge1);
+				rolebadge1.appendChild($scope.html_smallfooter.cloneNode(true));
+			}
 
+			if (roles_for_display.indexOf("mediator") == 1) {
+				rolebadgechooser("mediator", 2);
+				if (rolebadge2 !== "undefined") {
+					$scope.html_editbadges.appendChild(rolebadge2);
+					rolebadge2.appendChild($scope.html_smallfooter.cloneNode(true));
+				}
+			}
 
-	insertstars = function() {
-		if (stars > 0) {
-			$("#starscontainer").attr({
-				style: "display: flex"
-			});
-			if (stars == 1) {
-				html_stars.innerHTML = stars + " STAR";
-				$("#starscontainer").attr({
-					style: "height: " + ((8 * stars / 51 + 17 / 5) + 2) + "vh"
+			verifiedartistbadgechooser();
+			if (verifiedartistbadge !== "undefined") {
+				$scope.html_editbadges.appendChild(verifiedartistbadge);
+				verifiedartistbadge.appendChild($scope.html_smallfooter.cloneNode(true));
+			}
+			hoverEnabled = 1;
+			$(".smallfooter").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
+
+			$(".badgebox").hover(function () {
+					childindex = getChildrenIndex(this);
+					currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
+					if (currentfooter.id == "smallfooter") {
+						if (hoverEnabled == 1) {
+							$(currentfooter).fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
+						}
+					}
+				},
+				function () {
+					childindex = getChildrenIndex(this);
+					currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
+					if (currentfooter.id == "smallfooter") {
+						$(currentfooter).fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
+					}
 				});
-				$("#stars").attr({
-					style: "font-size: " + (8 * stars / 51 + 17 / 5) + "vh"
-				});
-			}
-			else {
-				html_stars.innerHTML = stars + " STARS";
-			}
-			$("#starscontainer").attr({
-				style: "height: " + ((8 * stars / 51 + 17 / 5) + 2) + "vh"
-			});
-			$("#stars").attr({
-				style: "font-size: " + (8 * stars / 51 + 17 / 5) + "vh"
-			});
 		}
-		else {
-			$("#starscontainer").attr({
-				style: "display: none"
-			});
-		}
-	};
-
-	insert = function() {
-		insertbadges();
-		insertavatar();
-		insertstats();
-		insertnamelink();
-		insertname();
-		insertlogin();
-		insertiq_for_display();
-		insertrole_for_display();
-		insertrole_icon();
-		insertstars();
-	};
-
-	doit = function() {
-		stars = 0;
-
-		find();
-
-		insert();
-
-		html_usererror.style.display = "none";
-
-		html_search.innerHTML = "search again";
-		$("#userinfo:hidden").attr({
-			style: "display: flex;"
-		});
-
-		$("#optionscontainer").attr({
-			style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin-bottom: 41px;"
-		});
-
-		$("#buttoncontainer").attr({
-			style: "padding-top: 5vh;padding-bottom: 5vh;"
-		});
-
-		$("#profilebox").attr({
-			style: "height: 0;margin-top: initial;margin-bottom: initial"
-		});
-
-		$("#profiletext").attr({
-			style: "opacity: 0"
-		});
-
-		$("#generatedtext").attr({
-			style: "opacity: 0"
-		});
-
-		html_profile.innerHTML = "ADD THEM TO YOUR PROFILE";
-
-		html_generatedtext.innerHTML = "";
-
-		$("#infocontainer").attr({
-			style: "background: #fff;width: initial;"
-		});
-
-		$("#info").attr({
-			style: "text-align: center;display: flex;flex-direction: column;justify-content: space-around;"
-		});
-
-		$("#badgeslogo").attr({
-			style: "width: 3vw;align-self: center;margin-bottom: 10px;height: initial;top: 0;"
-		});
-
-		$("#version").attr({
-			style: "font-size: 5vmin;color: #000000;font-weight: 700;margin-top: 0;margin-bottom: 0;line-height: 80%;padding-bottom:0;"
-		});
-
-		$("#menucontainer").attr({
-			style: "display: flex"
-		});
-
-		imageloop = function() {
-			if (html_badgescontainer.firstChild.firstChild.complete === true) {
-				$("#loadingcontainer").fadeOut(1000, function() {
-					$("#loadingcontaineroverlay").fadeOut(1000, function() {
-						$("#sitecontainer").attr({
-							style: "position: absolute;padding: 41px 5vw 41px 5vw;margin-top: 41px;"
-						});
-						$("#sitecontainer").animate({
-							scrollTop: $('#userinfo').offset().top
-						}, 1000);
-					});
-				});
-				console.log("images loaded");
-			}
-			else {
-				setTimeout(function() {
-						console.log("images not loaded yet");
-						imageloop();
-					},
-					1000);
-			}
-		};
-		if (isnothing == "no") {
-			imageloop();
-		}
-		else {
-			$("#loadingcontainer").fadeOut(1000, function() {
-				$("#loadingcontaineroverlay").fadeOut(1000);
-			});
-		}
-
-		data = [
-				["avatar", avatar],
-				["link", link],
-				["name", name],
-				["login", login],
-				["iq_for_display", iq_for_display],
-				["iq", iq],
-				["id", id],
-				["transcriptions_count", transcriptions_count],
-				["annotations_count", annotations_count],
-				["role_for_display", role_for_display],
-				["swag?", "swag."]
-			];
-		console.table(data);
 
 	};
 
-	bind();
+	insert = function () {
+		$scope.insertbadges();
+		$scope.styles.starscontainer.height = round(scaleconvert($scope.user.stars, "1-51", "34-80")) + "px";
+		$scope.styles.stars["font-size"] = round(scaleconvert($scope.user.stars, "1-51", "24-70")) + "px";
+	};
 
-	warmupyahooapi = function() {
-		url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='http://genius.com/SinaTheQueen'&format=json";
+	warmupyahooapi = function () {
+		url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='https://genius.com/SinaTheQueen'&format=json";
 
-		source = $.getJSON(url).done(function() {
+		source = $.getJSON(url).done(function () {
 			sourcestring1 = JSON.stringify(source);
 		});
 	};
 
 	// it's really a warmup...if this function wouldn't exist, the first request a user makes would take super long and eventually error then...i don't know why...it's like starting a steam machine or so :D
 
-	// warmupyahooapi();
-
-	$("input").keypress(function(event) {
-		if (event.which == 13) {
-			event.preventDefault();
-			html_search.onclick();
-		}
-	});
 
 	id = 0;
 
+
+	jQuery2html("html_", "id");
+
 	/*
-	loop=function(){$("script.momentscript").remove(),0!==n?i>0?(url="https://query.yahooapis.com/v1/public/yql?q=select * from html where url='http://genius.com/"+logininput.toUpperCase()+"'and%20compat='html5'%20and%20xpath=%27(//preload-content)[last()-"+i+"]%27&format=json",source=$.getJSON(url).done(function(){sourcestring1=JSON.stringify(source),175==sourcestring1.indexOf("user")?(findid(),id_given="yes",n=0,loop()):(i-=1,loop())})):(n=0,loop()):index<300?(createVariable("momentusername","ids["+index+"].username"),logininput.toUpperCase()==momentusername.toUpperCase()?(createVariable("momentid","ids["+index+"].id"),id=momentid,id_given="yes",index=1e6,loop()):(index+=1,loop())):"no"==id_given&&0==serverchecked?$.get("ids/"+logininput.toUpperCase()+".txt",function(a){},"text").done(function(a){id=a,id_given="yes",serverchecked=1,loop()}).fail(function(a){console.log("error"),n=1,serverchecked=1,loop()}):"yes"==id_given?(geniusurl="http://api.genius.com/users/"+id+"?access_token=G6EpShLbSH5axVzAGk7o_yzK2updweNevUtHX4qMa8oUVq9WSduHHSN8V0rO9axS&format=json",geniussource=$.getJSON(geniusurl).done(function(){doit(),phpid=new FormData,phpid.append("phpid",id),phpid.append("phplogin",login.toUpperCase()),xhr=window.XMLHttpRequest?new XMLHttpRequest:new activeXObject("Microsoft.XMLHTTP"),xhr.open("post","saveid.php",!0),xhr.send(phpid)})):""!=logininput?(html_nouser.innerHTML=logininput,$("#loadingcontainer").fadeOut("slow",function(){$("#usererror:hidden").fadeIn("slow")})):$("#loadingcontainer").fadeOut("slow",function(){endtime=$.now(),waitingtime=endtime-starttime,waitingtimeinseconds=waitingtime/1e3,html_wait.innerHTML=waitingtimeinseconds,$("#nothing:hidden").fadeIn("slow")})};
-	*/
-
-	// ---------------------------------------------
-	// CHECK IF IN ELECTRON ------------------------
-	// ---------------------------------------------
-	if (navigator.userAgent === "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36") {
-		userindexvalue = 172;
+	if (usergiven === 0) {
+	$("#loadingcontainer").attr({
+	style: "display: none"
+	});
 	}
-	else {
-		userindexvalue = 175;
-	}
-	// ---------------------------------------------
-	// ---------------------------------------------
-	// ---------------------------------------------
+	 */
 
+	$(document).ready(function () {
+		$("#donate").click(function () {
+			donate();
+		});
+	});
 
-
-	loop = function() {
-		if (logininputchecked === 0) {
-			if (logininput.match("^[#%^&\{\}\]\[\(\)\`\'<>\|\ ]*$") !== null || logininput.match(/\\/) !== null || logininput.match("\"") !== null) {
-				serverchecked = 1;
-				index = 300;
-				logininputchecked = 1;
-				loop();
-			}
-			else {
-				logininputchecked = 1;
-				loop();
-			}
-		}
-		else {
-			$("script.momentscript").remove();
-			if (n !== 0) {
-				if (i > 0) {
-					// check if existent (yahoo)
-					url = "https://query.yahooapis.com/v1/public/yql?q=select * from html where url='http://genius.com/" + logininput.toUpperCase().replace(/\s+/g, "-") + "'and%20xpath=%27(//preload-content)[last()-" + i + "]%27&format=json";
-
-					source = $.get(url).done(function() {
-						sourcestring1 = JSON.stringify(source);
-						if (sourcestring1.indexOf("user") < 200 && sourcestring1.indexOf("user") != -1) {
-							findid();
-							id_given = "yes";
-							n = 0;
-							console.log("did find user on genius");
-							loop();
-						}
-						else {
-							i = i - 1;
-							loop();
-						}
-					});
-				}
-				else {
-					n = 0;
-					console.log("didn't find user on genius");
-					loop();
-				}
-			}
-			else {
-				if (serverchecked === 0) {
-
-					// check if on server
-
-					$.get("ids/" + logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", function(response) {}, "text")
-						.done(function(response) {
-							id = response;
-							id_given = "yes";
-							serverchecked = 1;
-							idonserver = 1;
-							console.log("did find id on server");
-							loop();
-						})
-						.fail(function(response) {
-							serverchecked = 1;
-							console.log("didn't find id on server");
-							loop();
-						});
-				}
-
-				else {
-					if (id_given == "no" && arraychecked === 0) {
-
-						// check if in json
-
-
-						findusername = function(e) {
-							return e.username.toUpperCase() === logininput.toUpperCase();
-						};
-
-						if (ids2.find(findusername) !== undefined) {
-							id = ids2.find(findusername).id;
-							id_given = "yes";
-							arraychecked = 1;
-							console.log("did find id in array");
-							loop();
-						}
-						else {
-							n = 1;
-							arraychecked = 1;
-							console.log("didn't find id in array");
-							loop();
-						}
-
-						/*
-						createVariable("momentusername", "ids2[" + index + "].username");
-						if (logininput.toUpperCase() == momentusername.toUpperCase().replace(/\s+/g, "-")) {
-							createVariable("momentid", "ids2[" + index + "].id");
-							id = momentid;
-							id_given = "yes";
-							index = 1000000;
-							loop();
-						}
-						else {
-							index = index + 1;
-							$("script.momentscript").remove();
-							n = 1;
-							loop();
-						}
-						*/
-					}
-					else {
-						if (id_given == "yes") {
-							geniusurl = "http://api.genius.com/users/" + id + "?access_token=lUQ8rzBeb78dJdtUcBbE4Jh-jfO88nfoDxHV3Ji3iOz268lNbYAYh8G0PjlcV-ma";
-
-							geniussource = $.getJSON(geniusurl).done(function() {
-								console.log("got json from genius api");
-								doit();
-								userhere = 1;
-
-								if (idonserver === 0) {
-									phpid = new FormData();
-									phpid.append("phpid", id);
-									phpid.append("phplogin", logininput.toUpperCase().replace(/\s+/g, "-"));
-									xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
-									xhr.open('post', 'saveid.php', true);
-									xhr.send(phpid);
-									console.log("saved id on server");
-								}
-							});
-						}
-						else {
-							if (logininput !== "") {
-								console.log("entered username was not found");
-								userhere = 0;
-								html_search.innerHTML = "search again";
-								$("#optionscontainer").attr({
-									style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin-bottom: 41px;"
-								});
-
-								$("#buttoncontainer").attr({
-									style: "padding-top: 5vh;padding-bottom: 5vh;"
-								});
-
-								$("#infocontainer").attr({
-									style: "display: none;"
-								});
-								$("#loadingcontainer").fadeOut(1000, function() {
-									$("#loadingcontaineroverlay").fadeOut(1000);
-
-
-									$("#profilebox").attr({
-										style: "height: 0;margin-top: initial;margin-bottom: initial"
-									});
-
-									$("#profiletext").attr({
-										style: "opacity: 0"
-									});
-
-									$("#generatedtext").attr({
-										style: "opacity: 0"
-									});
-
-									html_profile.innerHTML = "NOTHING HERE";
-
-									html_generatedtext.innerHTML = "";
-
-									html_nouser.innerHTML = logininput;
-									$("#usererror:hidden").fadeIn("slow");
-								});
-							}
-							else {
-								console.log("user entered nothing");
-								userhere = 0;
-								html_search.innerHTML = "search again";
-								$("#optionscontainer").attr({
-									style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin-bottom: 41px;"
-								});
-
-								$("#buttoncontainer").attr({
-									style: "padding-top: 5vh;padding-bottom: 5vh;"
-								});
-
-								$("#infocontainer").attr({
-									style: "display: none;"
-								});
-
-								$("#loadingcontainer").fadeOut(1000, function() {
-									$("#loadingcontaineroverlay").fadeOut(1000);
-									endtime = $.now();
-									waitingtime = endtime - starttime;
-									waitingtimeinseconds = waitingtime / 1000;
-
-
-									$("#profilebox").attr({
-										style: "height: 0;margin-top: initial;margin-bottom: initial"
-									});
-
-									$("#profiletext").attr({
-										style: "opacity: 0"
-									});
-
-									$("#generatedtext").attr({
-										style: "opacity: 0"
-									});
-
-									html_profile.innerHTML = "NOTHING HERE";
-
-									html_generatedtext.innerHTML = "";
-
-									html_wait.innerHTML = waitingtimeinseconds;
-									$("#nothing:hidden").fadeIn("slow");
-								});
-							}
-						}
-					}
-				}
-			}
-		}
-	};
-}
-
-bind = function() {
-	html_search.onclick = function() {
-
-		logininput = $("#userinput").val();
-
-		starttime = $.now();
-
-		id_given = "no";
-
-		isnothing = "no";
-
-		n = 0;
-
-		index = 0;
-
-		arraychecked = 0;
-
-		i = 9;
-
-		serverchecked = 0;
-
-		logininputchecked = 0;
-
-		idonserver = 0;
-
-		userhere = 0;
-
-		if ($("#optionscontainer").css("margin-bottom") == "41px") {
-			$("#userinfo").fadeOut("slow", function() {
-				$("#loadingcontainer:hidden").fadeIn(1000, function() {
-					$("#loadingcontaineroverlay:hidden").fadeIn(1000, function() {
-						//$.get("ids2.js").done(function() {
-							loop();
-						//});
-					});
-				});
-			});
-		}
-		else {
-			$("#optionscontainer").fadeOut("slow", function() {
-				$("#userinfo").fadeOut("slow", function() {
-					$("#loadingcontainer:hidden").fadeIn(1000, function() {
-						$("#loadingcontaineroverlay:hidden").fadeIn(1000, function() {
-							//$.get("ids2.js").done(function() {
-								loop();
-							//});
-						});
-					});
-				});
-			});
-		}
-	};
+	$(document).ready(function () {
+		$("#about").click(function () {
+			about();
+		});
+	});
 };
+
+// ANGULARJS
+
+array = ["$scope", "$timeout", "$mdSidenav", "$mdDialog", "$window", "$http", "$q", mainfunction];
+
+var badges = angular.module('badges', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
+
+badges.config(["$mdIconProvider", "$qProvider", function ($mdIconProvider, $qProvider) {
+	$mdIconProvider.defaultIconSet('libraries/mdi/svg/mdi.svg');
+	$qProvider.errorOnUnhandledRejections(false);
+}]);
+
+badges.controller("all", array);

@@ -1,0 +1,16 @@
+﻿/* TEAM */
+CEO: Nano Miratus.
+Contact: nanomiratus@gmail.com
+Twitter: @nnmrts
+Location: Payerbach, Austria
+
+/* THANKS */
+humans: name or url
+
+/* SITE */
+Last update: 2016/11/18
+Language: English
+Standards: HTML5, CSS3
+Doctype: HTML5
+Components: jQuery, jQuery UI, Material Design Lite, EmojiOne, Normalize.css, NProgress.js, Bootstrap, Bootbox.js, Browserify, is.js, xhr.js, Google Web Starter Kit
+Software: Notepad++, FileZilla, Photoshop

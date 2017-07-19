@@ -1,0 +1,227 @@
+body {
+   font-family: 'Programme2';
+   margin:0;
+   background-color:#F5F7FA;
+   display:flex;
+   flex-direction:column;
+   overflow: inherit;
+}
+
+#nav {
+}
+
+.nav {
+	position: relative;
+	background-color: #ffff64;
+	height: 44px;
+	overflow:hidden;
+	border-bottom-color: white;
+	border-bottom-style: solid;
+	border-bottom-width: 3px;
+	min-height: initial;
+    width: initial;
+    display: inherit;
+    font-weight: initial;
+    font-size: initial
+}
+.nav:after {
+	position: absolute;
+	top:0px;
+	left:50%;
+	transform:translateX(-50%);
+	content: '';
+	width: 0px;
+	height: 0px;
+	border:10px solid transparent;
+	border-bottom:none;
+	border-top-color: #ff1464;
+	display: none;
+}
+
+.items {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	-webkit-transition:transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
+	transition:transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
+	white-space: nowrap;
+	user-select:none;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+.items div {
+	cursor: pointer;
+	display: inline-flex;
+	padding: 10px 0px;
+	color: #000000;
+	-webkit-transition: color 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
+	transition: color 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
+	width: 200px;
+	background-color: #ffff64;
+	text-align: center;
+	justify-content: center;
+	flex-direction: column;
+	height: 100%;
+}
+
+div .selected {
+	color: #000000;
+	background-color: #ffffff;
+	height: 100%;
+}
+
+.pages {
+	flex-grow:1;
+}
+
+.infocontainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    padding-top: 6vh;
+    padding-bottom: 4vh;
+    margin-bottom: 41px;
+    width: 100%;
+}
+
+.headline {
+	align-self: center;
+	font-size: 2em;
+	font-weight: 700;
+}
+
+.info {
+    align-self: center;
+    font-size: 1.1em;
+    width: 80%;
+    font-family: "Programme2";
+    margin: 4vh 4vh 4vh 4vh;
+}
+
+#badgescontainer {
+	width: 100%;
+	background-color: white;
+	padding: 5% 5% 5% 5%;
+	flex-shrink: 0;
+	margin-left: 0;
+	position: relative;
+}
+
+#add {
+	margin-bottom: 41px;
+	width: 100%;
+	z-index: 10;
+}
+
+.fixed {
+    position: fixed;
+    top: 41px;
+    width: 100%;
+    left: 0;
+    z-index: 100;
+}
+
+#collectioncontainer {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.navisfixed {
+    margin-top: 41px;
+}
+
+#editbadges {
+	flex-shrink: 0;
+	position: relative;
+	width: 100%;
+	padding: 5% 5% 5% 5%;
+}
+
+.sortable {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 450px;
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	-webkit-padding-start: 0;
+}
+.sortable li {
+	margin: 0;
+	float: left;
+	font-size: 4em;
+	text-align: center;
+	border: none;
+	background: none;
+	cursor: move;
+	display: inline-block;
+}
+
+#savebadges {
+    width: 100%;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.smallfooter {
+	display: flex;
+	position: relative;
+	z-index: 100;
+	height: 0;
+	width: 100%;
+}
+
+.smallfooterreally {
+	align-self: center;
+	background-color: #ff1464;
+	width: 100%;
+	margin: 0;
+	height: 40px;
+	border-width: 1px;
+	font-size: 0.3em;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	position: relative;
+}
+
+.remove {
+}
+
+#footertext {
+	color: white;
+	cursor: pointer;
+	display: inline-block;
+	align-self: center;
+	text-align: center;
+}
+
+.sortable-chosen {
+	opacity: 0.5;
+	display: none;
+}
+
+#badgescatalog {
+}
+
+
+.mdl-layout__container #collectioncontainer {
+	width: initial;
+}
+
+#savetext {
+    font-size: 24px;
+    margin-top: 82px;
+}

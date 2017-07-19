@@ -1,0 +1,29 @@
+ON STARTUP:
+$LASTWEEK = [LASTWEEK]
+$CURRENTWEEK = $LASTWEEK + 1
+
+NEW WEEK:
+cd C:\Users\Anton\Documents\GitHub
+$LASTWEEK = $LASTWEEK + 1
+$CURRENTWEEK = $CURRENTWEEK + 1
+git clone C:\Users\Anton\Documents\GitHub\badges2.1-weekly-$LASTWEEK C:\Users\Anton\Documents\GitHub\badges2.1-weekly-$CURRENTWEEK
+
+WHEN SOMETHING WAS CHANGED:
+cd C:\Users\Anton\Documents\GitHub\badges2.1-weekly-$CURRENTWEEK
+git diff
+git add .
+git add [FILE]
+git commit -m"[COMMENT]"
+
+IF CURRENT WEEKLY BRANCH DOESN'T EXIST ALREADY:
+cd C:\Users\Anton\Documents\GitHub\badges
+git checkout 2.1-weekly-$LASTWEEK
+git branch 2.1-weekly-$CURRENTWEEK
+git remote add $CURRENTWEEK C:\Users\Anton\Documents\GitHub\badges2.1-weekly-$CURRENTWEEK
+
+PUSH TO REPOSITORY:
+cd C:\Users\Anton\Documents\GitHub\badges
+git remote update
+git checkout 2.1-weekly-$CURRENTWEEK
+git merge $CURRENTWEEK/master
+git push https://github.com/nnmrts/badges.git 2.1-weekly-$CURRENTWEEK

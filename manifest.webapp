@@ -1,0 +1,38 @@
+{
+	"name": "Badges",
+	"short_name": "Badges",
+	"version": "3",
+	"description": "badges for everyone",
+	"launch_path": " ",
+	"start_url": " ",
+	"display": "standalone",
+	"orientation": "any",
+	"background_color": "#FFFFFF",
+	"theme_color": "#FFFF64",
+	"gcm_sender_id": "133393310272",
+	"default_locale": "en",
+	"permissions": {
+	},
+	"locales": {
+		"en": {
+			"name": "Badges",
+			"description": "badges for everyone"
+		}
+	},
+	"developer": {
+		"name": "Nano Miratus",
+		"url": ""
+	},
+	"installs_allowed_from": [
+		"*"
+	],
+	"icons": [{
+		"src": "favicon/favicon-194x194.png",
+		"sizes": "194x194",
+		"type": "image/png"
+	}, {
+		"src": "favicon/favicon-32x32.png",
+		"sizes": "32x32",
+		"type": "image/png"
+	}]
+}
