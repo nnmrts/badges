@@ -193,30 +193,30 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 	};
 	
 	cardinandout = function (outel, inel, options = {}) {
-		$scope.styles.site = {"overflow": "hidden"};
+		$scope.styles.site = { "overflow": "hidden" };
 		$scope.$applyAsync();
-		outel.removeClass($scope.animations.slideOutDown).addClass($scope.animations.slideOutDown).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+		outel.removeClass($scope.animations.slideOutDown).addClass($scope.animations.slideOutDown).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
 			outel.hide();
 			outel.removeClass($scope.animations.slideOutDown);
-			if(options.before) {
-				$q.when(options.before()).then(function() {
+			if (options.before) {
+				$q.when(options.before()).then(function () {
 					inel.show();
-					inel.removeClass($scope.animations.slideInUp).addClass($scope.animations.slideInUp).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+					inel.removeClass($scope.animations.slideInUp).addClass($scope.animations.slideInUp).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
 						inel.removeClass($scope.animations.slideInUp);
-						$scope.styles.site = {"overflow": "overlay"};
+						$scope.styles.site = { "overflow": "overlay" };
 						$scope.$apply();
-						if(options.callback) {
+						if (options.callback) {
 							options.callback();
 						}
 					});	
 				});
 			}
 			inel.show();
-			inel.removeClass($scope.animations.slideInUp).addClass($scope.animations.slideInUp).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+			inel.removeClass($scope.animations.slideInUp).addClass($scope.animations.slideInUp).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
 				inel.removeClass($scope.animations.slideInUp);
-				$scope.styles.site = {"overflow": "overlay"};
+				$scope.styles.site = { "overflow": "overlay" };
 				$scope.$apply();
-				if(options.callback) {
+				if (options.callback) {
 					options.callback();
 				}
 			});	
@@ -224,31 +224,33 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 	};
 	
 	cardin = function (inel, options = {}) {
-		if(options.before) {
+		if (options.before) {
 			options.before();
 		}
 		inel.show();
-		inel.removeClass($scope.animations.slideInUp).addClass($scope.animations.slideInUp).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+		inel.removeClass($scope.animations.slideInUp).addClass($scope.animations.slideInUp).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
 			inel.removeClass($scope.animations.slideInUp);
 			$scope.$apply();
-			if(options.callback) {
+			if (options.callback) {
 				options.callback();
 			}
 		});
 	};
 	
 	cardout = function (outel, options = {}) {
-		if(options.before) {
+		if (options.before) {
 			options.before();
 		}
-		outel.removeClass($scope.animations.slideOutDown).addClass($scope.animations.slideOutDown).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+		outel.removeClass($scope.animations.slideOutDown).addClass($scope.animations.slideOutDown).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
 			outel.hide();
 			outel.removeClass($scope.animations.slideOutDown);
-			if(options.callback) {
+			if (options.callback) {
 				options.callback();
 			}
 		});
-	};			scaleconvert = function (value, oldscale, newscale) {		oldmin = Number(oldscale.slice(0, oldscale.indexOf("-")));				oldmax = Number(oldscale.slice(oldscale.indexOf("-") + 1));				newmin = Number(newscale.slice(0, newscale.indexOf("-")));				newmax = Number(newscale.slice(newscale.indexOf("-") + 1));				return (((value - oldmin) * (newmax - newmin)) / (oldmax - oldmin)) + newmin;	};	
+	};
+	
+	scaleconvert = function (value, oldscale, newscale) { oldmin = Number(oldscale.slice(0, oldscale.indexOf("-"))); oldmax = Number(oldscale.slice(oldscale.indexOf("-") + 1)); newmin = Number(newscale.slice(0, newscale.indexOf("-"))); newmax = Number(newscale.slice(newscale.indexOf("-") + 1)); return (((value - oldmin) * (newmax - newmin)) / (oldmax - oldmin)) + newmin; };
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
@@ -370,9 +372,9 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		search: function () {
 			if ($("#userinfo").css("display") != "none") {
 				cardout($("#userinfo"), {
-					callback: function() {
+					callback: function () {
 						cardinandout($("#top"), $("#loadingcontainer"), {
-							callback: function() {
+							callback: function () {
 								// START LOADING BAR
 								NProgress.start();
 								
@@ -391,7 +393,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			}
 			else {
 				cardinandout($("#top"), $("#loadingcontainer"), {
-					callback: function() {
+					callback: function () {
 						// START LOADING BAR
 						NProgress.start();
 						
@@ -591,7 +593,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
 	
-	if(scope.apiobject.apicode) {
+	if (scope.apiobject.apicode) {
 		
 	}
 	
@@ -1018,21 +1020,23 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 
 					$scope.html_generatedtext.innerHTML = ""
 
-					NProgress.inc();										$scope.$applyAsync();
+					NProgress.inc();
+					
+					$scope.$applyAsync();
 
 					if (isnothing == "no") {
 						imageloop();
 						scope.$apply(
 							imagesLoaded(
 								document.querySelectorAll(".badgebox"),
-								function(instance) {
+								function (instance) {
 									console.log("images loaded");
 									NProgress.done();
 									cardinandout(
 										$("#loadingcontainer"),
 										$("#top"),
 										{
-											before: function() {
+											before: function () {
 												// -
 												$scope.styles.top = {
 													"height": "initial",
@@ -1041,7 +1045,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 												// --
 												$scope.styles.optionscontainer = {
 													"height": "initial",
-													"flex-direction": "row","margin": "30px 0 30px"
+													"flex-direction": "row", "margin": "30px 0 30px"
 												};
 												// ---
 												$scope.styles.info = {
@@ -1062,11 +1066,11 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 												
 												$scope.$applyAsync();
 											},
-											callback: function() {
+											callback: function () {
 												cardin(
 													$("#userinfo"),
 													{
-														callback: function() {
+														callback: function () {
 															$("#site").animate(
 																{
 																	scrollTop: $('#userinfo').offset().top - 75	
@@ -1099,12 +1103,12 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		if ($scope.html_badgescontainer.firstElementChild.firstElementChild.complete) {
 			bgImg = new Image();
 			bgImg.src = $scope.user.avatar.medium.url;
-			bgImg.onload = function(){
+			bgImg.onload = function () {
 			   $(this).remove();
 				console.log("images loaded");
 				NProgress.done();
 				cardinandout($("#loadingcontainer"), $("#top"), {
-					before: function() {
+					before: function () {
 						
 						// -
 						$scope.styles.top = {
@@ -1134,9 +1138,9 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 							"display": "flex"
 						};
 					},
-					callback: function() {
+					callback: function () {
 						cardin($("#userinfo"), {
-							callback: function() {
+							callback: function () {
 								$("#site").animate({
 									scrollTop: $('#userinfo').offset().top - 75
 								}, 1000, $.bez([0.4, 0.0, 0.2, 1]));
