@@ -1,8 +1,8 @@
 {
 	"name": "Badges",
 	"short_name": "Badges",
-	"version": "3",
-	"description": "badges for everyone",
+	"version": "2.1-weekly-201649",
+	"description": "A web-app for the badges initiative on genius.com.",
 	"launch_path": " ",
 	"start_url": " ",
 	"display": "standalone",
@@ -16,7 +16,7 @@
 	"locales": {
 		"en": {
 			"name": "Badges",
-			"description": "badges for everyone"
+			"description": "A web-app for the badges initiative on genius.com."
 		}
 	},
 	"developer": {

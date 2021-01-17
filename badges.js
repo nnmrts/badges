@@ -87,7 +87,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 
 	findhomepath = function () {
 		if (($scope.currentpath.match(/\//g) || []).length > 3) {
-			return location.origin + $scope.currentpath.slice(0, nthIndex($scope.currentpath, "/", ($scope.currentpath.match(/\//g) || []).length - 1));
+			return location.origin + $scope.currentpath.slice(0, nthIndex($scope.currentpath, "/", ($scope.currentpath.match(/\//g) || []).length));
 		}
 		else {
 			return location.origin + $scope.currentpath.slice(0, nthIndex($scope.currentpath, "/", ($scope.currentpath.match(/\//g) || []).length) + 1);
@@ -676,7 +676,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 								// IS SERVER CHECKED?
 								if (!$scope.s.server.checked) {
 									// CHECK IF ID ON SERVER
-									$scope.s.server.data = $http.get($scope.homepath + "ids/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", {
+									$scope.s.server.data = $http.get($scope.currenthref + "ids/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", {
 										responseType: "text"
 									});
 
@@ -789,7 +789,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 				else {
 					$scope.user = $scope.s.genius.source.response.user;
 					console.log("S: END LOOP");
-					window.history.pushState($scope.user.name + "'s badges collection", "Badges - " + $scope.user.name + "'s badges collection", $scope.currentpath.slice(0, (nthIndex($scope.currentpath, "/", 3) + 1)) + $scope.user.login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
+					window.history.pushState($scope.user.name + "'s badges collection", "Badges - " + $scope.user.name + "'s badges collection", $scope.currentpath.slice(0, (nthIndex($scope.currentpath, "/") + 1)) + $scope.user.login.toUpperCase().replace(/\s+/g, "-").toLowerCase());
 					$scope.doit();
 				}
 			}
@@ -972,7 +972,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			else {
 				if (!$scope.d.collection.checked) {
 					
-					$scope.d.collection.data = $http.get($scope.homepath + "collections/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", {
+					$scope.d.collection.data = $http.get($scope.currenthref + "collections/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", {
 							responseType: "text"
 					});
 
@@ -1012,7 +1012,70 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 					NProgress.inc();										$scope.$applyAsync();
 
 					if (isnothing == "no") {
-						// imageloop();							scope.$apply(							imagesLoaded(document.querySelectorAll(".badgebox"), function(instance) {								console.log("images loaded");								NProgress.done();								cardinandout($("#loadingcontainer"), $("#top"), {									before: function() {																				// -										$scope.styles.top = {											"height": "initial",											"margin-bottom": "41px"										};										// --										$scope.styles.optionscontainer = {											"height": "initial",											"flex-direction": "row",											"margin": "30px 0 30px"										};										// ---										$scope.styles.info = {											"width": "initial"										};										// ---										$scope.styles.inputcontainer = {											"margin-bottom": "0"										};										// ---										$scope.styles.search = {											"margin": "6px 8px"										};										// --										$scope.styles.menucontainer = {											"display": "flex"										};																				$scope.$applyAsync();									},									callback: function() {										cardin($("#userinfo"), {											callback: function() {												$("#site").animate({													scrollTop: $('#userinfo').offset().top - 75												}, 1000, $.bez([0.4, 0.0, 0.2, 1]));																								$scope.$applyAsync();											}										});																				$scope.$applyAsync();									}								});							});							);
+						imageloop();
+						scope.$apply(
+							imagesLoaded(
+								document.querySelectorAll(".badgebox"),
+								function(instance) {
+									console.log("images loaded");
+									NProgress.done();
+									cardinandout(
+										$("#loadingcontainer"),
+										$("#top"),
+										{
+											before: function() {
+												// -
+												$scope.styles.top = {
+													"height": "initial",
+													"margin-bottom": "41px"
+												};
+												// --
+												$scope.styles.optionscontainer = {
+													"height": "initial",
+													"flex-direction": "row","margin": "30px 0 30px"
+												};
+												// ---
+												$scope.styles.info = {
+													"width": "initial"
+												};
+												// ---
+												$scope.styles.inputcontainer = {
+													"margin-bottom": "0"
+												};
+												// ---
+												$scope.styles.search = {
+													"margin": "6px 8px"
+												};
+												// --
+												$scope.styles.menucontainer = {
+													"display": "flex"
+												};
+												
+												$scope.$applyAsync();
+											},
+											callback: function() {
+												cardin(
+													$("#userinfo"),
+													{
+														callback: function() {
+															$("#site").animate(
+																{
+																	scrollTop: $('#userinfo').offset().top - 75	
+																},
+																1000,
+																$.bez([0.4, 0.0, 0.2, 1])
+															);
+															$scope.$applyAsync();
+														}
+													}
+												);
+												$scope.$applyAsync();
+											}
+										}
+									);
+								}
+							)
+						);
 					}
 					else {
 						NProgress.done();
