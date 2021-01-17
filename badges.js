@@ -1,3 +1,75 @@
+// SMALL FUNCTIONS FOR DEVELOPMENT
+
+// rounds numbers - value: number to round, exp: how many decimals
+round = function (value, exp) {
+	if (typeof exp === 'undefined' || +exp === 0)
+		return Math.round(value);
+
+	value = +value;
+	exp = +exp;
+
+	if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
+		return NaN;
+
+	// Shift
+	value = value.toString().split('e');
+	value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
+
+	// Shift back
+	value = value.toString().split('e');
+	return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
+};
+
+jQuery2html = function (prefix, attribute) {
+	allElements = $("*");
+	for (var i = 0, n = allElements.length; i < n; ++i) {
+		var el = allElements[i];
+		if (el.id) {
+			$scope[prefix + el[attribute]] = el;
+		}
+	}
+};
+
+nthIndex = function (string, char, index) {
+	return string.split(char, index).join(char).length;
+};
+
+
+findhomepath = function () {
+	if (($scope.currentpath.match(/\//g) || []).length > 3) {
+		return location.origin + $scope.currentpath.slice(0, nthIndex($scope.currentpath, "/", ($scope.currentpath.match(/\//g) || []).length));
+	}
+	else {
+		return location.origin + $scope.currentpath.slice(0, nthIndex($scope.currentpath, "/", ($scope.currentpath.match(/\//g) || []).length) + 1);
+	}
+};
+
+pathgenerator = function (directory) {
+	if (($scope.currentpath.match(/\//g) || []).length > 3) {
+		$scope[directory + "path"] = $scope.homepath + "/" + directory + "/";
+	}
+	else {
+		$scope[directory + "path"] = $scope.homepath + directory + "/";
+	}
+};
+
+htmlEntities = function (str) {
+	return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+};
+
+createVariable = function (varName, varContent) {
+	var scriptStr = "var " + varName + "= " + varContent + "";
+
+	var nodescriptCode = document.createTextNode(scriptStr);
+	var nodescript = document.createElement("script");
+	nodescript.type = "text/javascript";
+	nodescript.setAttribute("class", "momentscript");
+	nodescript.appendChild(nodescriptCode);
+
+	var nodehead = document.getElementsByTagName("head")[0];
+	nodehead.appendChild(nodescript);
+};
+
 mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $http, $q) {
 
 	// LIBRARIES
@@ -22,21 +94,21 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 	$scope.doPrimaryAction = function (event) {
 		$mdDialog.show(
 			$mdDialog.alert()
-			.title('Primary Action')
-			.textContent('Primary actions can be used for one click actions')
-			.ariaLabel('Primary click demo')
-			.ok('Awesome!')
-			.targetEvent(event));
+				.title('Primary Action')
+				.textContent('Primary actions can be used for one click actions')
+				.ariaLabel('Primary click demo')
+				.ok('Awesome!')
+				.targetEvent(event));
 	};
 
 	$scope.doSecondaryAction = function (event) {
 		$mdDialog.show(
 			$mdDialog.alert()
-			.title('Secondary Action')
-			.textContent('Secondary actions can be used for one click actions')
-			.ariaLabel('Secondary click demo')
-			.ok('Neat!')
-			.targetEvent(event));
+				.title('Secondary Action')
+				.textContent('Secondary actions can be used for one click actions')
+				.ariaLabel('Secondary click demo')
+				.ok('Neat!')
+				.targetEvent(event));
 	};
 
 	var originatorEv;
@@ -45,80 +117,8 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		originatorEv = ev;
 		$mdOpenMenu(ev);
 	};
-	
+
 	NProgress.configure({ parent: '#site' });
-
-	// SMALL FUNCTIONS FOR DEVELOPMENT
-
-	// rounds numbers - value: number to round, exp: how many decimals
-	round = function (value, exp) {
-		if (typeof exp === 'undefined' || +exp === 0)
-			return Math.round(value);
-
-		value = +value;
-		exp = +exp;
-
-		if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
-			return NaN;
-
-		// Shift
-		value = value.toString().split('e');
-		value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
-
-		// Shift back
-		value = value.toString().split('e');
-		return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
-	};
-
-	jQuery2html = function (prefix, attribute) {
-		allElements = $("*");
-		for (var i = 0, n = allElements.length; i < n; ++i) {
-			var el = allElements[i];
-			if (el.id) {
-				$scope[prefix + el[attribute]] = el;
-			}
-		}
-	};
-
-	nthIndex = function (string, char, index) {
-		return string.split(char, index).join(char).length;
-	};
-
-
-	findhomepath = function () {
-		if (($scope.currentpath.match(/\//g) || []).length > 3) {
-			return location.origin + $scope.currentpath.slice(0, nthIndex($scope.currentpath, "/", ($scope.currentpath.match(/\//g) || []).length));
-		}
-		else {
-			return location.origin + $scope.currentpath.slice(0, nthIndex($scope.currentpath, "/", ($scope.currentpath.match(/\//g) || []).length) + 1);
-		}
-	};
-
-	pathgenerator = function (directory) {
-		if (($scope.currentpath.match(/\//g) || []).length > 3) {
-			$scope[directory + "path"] = $scope.homepath + "/" + directory + "/";
-		}
-		else {
-			$scope[directory + "path"] = $scope.homepath + directory + "/";
-		}
-	};
-
-	htmlEntities = function (str) {
-		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-	};
-
-	createVariable = function (varName, varContent) {
-		var scriptStr = "var " + varName + "= " + varContent + "";
-
-		var nodescriptCode = document.createTextNode(scriptStr);
-		var nodescript = document.createElement("script");
-		nodescript.type = "text/javascript";
-		nodescript.setAttribute("class", "momentscript");
-		nodescript.appendChild(nodescriptCode);
-
-		var nodehead = document.getElementsByTagName("head")[0];
-		nodehead.appendChild(nodescript);
-	};
 
 
 	// -----------------------------
@@ -191,7 +191,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		}
 		return frag;
 	};
-	
+
 	cardinandout = function (outel, inel, options = {}) {
 		$scope.styles.site = { "overflow": "hidden" };
 		$scope.$applyAsync();
@@ -208,7 +208,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 						if (options.callback) {
 							options.callback();
 						}
-					});	
+					});
 				});
 			}
 			inel.show();
@@ -219,10 +219,10 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 				if (options.callback) {
 					options.callback();
 				}
-			});	
+			});
 		});
 	};
-	
+
 	cardin = function (inel, options = {}) {
 		if (options.before) {
 			options.before();
@@ -236,7 +236,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			}
 		});
 	};
-	
+
 	cardout = function (outel, options = {}) {
 		if (options.before) {
 			options.before();
@@ -256,8 +256,8 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
-	
-	
+
+
 	// APP DATA
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
@@ -272,9 +272,9 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		$scope.version = $scope.manifest.responseJSON.version;
 		$scope.client_id = $scope.manifest.responseJSON.client_id;
 	});
-	
+
 	$scope.currenthref = location.href;
-	
+
 	$scope.currentpath = location.pathname;
 
 	$scope.homepath = findhomepath();
@@ -287,14 +287,14 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 	pathgenerator("collection");
 	pathgenerator("collections");
 	pathgenerator("ids");
-	
+
 	$scope.apiobject = {
 		["api" + location.search.slice(1, location.search.indexOf("="))]: location.search.slice(location.search.indexOf("=") + 1, location.search.indexOf("&")),
 		["api" + location.search.slice(nthIndex(location.search, "&", 1) + 1, nthIndex(location.search, "=", 2))]: (location.search.slice(nthIndex(location.search, "&", 1) + 1)).slice((location.search.slice(nthIndex(location.search, "&", 1) + 1)).indexOf("=") + 1)
 	};
-	
+
 	$scope.animationprefix = "animated ";
-	
+
 	$scope.animations = {
 		slideOutDown: $scope.animationprefix + "slideOutDown",
 		slideInUp: $scope.animationprefix + "slideInUp",
@@ -358,7 +358,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 	};
 
 	$scope.s = {};
-	
+
 	$scope.d = {};
 
 	// UI FUNCTIONS
@@ -377,13 +377,13 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 							callback: function () {
 								// START LOADING BAR
 								NProgress.start();
-								
+
 								// RENAME SEARCH BUTTON
 								$scope.buttons.search.text = "search again";
-								
+
 								// RESET FIRST LOOP BOOLEAN
 								$scope.s.firstloop = true;
-								
+
 								// INIT LOOP
 								$scope.searchloop();
 							}
@@ -396,13 +396,13 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 					callback: function () {
 						// START LOADING BAR
 						NProgress.start();
-						
+
 						// RENAME SEARCH BUTTON
 						$scope.buttons.search.text = "search again";
-						
+
 						// RESET FIRST LOOP BOOLEAN
 						$scope.s.firstloop = true;
-						
+
 						// INIT LOOP
 						$scope.searchloop();
 					}
@@ -410,10 +410,10 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			}
 		},
 		profile: function () {
-			
+
 			if ($scope.s.user.given) {
 				if ($scope.buttons.profile.text == "close that") {
-					
+
 					$scope.buttons.profile.text = "add them to your profile";
 					/* 
 					$('#profile').removeClass($scope.animations.pulse).addClass($scope.animations.pulse).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
@@ -434,15 +434,15 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 				}
 				else {
 					$scope.buttons.profile.text = "close that";
-					
+
 					/*
 					$('#profile').removeClass($scope.animations.pulse).addClass($scope.animations.pulse).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
 						$(this).removeClass($scope.animations.pulse);
 					});
 					*/
-					
+
 					if (!$scope.d.collection.given) {
-						
+
 						urlarray = [];
 
 						if (starbadge1 != "undefined") {
@@ -549,7 +549,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 
 					gentext = htmlEntities(gentexthtml);
 					$scope.html_generatedtext.innerHTML = gentext;
-					
+
 					$("#profilebox").attr({
 						style: "height: 0;display:flex;opacity: 0;"
 					});
@@ -571,7 +571,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 					$("#profilebox").animate({
 						height: "350px"
 					}, 400, $.bez([0.4, 0.0, 0.2, 1]), function () {
-						
+
 						$("#profilebox").animate({
 							opacity: 1
 						}, 250, $.bez([0.0, 0.0, 0.2, 1]));
@@ -588,19 +588,19 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			$scope.ui.search();
 		}
 	});
-	
+
 	// COLLECTION INIT
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
-	
+
 	if (scope.apiobject.apicode) {
-		
+
 	}
-	
+
 	// BIG LOOP FUNCTION
 	//---------------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------------
-	
+
 	$scope.searchloop = function () {
 		NProgress.inc();
 
@@ -608,7 +608,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 
 		// FIRST LOOP (for setup and resetting...)
 		if ($scope.s.firstloop) {
-			
+
 			$scope.user = {};
 
 			isnothing = "no";
@@ -669,7 +669,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 								$scope.s.input.checked = true;
 								console.log("S: INPUT CHECKED");
 							}
-							
+
 							$scope.searchloop();
 						}
 						else {
@@ -692,7 +692,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 										}
 										$scope.s.server.checked = true;
 										console.log("S: SERVER CHECKED");
-										
+
 										$scope.searchloop();
 									});
 								}
@@ -806,7 +806,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 						$scope.html_generatedtext.innerHTML = "";
 
 						$scope.html_nouser.innerHTML = $scope.logininput;
-						
+
 						$("#optionscontainer").attr({
 							style: "width: 100%;height: initial;background: #fff;display: flex;justify-content: space-around;align-items: center;flex-direction: row;position: static;margin: 30px 0 30px;"
 						});
@@ -927,7 +927,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			}
 		}
 	};
-	
+
 	$scope.doit = function () {
 		// RESET FIRST LOOP BOOLEAN
 		$scope.d.firstloop = true;
@@ -935,15 +935,15 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		// INIT LOOP
 		$scope.doitloop();
 	};
-	
+
 	$scope.doitloop = function () {
-		
+
 		NProgress.inc();
-		
+
 		$scope.$applyAsync();
-		
+
 		if ($scope.d.firstloop) {
-			
+
 			$scope.user.stars = 0;
 
 			$scope.d = {
@@ -965,49 +965,49 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 				while ($scope.html_badgescontainer.firstChild) {
 					$scope.html_badgescontainer.removeChild($scope.html_badgescontainer.firstChild);
 				}
-				
+
 				$scope.d.badgescontainer.emptied = true;
 				console.log("D: BADGESCONTAINER EMPTIED");
-				
+
 				$scope.doitloop();
 			}
 			else {
 				if (!$scope.d.collection.checked) {
-					
-					$q.when($scope.d.collection.data,
-  function () {
-    if (JSON.stringify($scope.d.collection.data.$$state.value.data).indexOf("{") === 0) {
-      $scope.user.collection = $scope.d.collection.data.$$state.value.data;
-                            
-      $scope.d.collection.given = true;
-      console.log("D: COLLECTION GIVEN");
-    }
-    else {
-      console.log("D: COLLECTION NOT GIVEN");
-    }
-                        
-    $scope.d.collection.checked = true;
-    console.log("D: COLLECTION CHECKED");
-                        
-    $scope.doitloop();
-  },
-  function () {
-    console.log("D: COLLECTION NOT GIVEN");
-    
-    $scope.d.collection.checked = true;
-    console.log("D: COLLECTION CHECKED");
 
-    $scope.doitloop();
-  }
-)
+					$q.when($scope.d.collection.data,
+						function () {
+							if (JSON.stringify($scope.d.collection.data.$$state.value.data).indexOf("{") === 0) {
+								$scope.user.collection = $scope.d.collection.data.$$state.value.data;
+
+								$scope.d.collection.given = true;
+								console.log("D: COLLECTION GIVEN");
+							}
+							else {
+								console.log("D: COLLECTION NOT GIVEN");
+							}
+
+							$scope.d.collection.checked = true;
+							console.log("D: COLLECTION CHECKED");
+
+							$scope.doitloop();
+						},
+						function () {
+							console.log("D: COLLECTION NOT GIVEN");
+
+							$scope.d.collection.checked = true;
+							console.log("D: COLLECTION CHECKED");
+
+							$scope.doitloop();
+						}
+					)
 				}
 				else {
 					insert();
-					
+
 					$scope.$applyAsync();
-					
+
 					$scope.html_usererror.style.display = "none";
-					
+
 					/*
 					
 					$("#userinfo:hidden").attr({
@@ -1063,7 +1063,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 												$scope.styles.menucontainer = {
 													"display": "flex"
 												};
-												
+
 												$scope.$applyAsync();
 											},
 											callback: function () {
@@ -1073,7 +1073,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 														callback: function () {
 															$("#site").animate(
 																{
-																	scrollTop: $('#userinfo').offset().top - 75	
+																	scrollTop: $('#userinfo').offset().top - 75
 																},
 																1000,
 																$.bez([0.4, 0.0, 0.2, 1])
@@ -1099,17 +1099,17 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 		}
 	};
 
-	imageloop = function () {								
+	imageloop = function () {
 		if ($scope.html_badgescontainer.firstElementChild.firstElementChild.complete) {
 			bgImg = new Image();
 			bgImg.src = $scope.user.avatar.medium.url;
 			bgImg.onload = function () {
-			   $(this).remove();
+				$(this).remove();
 				console.log("images loaded");
 				NProgress.done();
 				cardinandout($("#loadingcontainer"), $("#top"), {
 					before: function () {
-						
+
 						// -
 						$scope.styles.top = {
 							"height": "initial",
@@ -1260,7 +1260,7 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 				}
 			}
 		}
-		
+
 		$scope.user.stars = $scope.user.stars + badgeid;
 	};
 
@@ -1276,43 +1276,43 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 
 	starbadgenamechooser = function (badgeid) {
 		badgenames = [{
-				0: ""
-					}, {
-				1: "coal"
-					}, {
-				2: "copper"
-					}, {
-				3: "bronze"
-					}, {
-				4: "silver"
-					}, {
-				5: "gold"
-					}, {
-				6: "platinum"
-					}, {
-				7: "sapphire"
-					}, {
-				8: "amber"
-					}, {
-				9: "emerald"
-					}, {
-				10: "topaz"
-					}, {
-				11: "opal"
-					}, {
-				12: "amethyst"
-					}, {
-				13: "ruby"
-					}, {
-				14: "yellowdiamond"
-					}, {
-				15: "greendiamond"
-					}, {
-				16: "reddiamond"
-					}, {
-				17: "diamond"
-					}
-				];
+			0: ""
+		}, {
+			1: "coal"
+		}, {
+			2: "copper"
+		}, {
+			3: "bronze"
+		}, {
+			4: "silver"
+		}, {
+			5: "gold"
+		}, {
+			6: "platinum"
+		}, {
+			7: "sapphire"
+		}, {
+			8: "amber"
+		}, {
+			9: "emerald"
+		}, {
+			10: "topaz"
+		}, {
+			11: "opal"
+		}, {
+			12: "amethyst"
+		}, {
+			13: "ruby"
+		}, {
+			14: "yellowdiamond"
+		}, {
+			15: "greendiamond"
+		}, {
+			16: "reddiamond"
+		}, {
+			17: "diamond"
+		}
+		];
 		badgename = badgenames[badgeid][badgeid];
 	};
 
@@ -1407,19 +1407,19 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 
 	rolebadgenamechooser = function (badgeid) {
 		badgenames = [{
-				0: ""
-					}, {
-				1: "contributor"
-					}, {
-				2: "mediator"
-					}, {
-				3: "editor"
-					}, {
-				4: "moderator"
-					}, {
-				5: "staff"
-					}
-				];
+			0: ""
+		}, {
+			1: "contributor"
+		}, {
+			2: "mediator"
+		}, {
+			3: "editor"
+		}, {
+			4: "moderator"
+		}, {
+			5: "staff"
+		}
+		];
 		badgename = badgenames[badgeid][badgeid];
 	};
 
@@ -1562,14 +1562,14 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			$(".smallfooter").fadeOut(250, $.bez([0.4, 0.0, 1, 1]));
 
 			$(".badgebox").hover(function () {
-					childindex = getChildrenIndex(this);
-					currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
-					if (currentfooter.id == "smallfooter") {
-						if (hoverEnabled == 1) {
-							$(currentfooter).fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
-						}
+				childindex = getChildrenIndex(this);
+				currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
+				if (currentfooter.id == "smallfooter") {
+					if (hoverEnabled == 1) {
+						$(currentfooter).fadeIn(250, $.bez([0.0, 0.0, 0.2, 1]));
 					}
-				},
+				}
+			},
 				function () {
 					childindex = getChildrenIndex(this);
 					currentfooter = $("#editbadges > .badgebox")[childindex].lastElementChild;
