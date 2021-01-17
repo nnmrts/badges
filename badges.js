@@ -972,23 +972,32 @@ mainfunction = function all($scope, $timeout, $mdSidenav, $mdDialog, $window, $h
 			else {
 				if (!$scope.d.collection.checked) {
 					
-					$scope.d.collection.data = $http.get($scope.currenthref + "collections/" + $scope.logininput.toUpperCase().replace(/\s+/g, "-") + ".txt", {
-							responseType: "text"
-					});
+					$q.when($scope.d.collection.data,
+  function () {
+    if (JSON.stringify($scope.d.collection.data.$$state.value.data).indexOf("{") === 0) {
+      $scope.user.collection = $scope.d.collection.data.$$state.value.data;
+                            
+      $scope.d.collection.given = true;
+      console.log("D: COLLECTION GIVEN");
+    }
+    else {
+      console.log("D: COLLECTION NOT GIVEN");
+    }
+                        
+    $scope.d.collection.checked = true;
+    console.log("D: COLLECTION CHECKED");
+                        
+    $scope.doitloop();
+  },
+  function () {
+    console.log("D: COLLECTION NOT GIVEN");
+    
+    $scope.d.collection.checked = true;
+    console.log("D: COLLECTION CHECKED");
 
-					$q.when($scope.d.collection.data, function () {
-						if (JSON.stringify($scope.d.collection.data.$$state.value.data).indexOf("{") === 0) {
-							$scope.user.collection = $scope.d.collection.data.$$state.value.data;
-							
-							$scope.d.collection.given = true;
-							console.log("D: COLLECTION GIVEN");
-						}
-						
-						$scope.d.collection.checked = true;
-						console.log("D: COLLECTION CHECKED");
-						
-						$scope.doitloop();
-					});
+    $scope.doitloop();
+  }
+)
 				}
 				else {
 					insert();
