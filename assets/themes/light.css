@@ -1,0 +1,14 @@
+body,
+#badgescontainer,
+#collectioncontainer,
+.badges-layout .mdl-layout__content,
+.badges-layout md-card md-card-content,
+#optionscontainer,
+.infocontainer,
+.badges-layout #site {
+    background-color: white;
+}
+
+.badges-layout h1 {
+    color: #000000;
+}

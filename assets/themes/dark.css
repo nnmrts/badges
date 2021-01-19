@@ -1,0 +1,48 @@
+html.md-default-theme,
+html,
+body.md-default-theme,
+body,
+#badgescontainer,
+#collectioncontainer,
+.infocontainer,
+#optionscontainer,
+.badges-layout md-card md-card-content,
+.badges-layout #site,
+.badges-layout md-sidenav {
+    background-color: #303030;
+}
+
+.info,
+.headline,
+.badges-layout h1,
+.badges-layout md-sidenav {
+    color: white;
+}
+
+html.md-default-theme,
+html,
+body.md-default-theme,
+body,
+.profile_header {
+    color: #303030;
+}
+
+.md-list-item .md-list-item-inner>div.md-primary>md-icon:not(.md-avatar-icon),
+md-list-item .md-list-item-inner>div.md-secondary>md-icon:not(.md-avatar-icon),
+md-list-item .md-list-item-inner>md-icon.md-secondary:not(.md-avatar-icon),
+md-list-item .md-list-item-inner>md-icon:first-child:not(.md-avatar-icon),
+md-list-item>div.md-primary>md-icon:not(.md-avatar-icon),
+md-list-item>div.md-secondary>md-icon:not(.md-avatar-icon),
+md-list-item>md-icon.md-secondary:not(.md-avatar-icon),
+md-list-item>md-icon:first-child:not(.md-avatar-icon) {
+    width: 24px;
+    margin-top: 16px;
+    margin-bottom: 12px;
+    box-sizing: content-box;
+    background-color: white;
+}
+
+.badges-layout label {
+    font-weight: 300;
+    color: white;
+}
